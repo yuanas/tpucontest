@@ -9,9 +9,9 @@
 #define NPU_NUM okk_npu_num()
 #define NO_USE 0
 typedef struct {
+    int N, C, H, W;
     unsigned long long output_addr;
     unsigned long long input_addr;
-    int N, C, H, W;
 } __attribute__((packed)) param_t;
 
 void softmax_contest(const void *args) {

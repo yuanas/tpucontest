@@ -9,10 +9,10 @@
 #define NPU_NUM okk_npu_num()
 #define NO_USE 0
 typedef struct {
+    int left_rows, left_cols, right_cols;
     unsigned long long output_addr;
     unsigned long long left_addr;
     unsigned long long right_addr;
-    int left_rows, left_cols, right_cols;
 } __attribute__((packed)) param_t;
 
 void matmul_demo(const void *args) {

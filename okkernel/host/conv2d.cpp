@@ -5,16 +5,20 @@
 #include "bmlib_runtime.h"
 #define BMLIB_SAFE_CALL(cmd) assert(cmd == BM_SUCCESS)
 #define DIV_UP(a, b) (((a) - 1) / (b) + 1)
-#define MAXIT (10)
+#ifdef USING_CMODEL
+#define MAXIT (1)
+#else
+#define MAXIT (100)
+#endif
 typedef struct {
-    unsigned long long output_addr;
-    unsigned long long input_addr;
-    unsigned long long kernel_addr;
     int N, IC, OC, H, W;
     int kernel_h, kernel_w;
     int pad_top, pad_bottom, pad_left, pad_right;
     int stride_h, stride_w;
     int dilation_h, dilation_w;
+    unsigned long long output_addr;
+    unsigned long long input_addr;
+    unsigned long long kernel_addr;
 } __attribute__((packed)) param_t;
 
 static inline void conv2d_reference(float *output, const float *input, const float *kernel, const param_t &param) {

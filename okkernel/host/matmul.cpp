@@ -6,12 +6,16 @@
 #include "bmlib_runtime.h"
 #define BMLIB_SAFE_CALL(cmd) assert(cmd == BM_SUCCESS)
 #define DIV_UP(a, b) (((a) - 1) / (b) + 1)
-#define MAXIT (10)
+#ifdef USING_CMODEL
+#define MAXIT (1)
+#else
+#define MAXIT (100)
+#endif
 typedef struct {
+    int left_rows, left_cols, right_cols;
     unsigned long long output_addr;
     unsigned long long left_addr;
     unsigned long long right_addr;
-    int left_rows, left_cols, right_cols;
 } __attribute__((packed)) param_t;
 
 static inline void matmul_reference(float *output, const float *left, const float *right, const param_t &param) {

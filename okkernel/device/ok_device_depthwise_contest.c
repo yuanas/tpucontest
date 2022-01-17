@@ -9,14 +9,14 @@
 #define NPU_NUM okk_npu_num()
 #define NO_USE 0
 typedef struct {
-    unsigned long long output_addr;
-    unsigned long long input_addr;
-    unsigned long long kernel_addr;
     int N, C, H, W;
     int kernel_h, kernel_w;
     int pad_top, pad_bottom, pad_left, pad_right;
     int stride_h, stride_w;
     int dilation_h, dilation_w;
+    unsigned long long output_addr;
+    unsigned long long input_addr;
+    unsigned long long kernel_addr;
 } __attribute__((packed)) param_t;
 
 void depthwise_contest(const void *args) {
