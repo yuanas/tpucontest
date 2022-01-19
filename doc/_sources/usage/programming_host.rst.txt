@@ -1,0 +1,35 @@
+.. _programming on host:
+
+Programming on Host
+===================
+
+Launch Kernel Function
+______________________
+
+    On host, kernel function is launched by calling :cpp:func:`okkernel_launch_sync` which will return immediately or :cpp:func:`okkernel_launch_async` which will block until the launching done.
+
+    Only one kernel function can be launched from host by calling the launching function once,
+    and it is specified by the function name as the second arguement :cpp:expr:`func_name`.
+
+    As mentioned, there exists a structure decorated by :cpp:expr:`__attribute__((packed))` linking host and device.
+    The pointer to the structure and the size of it are the third arguement :cpp:expr:`args` and the fourth arguement :cpp:expr:`size`.
+
+Hello World on Host
+___________________
+
+    .. code-block:: c
+
+        typedef struct {
+            int year;
+            int month;
+            int day;
+        } __attribute__((packed)) date_t;
+
+        bm_handle_t handle;
+        date_t param = {.year = 2021, .month = 1, .day = 1};
+        // Initialize.
+        bm_dev_request(&handle, 0);
+        // Launch kernel function.
+        okkernel_launch_sync(handle, "hello_world", &param, sizeof(param));
+        // Deinitialize.
+        bm_dev_free(handle);

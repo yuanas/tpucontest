@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>FP32 Neural Network Functions &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>FP32 Neural Network Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/refined/fp32_nn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="fp32-neural-network-functions">
+<h1>FP32 Neural Network Functions<a class="headerlink" href="#fp32-neural-network-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="okk-bdc-relu">
+<h2>okk_bdc_relu<a class="headerlink" href="#okk-bdc-relu" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4">
+<span id="_CPPv312okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4"></span><span id="_CPPv212okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_relu__local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_relu</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate ReLU of the elements of the source tensor for fp32 data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)&amp;{\text{if }}src(n, c, h, w)&gt;0,\\0&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source and work tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensors is fp32.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_relu12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_relu::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-bias">
+<h2>okk_bdc_bias<a class="headerlink" href="#okk-bdc-bias" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4">
+<span id="_CPPv312okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4"></span><span id="_CPPv212okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_bias__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_bias</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>bias_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform adding bias to the elements of the source tensor per channel.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src(n, c, h, w) + bias(0, c, 0, 0)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>bias_addr</strong> – Address of the bias tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The bias tensor is in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</li>
+<li>The data type of the destination, source and bias tensors is fp32.</li>
+<li>The shape of the bias tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, 1, 1].</li>
+<li>The destination, source and bias tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::src_addr"><span class="pre">src_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::bias_addr"><span class="pre">bias_addr</span></a></code> are divisible by 4, where <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::src_addr"><span class="pre">src_addr</span></a></code> are preferred to be divisible by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv412okk_bdc_bias12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4" title="okk_bdc_bias::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-scale">
+<h2>okk_bdc_scale<a class="headerlink" href="#okk-bdc-scale" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b">
+<span id="_CPPv313okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b"></span><span id="_CPPv213okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b"></span><span id="okk_bdc_scale__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.b"></span>void <code class="descname">okk_bdc_scale</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>scale_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em>, bool <em>result_add</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform scaling the elements of the source tensor per channel with or without result accumulation by addtition.</p>
+<p>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::result_add"><span class="pre">result_add</span></a> <span class="pre">==</span> <span class="pre">false</span></code></p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src(n, c, h, w)\times scale(0, c, 0, 0)\]</div>
+<p>else</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = dst(n, c, h, w) + src(n, c, h, w)\times scale(0, c, 0, 0)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>bias_addr</strong> – Address of the scale tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+<li><strong>result_add</strong> – Flag of performing result accumulation by addtition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The scale tensor is in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</li>
+<li>The data type of the destination, source and scale tensors is fp32.</li>
+<li>The shape of the scale tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, 1, 1].</li>
+<li>The destination, source and scale tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::src_addr"><span class="pre">src_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::scale_addr"><span class="pre">scale_addr</span></a></code> are divisible by 4, where <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::src_addr"><span class="pre">src_addr</span></a></code> are preferred to be divisible by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv413okk_bdc_scale12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-scale-bias">
+<h2>okk_bdc_scale_bias<a class="headerlink" href="#okk-bdc-scale-bias" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b">
+<span id="_CPPv318okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b"></span><span id="_CPPv218okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b"></span><span id="okk_bdc_scale_bias__local_addr_t.local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.b"></span>void <code class="descname">okk_bdc_scale_bias</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>scale_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>bias_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em>, bool <em>result_add</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform scaling and adding bias to the elements of the source tensor per channel with or without result accumulation by addtition.</p>
+<p>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::result_add"><span class="pre">result_add</span></a> <span class="pre">==</span> <span class="pre">false</span></code></p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src(n, c, h, w)\times scale(0, c, 0, 0) + bias(0, c, 0, 0)\]</div>
+<p>else</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = dst(n, c, h, w) + src(n, c, h, w)\times scale(0, c, 0, 0) + bias(0, c, 0, 0)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>scale_addr</strong> – Address of the scale tensor.</li>
+<li><strong>bias_addr</strong> – Address of the bias tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+<li><strong>result_add</strong> – Flag of performing result accumulation by addtition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The scale and bias tensors are in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</li>
+<li>The data type of the destination, source, scale and bias tensors is fp32.</li>
+<li>The shape of the scale and bias tensors is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, 1, 1].</li>
+<li>The destination, source, scale and bias tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::src_addr"><span class="pre">src_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::scale_addr"><span class="pre">scale_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::bias_addr"><span class="pre">bias_addr</span></a></code> are divisible by 4, where <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::src_addr"><span class="pre">src_addr</span></a></code> are preferred to be divisible by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_scale_bias12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4b" title="okk_bdc_scale_bias::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-conv2d">
+<h2>okk_bdc_conv2d<a class="headerlink" href="#okk-bdc-conv2d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2">
+<span id="_CPPv314okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2"></span><span id="_CPPv214okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2"></span><span id="okk_bdc_conv2d__local_addr_t.local_addr_t.local_addr_t.local_addr_t.dim4CP.i.i.i.dim4CP.dim4CP.b.b.PaddingCP.dim2CP.dim2CP"></span>void <code class="descname">okk_bdc_conv2d</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>output_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>input_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>weight_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>bias_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>input_shape</em>, int <em>output_c</em>, int <em>kernel_h</em>, int <em>kernel_w</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>input_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>kernel_stride</em>, bool <em>using_bias</em>, bool <em>result_add</em>, <em class="property">const</em> Padding *<em>padding</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim2" title="dim2">dim2</a> *<em>stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim2" title="dim2">dim2</a> *<em>dilation</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform 2D convolution with or without adding bias and result accumulation by addtition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output_addr</strong> – Address of the output tensor.</li>
+<li><strong>input_addr</strong> – Address of the input tensor.</li>
+<li><strong>weight_addr</strong> – Address of the weight tensor.</li>
+<li><strong>bias_addr</strong> – Address of the bias tensor, only used when <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::using_bias"><span class="pre">using_bias</span></a> <span class="pre">=</span> <span class="pre">true</span></code>.</li>
+<li><strong>input_shape</strong> – Pointer to the shape of the input tensor.</li>
+<li><strong>output_c</strong> – Channel number of the output tensor.</li>
+<li><strong>kernel_h</strong> – Height of the convolution kernel.</li>
+<li><strong>kernel_w</strong> – Width of the convolution kernel.</li>
+<li><strong>input_stride</strong> – Pointer to the stride of the input tensor.</li>
+<li><strong>kernel_stride</strong> – Pointer to the stride of the weight tensor.</li>
+<li><strong>using_bias</strong> – Flag of adding bias.</li>
+<li><strong>result_add</strong> – Flag of performing result accumulation by addtition.</li>
+<li><strong>padding</strong> – Pointer to the amount of paddings applied to the input tensor.</li>
+<li><strong>stride</strong> – Pointer to the strides for the cross-correlation.</li>
+<li><strong>dilation</strong> – Pointer to the spacings between the kernel points.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul>
+<li><p class="first">The output tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>, the bias tensor is in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</p>
+</li>
+<li><p class="first">The data type of the output, input, weight and bias tensors is fp32.</p>
+</li>
+<li><p class="first">The weight tensor is in the <a class="reference internal" href="../layout.html#ic-mode"><span class="std std-ref">2IC-mode</span></a>.</p>
+</li>
+<li><p class="first">The output, weight and bias tensors start at the same NPU.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::output_addr"><span class="pre">output_addr</span></a></code> is divisible by 128, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_addr"><span class="pre">input_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::weight_addr"><span class="pre">weight_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::bias_addr"><span class="pre">bias_addr</span></a></code> are divisible by 4.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code> is in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 2047].</p>
+</li>
+<li><p class="first">It is required that</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> &lt;= 2047,</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the output tensor is [<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::output_c"><span class="pre">output_c</span></a></code>, output_h, output_w], where</p>
+<p>output_h = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> - ((<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::kernel_h"><span class="pre">kernel_h</span></a></code> - 1) * <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + 1)) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + 1,</p>
+<p>output_w = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> - ((<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::kernel_w"><span class="pre">kernel_w</span></a></code> - 1) * <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + 1)) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + 1,</p>
+<p>and it is required that output_h &lt;= 2047 and output_w &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the bias tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::output_c"><span class="pre">output_c</span></a></code>, 1, 1].</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> are in [0, 15], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 15], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 15].</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::padding"><span class="pre">padding</span></a></code> is NULL, there will be no paddings.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::stride"><span class="pre">stride</span></a></code> is NULL, the stride value will be one as default.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::dilation"><span class="pre">dilation</span></a></code> is NULL, the dilation value will be one as default.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_conv2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iiiPK4dim4PK4dim4bbPK7PaddingPK4dim2PK4dim2" title="okk_bdc_conv2d::input_stride"><span class="pre">input_stride</span></a></code> is NULL, the input tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</p>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-depthwise2d">
+<h2>okk_bdc_depthwise2d<a class="headerlink" href="#okk-bdc-depthwise2d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2">
+<span id="_CPPv319okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2"></span><span id="_CPPv219okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2"></span><span id="okk_bdc_depthwise2d__local_addr_t.local_addr_t.local_addr_t.local_addr_t.dim4CP.i.i.b.PaddingCP.dim2CP.dim2CP"></span>void <code class="descname">okk_bdc_depthwise2d</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>output_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>input_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>weight_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>bias_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>input_shape</em>, int <em>kernel_h</em>, int <em>kernel_w</em>, bool <em>using_bias</em>, <em class="property">const</em> Padding *<em>padding</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim2" title="dim2">dim2</a> *<em>stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim2" title="dim2">dim2</a> *<em>dilation</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform 2D depthwise convolution with or without adding bias.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output_addr</strong> – Address of the output tensor.</li>
+<li><strong>input_addr</strong> – Address of the input tensor.</li>
+<li><strong>weight_addr</strong> – Address of the weight tensor.</li>
+<li><strong>bias_addr</strong> – Address of the bias tensor, only used when <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::using_bias"><span class="pre">using_bias</span></a> <span class="pre">=</span> <span class="pre">true</span></code>.</li>
+<li><strong>input_shape</strong> – Pointer to the shape of the input tensor.</li>
+<li><strong>kernel_h</strong> – Height of the convolution kernel.</li>
+<li><strong>kernel_w</strong> – Width of the convolution kernel.</li>
+<li><strong>using_bias</strong> – Flag of adding bias.</li>
+<li><strong>padding</strong> – Pointer to the amount of paddings applied to the input tensor.</li>
+<li><strong>stride</strong> – Pointer to the strides for the cross-correlation.</li>
+<li><strong>dilation</strong> – Pointer to the spacings between the kernel points.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul>
+<li><p class="first">The output and input tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>, the weight and bias tensors are in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</p>
+</li>
+<li><p class="first">The data type of the output, input, weight and bias tensors is fp32.</p>
+</li>
+<li><p class="first">The output, input, weight and bias tensors start at the same NPU.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::output_addr"><span class="pre">output_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_addr"><span class="pre">input_addr</span></a></code> are divisible by 128, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::weight_addr"><span class="pre">weight_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::bias_addr"><span class="pre">bias_addr</span></a></code> are divisible by 4.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code> is in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 2047].</p>
+</li>
+<li><p class="first">It is required that</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> &lt;= 2047,</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the output tensor is [<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, output_h, output_w], where</p>
+<p>output_h = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> - ((<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::kernel_h"><span class="pre">kernel_h</span></a></code> - 1) * <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + 1)) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + 1,</p>
+<p>output_w = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> - ((<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::kernel_w"><span class="pre">kernel_w</span></a></code> - 1) * <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + 1)) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + 1,</p>
+<p>and it is required that output_h &lt;= 2047 and output_w &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the weight tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::kernel_h"><span class="pre">kernel_h</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::kernel_w"><span class="pre">kernel_w</span></a></code>], the shape of the bias tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, 1, 1].</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> are in [0, 15], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 15], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::dilation"><span class="pre">dilation</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 15].</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::padding"><span class="pre">padding</span></a></code> is NULL, there will be no paddings.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::stride"><span class="pre">stride</span></a></code> is NULL, the stride value will be one as default.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_depthwise2d12local_addr_t12local_addr_t12local_addr_t12local_addr_tPK4dim4iibPK7PaddingPK4dim2PK4dim2" title="okk_bdc_depthwise2d::dilation"><span class="pre">dilation</span></a></code> is NULL, the dilation value will be one as default.</p>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-avg-pool2d">
+<h2>okk_bdc_avg_pool2d<a class="headerlink" href="#okk-bdc-avg-pool2d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2">
+<span id="_CPPv318okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2"></span><span id="_CPPv218okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2"></span><span id="okk_bdc_avg_pool2d__local_addr_t.local_addr_t.dim4CP.i.i.PaddingCP.dim2CP"></span>void <code class="descname">okk_bdc_avg_pool2d</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>output_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>input_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>input_shape</em>, int <em>kernel_h</em>, int <em>kernel_w</em>, <em class="property">const</em> Padding *<em>padding</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim2" title="dim2">dim2</a> *<em>stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform 2D average pooling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output_addr</strong> – Address of the output tensor.</li>
+<li><strong>input_addr</strong> – Address of the input tensor.</li>
+<li><strong>input_shape</strong> – Pointer to the shape of the input tensor.</li>
+<li><strong>kernel_h</strong> – Height of the convolution kernel.</li>
+<li><strong>kernel_w</strong> – Width of the convolution kernel.</li>
+<li><strong>padding</strong> – Pointer to the amount of paddings applied to the input tensor.</li>
+<li><strong>stride</strong> – Pointer to the strides for the cross-correlation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul>
+<li><p class="first">The output and input tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</p>
+</li>
+<li><p class="first">The data type of the output and input tensors is fp32.</p>
+</li>
+<li><p class="first">The output and input tensors start at the same NPU.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::output_addr"><span class="pre">output_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_addr"><span class="pre">input_addr</span></a></code> are divisible by 128.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code> is in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 2047].</p>
+</li>
+<li><p class="first">It is required that</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> &lt;= 2047,</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the output tensor is [<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, output_h, output_w], where</p>
+<p>output_h = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> - <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::kernel_h"><span class="pre">kernel_h</span></a></code>) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + 1,</p>
+<p>output_w = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> - <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::kernel_w"><span class="pre">kernel_w</span></a></code>) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + 1,</p>
+<p>and it is required that output_h &lt;= 2047 and output_w &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the weight tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::kernel_h"><span class="pre">kernel_h</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::kernel_w"><span class="pre">kernel_w</span></a></code>], the shape of the bias tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, 1, 1].</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> are in [0, 15], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 15].</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::padding"><span class="pre">padding</span></a></code> is NULL, there will be no paddings.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_avg_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_avg_pool2d::stride"><span class="pre">stride</span></a></code> is NULL, the stride value will be one as default.</p>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-max-pool2d">
+<h2>okk_bdc_max_pool2d<a class="headerlink" href="#okk-bdc-max-pool2d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2">
+<span id="_CPPv318okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2"></span><span id="_CPPv218okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2"></span><span id="okk_bdc_max_pool2d__local_addr_t.local_addr_t.dim4CP.i.i.PaddingCP.dim2CP"></span>void <code class="descname">okk_bdc_max_pool2d</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>output_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>input_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>input_shape</em>, int <em>kernel_h</em>, int <em>kernel_w</em>, <em class="property">const</em> Padding *<em>padding</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim2" title="dim2">dim2</a> *<em>stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform 2D max pooling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output_addr</strong> – Address of the output tensor.</li>
+<li><strong>input_addr</strong> – Address of the input tensor.</li>
+<li><strong>input_shape</strong> – Pointer to the shape of the input tensor.</li>
+<li><strong>kernel_h</strong> – Height of the convolution kernel.</li>
+<li><strong>kernel_w</strong> – Width of the convolution kernel.</li>
+<li><strong>padding</strong> – Pointer to the amount of paddings applied to the input tensor.</li>
+<li><strong>stride</strong> – Pointer to the strides for the cross-correlation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul>
+<li><p class="first">The output and input tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</p>
+</li>
+<li><p class="first">The data type of the output and input tensors is fp32.</p>
+</li>
+<li><p class="first">The output and input tensors start at the same NPU.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::output_addr"><span class="pre">output_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_addr"><span class="pre">input_addr</span></a></code> are divisible by 128.</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code> is in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 2047].</p>
+</li>
+<li><p class="first">It is required that</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> &lt;= 2047,</p>
+<p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the output tensor is [<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, output_h, output_w], where</p>
+<p>output_h = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code> - <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::kernel_h"><span class="pre">kernel_h</span></a></code>) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> + 1,</p>
+<p>output_w = (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> + <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> - <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::kernel_w"><span class="pre">kernel_w</span></a></code>) / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> + 1,</p>
+<p>and it is required that output_h &lt;= 2047 and output_w &lt;= 2047.</p>
+</li>
+<li><p class="first">The shape of the weight tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::kernel_h"><span class="pre">kernel_h</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::kernel_w"><span class="pre">kernel_w</span></a></code>], the shape of the bias tensor is [1, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::input_shape"><span class="pre">input_shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code>, 1, 1].</p>
+</li>
+<li><p class="first"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">top</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">bottom</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">left</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a><span class="pre">-&gt;</span><span class="pre">right</span></code> are in [0, 15], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::stride"><span class="pre">stride</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 15].</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::padding"><span class="pre">padding</span></a></code> is NULL, there will be no paddings.</p>
+</li>
+<li><p class="first">If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_max_pool2d12local_addr_t12local_addr_tPK4dim4iiPK7PaddingPK4dim2" title="okk_bdc_max_pool2d::stride"><span class="pre">stride</span></a></code> is NULL, the stride value will be one as default.</p>
+</li>
+<li><p class="first">The implicit padding value is -3.4028234663852886E38 (0xff7fffff).</p>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-matmul">
+<h2>okk_bdc_matmul<a class="headerlink" href="#okk-bdc-matmul" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb">
+<span id="_CPPv314okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb"></span><span id="_CPPv214okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb"></span><span id="okk_bdc_matmul__local_addr_t.local_addr_t.local_addr_t.local_addr_t.i.i.i.i.i.b.b"></span>void <code class="descname">okk_bdc_matmul</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>output_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>left_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>right_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>bias_addr</em>, int <em>left_rows</em>, int <em>left_cols</em>, int <em>right_cols</em>, int <em>left_cols_per_channel</em>, int <em>right_cols_per_channel</em>, bool <em>using_bias</em>, bool <em>result_add</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform matrix multiplication with or without adding bias and result accumulation by addtition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output_addr</strong> – Address of the output tensor.</li>
+<li><strong>left_addr</strong> – Address of the left matrix tensor.</li>
+<li><strong>right_addr</strong> – Address of the right matrix tensor.</li>
+<li><strong>bias_addr</strong> – Address of the bias tensor, only used when <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::using_bias"><span class="pre">using_bias</span></a> <span class="pre">=</span> <span class="pre">true</span></code>.</li>
+<li><strong>left_rows</strong> – Number of the rows of the left matrix.</li>
+<li><strong>left_cols</strong> – Number of the columns of the left matrix.</li>
+<li><strong>right_cols</strong> – Number of the columns of the right matrix.</li>
+<li><strong>left_cols_per_channel</strong> – Number of the columns of the left matrix per channel.</li>
+<li><strong>right_cols_per_channel</strong> – Number of the columns of the right matrix per channel.</li>
+<li><strong>using_bias</strong> – Flag of adding bias.</li>
+<li><strong>result_add</strong> – Flag of performing result accumulation by addtition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The output, left matrix, right matrix and bias tensors are in the matrix layout.</li>
+<li>The data type of the output, left matrix, right matrix and bias tensors is fp32.</li>
+<li>The output, right matrix and bias tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::output_addr"><span class="pre">output_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::left_addr"><span class="pre">left_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::right_addr"><span class="pre">right_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::bias_addr"><span class="pre">bias_addr</span></a></code> are divisible by 128.</li>
+<li>The bias is a 1-by-<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::right_cols"><span class="pre">right_cols</span></a></code> matrix.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::left_cols_per_channel"><span class="pre">left_cols_per_channel</span></a></code> is in [1, min(128, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::left_cols"><span class="pre">left_cols</span></a></code>)], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::left_rows"><span class="pre">left_rows</span></a></code> is in [1, 65535], and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::right_cols_per_channel"><span class="pre">right_cols_per_channel</span></a></code> in [1, min(128, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::right_cols"><span class="pre">right_cols</span></a></code>)].</li>
+<li>It is required that ceil(<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::left_cols"><span class="pre">left_cols</span></a></code> / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::left_cols_per_channel"><span class="pre">left_cols_per_channel</span></a></code>) &lt;= 4095 and ceil(<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::right_cols"><span class="pre">right_cols</span></a></code> / <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv414okk_bdc_matmul12local_addr_t12local_addr_t12local_addr_t12local_addr_tiiiiibb" title="okk_bdc_matmul::right_cols_per_channel"><span class="pre">right_cols_per_channel</span></a></code>) &lt;= 4095.</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

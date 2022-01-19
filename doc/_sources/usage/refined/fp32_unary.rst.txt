@@ -1,0 +1,289 @@
+FP32 Unary Functions
+====================
+
+okk_bdc_rsqrt
+___________________
+
+.. cpp:function:: void okk_bdc_rsqrt(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape)
+
+    Calculate reciprocal of the square-root of the elements of the source tensor.
+
+    .. math:: dst(n, c, h, w) = \frac{1}{\sqrt{src(n, c, h, w)}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+
+    **Remarks**
+
+    - The destination and source tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+
+okk_bdc_sqrt
+__________________
+
+.. cpp:function:: void okk_bdc_sqrt(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape)
+
+    Calculate square-root of the elements of the source tensor.
+
+    .. math:: dst(n, c, h, w) = \sqrt{src(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+
+    **Remarks**
+
+    - The destination and source tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+
+okk_bdc_taylor_exp
+________________________
+
+.. cpp:function:: void okk_bdc_taylor_exp(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, int num_series)
+
+    Calculate exponential of the elements of the source tensor by taylor expansion.
+
+    .. math:: dst(n, c, h, w) = e^{src(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param num_series: Number of the taylor expansion series.
+
+    **Remarks**
+
+    - The destination and source tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - :cpp:expr:`num_series` is in [1, 64], a trade-off between performance and accuracy.
+    - This function is suitable for the situation that the absolute values of the elements of the source tensor are small, at least less than one.
+
+okk_bdc_lookup_exp
+________________________
+
+.. cpp:function:: void okk_bdc_lookup_exp(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape)
+
+    Calculate exponential of the elements of the source tensor by lookup table.
+
+    .. math:: dst(n, c, h, w) = e^{src(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+
+    **Remarks**
+
+    - The destination and source tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the source tensor is int32, the data type of the destination tensor is fp32.
+    - The elements of the source tensor are in [-103, 88].
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+
+okk_bdc_exp
+_________________
+
+.. cpp:function:: void okk_bdc_exp(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape)
+
+    Calculate exponential of the elements of the source tensor.
+
+    .. math:: dst(n, c, h, w) = e^{src(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination, source and work tensors is fp32.
+    - The elements of the source tensor are in [-103.0, 88.0].
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` or :cpp:expr:`src_addr = work_addr` is not allowed.
+
+okk_bdc_exp_tunable
+_________________________
+
+.. cpp:function:: void okk_bdc_exp_tunable(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape, int num_series)
+
+    Calculate exponential of the elements of the source tensor with tunable number of the taylor expansion series.
+
+    .. math:: dst(n, c, h, w) = e^{src(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param num_series: Number of the taylor expansion series.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination, source and work tensors is fp32.
+    - The elements of the source tensor are in [-103.0, 88.0].
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - :cpp:expr:`num_series` is in [1, 64], a trade-off between performance and accuracy.
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` or :cpp:expr:`src_addr = work_addr` is not allowed.
+    - :cpp:func:`okk_bdc_exp` is equivalent to :cpp:func:`okk_bdc_exp_tunable` with :cpp:expr:`num_series = 32`.
+
+okk_bdc_sigmoid
+_____________________
+
+.. cpp:function:: void okk_bdc_sigmoid(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape)
+
+    Calculate sigmoid of the elements of the source tensor.
+
+    .. math:: dst(n, c, h, w) = \text{sigmoid}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination, source and work tensors is fp32.
+    - The elements of the source tensor are in [-103.0, 88.0].
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` or :cpp:expr:`src_addr = work_addr` is not allowed.
+
+okk_bdc_sigmoid_tunable
+_____________________________
+
+.. cpp:function:: void okk_bdc_sigmoid_tunable(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape, int num_series)
+
+    Calculate sigmoid of the elements of the source tensor with tunable number of the taylor expansion series.
+
+    .. math:: dst(n, c, h, w) = \text{sigmoid}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param num_series: Number of the taylor expansion series.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination, source and work tensors is fp32.
+    - The elements of the source tensor are in [-103.0, 88.0].
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - :cpp:expr:`num_series` is in [1, 64], a trade-off between performance and accuracy.
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` or :cpp:expr:`src_addr = work_addr` is not allowed.
+    - :cpp:func:`okk_bdc_sigmoid` is equivalent to :cpp:func:`okk_bdc_sigmoid_tunable` with :cpp:expr:`num_series = 32`.
+
+okk_bdc_tanh
+__________________
+
+.. cpp:function:: void okk_bdc_tanh(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape)
+
+    Calculate tanh of the elements of the source tensor.
+
+    .. math:: dst(n, c, h, w) = \text{tanh}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination, source and work tensors is fp32.
+    - The elements of the source tensor are in [-103.0, 88.0].
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` or :cpp:expr:`src_addr = work_addr` is not allowed.
+
+okk_bdc_tanh_tunable
+__________________________
+
+.. cpp:function:: void okk_bdc_tanh_tunable(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape, int num_series)
+
+    Calculate tanh of the elements of the source tensor with tunable number of the taylor expansion series.
+
+    .. math:: dst(n, c, h, w) = \text{tanh}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param num_series: Number of the taylor expansion series.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the destination, source and work tensors is fp32.
+    - The elements of the source tensor are in [-103.0, 88.0].
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - :cpp:expr:`num_series` is in [1, 64], a trade-off between performance and accuracy.
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` or :cpp:expr:`src_addr = work_addr` is not allowed.
+    - :cpp:func:`okk_bdc_tanh` is equivalent to :cpp:func:`okk_bdc_tanh_tunable` with :cpp:expr:`num_series = 32`.
+
+okk_bdc_reciprocal
+________________________
+
+.. cpp:function:: void okk_bdc_reciprocal(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Calculate reciprocal of the elements of the source tensor for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)^{-1}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_neg
+_________________
+
+.. cpp:function:: void okk_bdc_neg(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Calculate negative of the elements of the source tensor for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = -src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.

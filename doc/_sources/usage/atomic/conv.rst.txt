@@ -1,0 +1,124 @@
+Convolution
+================
+
+浮点运算
+________
+
+二维卷积浮点运算。
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input_addr;
+             unsigned int weight_addr;
+             unsigned int bias_addr;
+             unsigned int output_addr;
+             unsigned int input_shape[4];
+             unsigned int output_c;
+             unsigned int kernel_h;
+             unsigned int kernel_w;
+             unsigned int stride_h;
+             unsigned int stride_w;
+             unsigned int input_stride[4];
+             unsigned int kernel_stride[4];
+             unsigned int ins_h;
+             unsigned int ins_w;
+             unsigned int dilate_h;
+             unsigned int dilate_w;
+             bool kernel_is_const;
+             float kernel_val;
+             unsigned int pad[4];
+             bool using_bias;
+             bool kernel_flip;
+             bool result_add;
+         } ConvParam;
+
+         void bm_atomic_conv(const ConvParam* param);
+
+参数说明：
+
+* input_addr：存放输入feature map的Local Memory偏移地址;
+* weight_addr：存放权重系数的Local Memory偏移地址;
+* bias_addr： 存放bias系数的Local Memory偏移地址;
+* output_addr：存放输出feature map的Local Memory偏移地址;
+* input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;
+* output_c：输出feature map的 C 维度的大小;
+* kernel_h/kernel_w：kernel的shape，分别对应HW维度;
+* stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;
+* input_stride[4]：存放输入feature map的stride信息，分别对应NCHW四个维度的stride大小;
+* kernel_stride[4]：存放权重系数的stride信息，分别对应IC\OC\KH\KW四个维度的stride大小;
+* ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;
+* dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;
+* kernel_is_const/kernel_val：kernel是否为常量，如果是其值为kernel_val，否则忽略;
+* pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;
+* using_bias：是否含有bias运算;
+* kernel_flip：是否对kernel进行旋转，操作为kernel_rotate(n,c,h,w)=kernel(n,c,kh-1-h,kw-1-w)
+* result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;
+
+
+定点运算
+__________
+
+该操作的输入feature map、kernel以及输出feature map为8bits，bias为16bits。
+
+输入输出feature map以及kernel按照4N模式存储，bias按照1N模式存储。
+
+
+    .. code-block:: c
+
+              typedef struct {
+                  unsigned int input_addr;
+                  unsigned int weight_addr;
+                  unsigned int bias_addr;
+                  unsigned int output_addr;
+                  unsigned int input_shape[4];
+                  unsigned int output_c;
+                  unsigned int kernel_h;
+                  unsigned int kernel_w;
+                  unsigned int stride_h;
+                  unsigned int stride_w;
+                  unsigned int input_stride[4];
+                  unsigned int kernel_stride[4];
+                  unsigned int ins_h;
+                  unsigned int ins_w;
+                  unsigned int dilate_h;
+                  unsigned int dilate_w;
+                  bool kernel_is_const;
+                  signed char kernel_val;
+                  unsigned int pad[4];
+                  unsigned int rshift_bit;
+                  bool using_bias;
+                  bool kernel_flip;
+                  bool result_add;
+                  bool if_relu;
+                  bool input_sign;
+                  bool weight_sign;
+                  bool bias_sign;
+              } ConvQuantParam;
+
+         void bm_atomic_conv_quantized(const ConvQuantParam* param);
+
+参数说明：
+
+* input_addr：存放输入feature map的Local Memory偏移地址;
+* weight_addr：存放权重系数的Local Memory偏移地址;
+* bias_addr： 存放bias系数的Local Memory偏移地址;
+* output_addr：存放输出feature map的Local Memory偏移地址;
+* input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;
+* output_c：输出feature map的 C 维度的大小;
+* kernel_h/kernel_w：kernel的shape，分别对应HW维度;
+* stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;
+* input_stride[4]：存放输入feature map的stride信息，分别对应NCHW四个维度的stride大小;
+* kernel_stride[4]：存放权重系数的stride信息，分别对应IC\OC\KH\KW四个维度的stride大小;
+* ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;
+* dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;
+* kernel_is_const/kernel_val：kernel是否为常量，如果是其值为kernel_val，否则忽略;
+* pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;
+* rshift_bit：为了防止溢出，中间的累加结果使用int32表示，该参数表示将int32的中间结果右移rshift_bit位之后得到最后的8bit结果;
+* using_bias：是否含有bias运算;
+* kernel_flip：是否对kernel进行旋转，操作为kernel_rotate(n,c,h,w)=kernel(n,c,kh-1-h,kw-1-w)
+* result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;
+* if_relu：是否对输出结果进行relu操作，也就是将relu与conv合并；
+* input_sign/weight_sign/bias_sign：分别表示输入feature map、kernel以及bias的值是否为有符号数；
+
+

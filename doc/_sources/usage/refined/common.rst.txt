@@ -1,0 +1,90 @@
+Common Functions
+================
+
+okk_initialize
+______________
+
+.. cpp:function:: void okk_initialize()
+
+    Initialize device before calling GDMA and BDC functions.
+
+okk_poll
+________
+
+.. cpp:function:: void okk_poll()
+
+    Synchronize device to make all the previous GDMA and BDC functions done.
+
+    **Remarks**
+
+    - Before calling this function, the parallel mode is required to be inactive.
+    - After calling this function, it will be blocked until all the previous GDMA and BDC functions are done.
+
+okk_parallel_start
+__________________
+
+.. cpp:function:: void okk_parallel_start()
+
+    Start the parallel mode.
+
+    **Remarks**
+
+    - Before calling this function, the parallel mode is required to be inactive.
+    - After calling this function, the parallel mode is set active, and the following GDMA kind and BDC kind functions will run paralle.
+
+okk_parallel_end
+________________
+
+.. cpp:function:: void okk_parallel_end()
+
+    End the parallel mode.
+
+    **Remarks**
+
+    - Before calling this function, the parallel mode is required to be active.
+    - After calling this function, the parallel mode is set inactive, and the following GDMA kind and BDC kind functions will run serially.
+
+okk_is_parallel_state
+_____________________
+
+.. cpp:function:: bool okk_is_parallel_state()
+
+    Get the flag of the current paralle mode.
+
+    :return: Flag of the current paralle mode, :cpp:expr:`true` means active, otherwise, inactive.
+
+okk_local_mem_size_per_npu
+__________________________
+
+.. cpp:function:: unsigned int okk_local_mem_size_per_npu()
+
+    Get the size in bytes of local memory in each NPU.
+
+    :return: Size of local memory per NPU.
+
+okk_l2_sram_size
+________________
+
+.. cpp:function:: unsigned int okk_l2_sram_size()
+
+    Get the size in bytes of L2-SRAM.
+
+    :return: Size of L2-SRAM.
+
+okk_dtcm_size
+_____________
+
+.. cpp:function:: unsigned int okk_dtcm_size()
+
+    Get the size in bytes of DTCM.
+
+    :return: Size of DTCM.
+
+okk_npu_num
+___________
+
+.. cpp:function:: int okk_npu_num()
+
+    Get the number of NPUs in each TPU.
+
+    :return: Number of NPUs.

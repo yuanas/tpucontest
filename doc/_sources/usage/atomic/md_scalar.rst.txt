@@ -1,0 +1,42 @@
+MD-Scalar
+================
+
+四维Tensor点对点的四则运算
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned int input0_addr;
+              unsigned int input1_addr;
+              unsigned int output_addr;
+              unsigned int* shape;
+              BmAtomicOp op;
+              bool result_add;
+              bool input0_is_const;
+              float input0_const;
+              bool input1_is_const;
+              float input1_const;
+          } MDScalarParam;
+
+          void bm_atomic_md_scalar(const MDScalarParam* param);
+
+参数说明：
+
+* input0_addr: 存放输入tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* input1_addr: 存放输入tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* output_addr: 存放输出tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度；
+* op: 操作码，可支持如下操作：
+
+      + BM_ADD: float32 tensor加法
+      + BM_SUB: float32 tensor减法
+      + BM_MUL: float32 tensor乘法
+      + BM_DIV: float32 tensor除法
+
+* result_add：当运算为乘法时是否累加上原来的结果，也就是将本次计算结果与Y_addr本来存放的值进行累加;
+* input0_is_const：input0 是否为常数值;
+* input1_is_const：input1 是否为常数值;
+* input0_const：如果input0为常数值的话，其常数值为input0_const;
+* input1_const：如果input1为常数值的话，其常数值为input1_const;
+
+

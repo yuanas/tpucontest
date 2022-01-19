@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Utils Functions &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Utils Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/refined/utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="utils-functions">
+<h1>Utils Functions<a class="headerlink" href="#utils-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="okk-start-npu-index">
+<h2>okk_start_npu_index<a class="headerlink" href="#okk-start-npu-index" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv419okk_start_npu_index12local_addr_t">
+<span id="_CPPv319okk_start_npu_index12local_addr_t"></span><span id="_CPPv219okk_start_npu_index12local_addr_t"></span><span id="okk_start_npu_index__local_addr_t"></span>int <code class="descname">okk_start_npu_index</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>addr</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate the index of the NPU where the tensor starts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>addr</strong> – Address of the tensor in local memory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Index of NPU.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-channle-num-per-npu">
+<h2>okk_channle_num_per_npu<a class="headerlink" href="#okk-channle-num-per-npu" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv423okk_channle_num_per_npuii">
+<span id="_CPPv323okk_channle_num_per_npuii"></span><span id="_CPPv223okk_channle_num_per_npuii"></span><span id="okk_channle_num_per_npu__i.i"></span>int <code class="descname">okk_channle_num_per_npu</code><span class="sig-paren">(</span>int <em>start_idx</em>, int <em>num_channels</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate the number of channels in each NPU.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start_idx</strong> – Index of the NPU where the tensor starts.</li>
+<li><strong>num_channels</strong> – Number of channels of the tensor.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of channels per NPU.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-128-byte-aligned-stride-for-32bit">
+<h2>okk_128_byte_aligned_stride_for_32bit<a class="headerlink" href="#okk-128-byte-aligned-stride-for-32bit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv437okk_128_byte_aligned_stride_for_32bitP4dim4iPK4dim4">
+<span id="_CPPv337okk_128_byte_aligned_stride_for_32bitP4dim4iPK4dim4"></span><span id="_CPPv237okk_128_byte_aligned_stride_for_32bitP4dim4iPK4dim4"></span><span id="okk_128_byte_aligned_stride_for_32bit__dim4P.i.dim4CP"></span>void <code class="descname">okk_128_byte_aligned_stride_for_32bit</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>stride</em>, int <em>start_idx</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate strides of the tensor in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a> for 32-bit data type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride[out]</strong> – Pointer to the stride of the tensor.</li>
+<li><strong>start_idx</strong> – Index of the NPU where the tensor starts.</li>
+<li><strong>shape</strong> – Pointer to the shape of the tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-128-byte-aligned-stride-for-16bit">
+<h2>okk_128_byte_aligned_stride_for_16bit<a class="headerlink" href="#okk-128-byte-aligned-stride-for-16bit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv437okk_128_byte_aligned_stride_for_16bitP4dim4iPK4dim4">
+<span id="_CPPv337okk_128_byte_aligned_stride_for_16bitP4dim4iPK4dim4"></span><span id="_CPPv237okk_128_byte_aligned_stride_for_16bitP4dim4iPK4dim4"></span><span id="okk_128_byte_aligned_stride_for_16bit__dim4P.i.dim4CP"></span>void <code class="descname">okk_128_byte_aligned_stride_for_16bit</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>stride</em>, int <em>start_idx</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate strides of the tensor in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a> for 16-bit data type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride[out]</strong> – Pointer to the stride of the tensor.</li>
+<li><strong>start_idx</strong> – Index of the NPU where the tensor starts.</li>
+<li><strong>shape</strong> – Pointer to the shape of the tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-128-byte-aligned-stride-for-8bit">
+<h2>okk_128_byte_aligned_stride_for_8bit<a class="headerlink" href="#okk-128-byte-aligned-stride-for-8bit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv436okk_128_byte_aligned_stride_for_8bitP4dim4iPK4dim4">
+<span id="_CPPv336okk_128_byte_aligned_stride_for_8bitP4dim4iPK4dim4"></span><span id="_CPPv236okk_128_byte_aligned_stride_for_8bitP4dim4iPK4dim4"></span><span id="okk_128_byte_aligned_stride_for_8bit__dim4P.i.dim4CP"></span>void <code class="descname">okk_128_byte_aligned_stride_for_8bit</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>stride</em>, int <em>start_idx</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate strides of the tensor in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a> for 8-bit data type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride[out]</strong> – Pointer to the stride of the tensor.</li>
+<li><strong>start_idx</strong> – Index of the NPU where the tensor starts.</li>
+<li><strong>shape</strong> – Pointer to the shape of the tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-compact-stride">
+<h2>okk_compact_stride<a class="headerlink" href="#okk-compact-stride" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv418okk_compact_strideP4dim4iPK4dim4">
+<span id="_CPPv318okk_compact_strideP4dim4iPK4dim4"></span><span id="_CPPv218okk_compact_strideP4dim4iPK4dim4"></span><span id="okk_compact_stride__dim4P.i.dim4CP"></span>void <code class="descname">okk_compact_stride</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>stride</em>, int <em>start_idx</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate strides of the tensor in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride[out]</strong> – Pointer to the stride of the tensor.</li>
+<li><strong>start_idx</strong> – Index of the NPU where the tensor starts.</li>
+<li><strong>shape</strong> – Pointer to the shape of the tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-continuous-stride">
+<h2>okk_continuous_stride<a class="headerlink" href="#okk-continuous-stride" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv421okk_continuous_strideP4dim4PK4dim4">
+<span id="_CPPv321okk_continuous_strideP4dim4PK4dim4"></span><span id="_CPPv221okk_continuous_strideP4dim4PK4dim4"></span><span id="okk_continuous_stride__dim4P.dim4CP"></span>void <code class="descname">okk_continuous_stride</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Calculate strides of the tensor in the <a class="reference internal" href="../layout.html#continuous-layout"><span class="std std-ref">Continuous Layout</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stride[out]</strong> – Pointer to the stride of the tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

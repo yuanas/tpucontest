@@ -1,0 +1,51 @@
+MD-CMP
+=======
+
+
+实现Tensor的比较操作，计算可以总结为：
+
+Y(n, c, h, w) = max(A(n, c, h, w) , B(n, c, h, w))
+
+R(n, c, h, w) = A(n, c, h, w) > B(n, c, h, w) ? C(n, c, h, w) : D(n, c, h, w)；
+
+该操作中有可能同时计算Y和R，也有可能只计算Y或者R中的某一个。
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned int tensorA_addr;
+              unsigned int tensorB_addr;
+              unsigned int tensorC_addr;
+              unsigned int tensorD_addr;
+              unsigned int tensorY_addr;
+              unsigned int tensorR_addr;
+              unsigned int shape[4];
+              bool tensorA_is_const;
+              float tensorA_const;
+              bool tensorB_is_const;
+              float tensorB_const;
+              bool tensorC_is_const;
+              unsigned int tensorC_const;
+              bool tensorD_is_const;
+              unsigned int tensorD_const;
+              int result_skip;
+          } MDCmpParam;
+
+          void bm_atomic_md_cmp(const MDCmpParam* param);
+
+参数说明：
+
+* tensorA_addr: 存放输入tensor A的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tensorB_addr: 存放输入tensor B的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tensorC_addr: 存放输入tensor C的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tensorD_addr: 存放输入tensor D的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tensorY_addr: 存放输出tensor Y的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tesnorR_addr: 存放输出tensor R的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度；
+* tensorA_is_const/tensorA_const：A tensor 是否为常数值，如果是则其值为tensorA_const;
+* tensorB_is_const/tensorB_const：B tensor 是否为常数值，如果是则其值为tensorB_const;
+* tensorC_is_const/tensorC_const：C tensor 是否为常数值，如果是则其值为tensorC_const;
+* tensorD_is_const/tensorD_const：D tensor 是否为常数值，如果是则其值为tensorD_const;
+* result_skip：执行模式的选择，0表示Y和R都计算，1表示只计算Y，2表示只计算R;
+
+

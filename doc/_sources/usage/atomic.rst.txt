@@ -1,0 +1,27 @@
+
+所有的原子操作指令可以分为两类：数据搬运和运算。
+
+* 数据搬运：由GDMA模块完成，负责Global memory、Local memory以及L2-SRAM之间的数据搬运。
+
+* 运算：主要由NPU模块完成，可以实现Convolution、Pooling、tensor-arithmetic等功能。
+
+由于这两类原子操作指令是属于不同功能模块，因此可以并行执行，这也是优化性能的重要思路之一。TPU是典型的SIMD架构，由n个NPU构成，每个NPU内部有各自独立的存储空间（Local Memory），也就是NPU运算所需的输入数据以及得到的结果只能存放于各自Local Memory之内，因此在计算开始前，需要使用GDMA将数据从DDR（Global memory）搬运至NPU内部的Local Memory。通过使用合理的数据切割、流水操作等技巧可以使搬运与计算并行，从而提高性能。
+
+下面分别介绍所有的原子操作指令。
+
+
+.. include:: atomic/gdma.rst
+.. include:: atomic/conv.rst
+.. include:: atomic/winograd.rst
+.. include:: atomic/pooling.rst
+.. include:: atomic/depthwise.rst
+.. include:: atomic/matmul.rst
+.. include:: atomic/tensor_arithmetic.rst
+.. include:: atomic/table_lookup.rst
+.. include:: atomic/gather_data.rst
+.. include:: atomic/vec_correlation.rst
+.. include:: atomic/sort.rst
+.. include:: atomic/md_scalar.rst
+.. include:: atomic/md_linear.rst
+.. include:: atomic/md_cmp.rst
+.. include:: atomic/md_sfu.rst

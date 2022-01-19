@@ -1,0 +1,95 @@
+Depthwise
+================
+
+浮点运算
+________
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input_addr;
+             unsigned int weight_addr;
+             unsigned int bias_addr;
+             unsigned int output_addr;
+             unsigned int input_shape[4];
+             unsigned int kernel_h;
+             unsigned int kernel_w;
+             unsigned int stride_h;
+             unsigned int stride_w;
+             unsigned int ins_h;
+             unsigned int ins_w;
+             unsigned int dilate_h;
+             unsigned int dilate_w;
+             unsigned int pad[4];
+             bool using_bias;
+         } DepthwiseParam;
+
+         void bm_atomic_depthwise(const DepthwiseParam* param);
+
+参数说明：
+
+* input_addr：存放输入feature map的Local Memory偏移地址;
+* weight_addr：存放权重系数的Local Memory偏移地址;
+* bias_addr：存放bias系数的Local Memory偏移地址;
+* output_addr：存放输出feature map的Local Memory偏移地址;
+* input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;
+* kernel_h/kernel_w：kernel的shape，分别对应HW维度;
+* stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;
+* ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;
+* dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;
+* pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;
+* using_bias：是否含有bias运算;
+
+
+定点运算
+__________
+
+该操作的输入feature map、kernel以及输出feature map为8bits，bias为16bits。
+
+输入输出的feature map以及kernel均按照4N模式存储，bias按照1N模式存储。
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input_addr;
+             unsigned int weight_addr;
+             unsigned int bias_addr;
+             unsigned int output_addr;
+             unsigned int input_shape[4];
+             unsigned int kernel_h;
+             unsigned int kernel_w;
+             unsigned int stride_h;
+             unsigned int stride_w;
+             unsigned int ins_h;
+             unsigned int ins_w;
+             unsigned int dilate_h;
+             unsigned int dilate_w;
+             unsigned int pad[4];
+             unsigned int rshift_bit;
+             bool using_bias;
+             bool if_relu;
+             bool input_sign;
+             bool weight_sign;
+             bool bias_sign;
+         } DepthwiseQuantParam;
+
+         void bm_atomic_depthwise_quantized(const DepthwiseQuantParam* param);
+
+参数说明：
+
+* input_addr：存放输入feature map的Local Memory偏移地址;
+* weight_addr：存放权重系数的Local Memory偏移地址;
+* bias_addr： 存放bias系数的Local Memory偏移地址;
+* output_addr：存放输出feature map的Local Memory偏移地址;
+* input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;
+* kernel_h/kernel_w：kernel的shape，分别对应HW维度;
+* stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;
+* ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;
+* dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;
+* pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;
+* rshift_bit：为了防止溢出，中间的累加结果使用int32表示，该参数表示将int32的中间结果右移rshift_bits位之后得到最后的8bits结果;
+* using_bias：是否含有bias运算;
+* if_relu：是否对卷积的结果再进行relu操作;
+* input_sign/weight_sign/bias_sign：分别表示输入feature map、weight以及bias的值是否为有符号数;
+
+

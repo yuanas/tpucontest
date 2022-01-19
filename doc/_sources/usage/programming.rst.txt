@@ -1,0 +1,110 @@
+异构编程
+=================
+
+BMKernel编程包括两部分：HOST端和DEVICE端
+
+* HOST端：SoC模式下是指芯片上的ARM A53处理器，PCIe模式下则是指用户所使用的主机
+* DEVICE端：SoC和PCIe均是芯片上的微处理器（ARM9）
+
+
+DEVICE端
+_______________________
+
+用于解析HOST端发送过来的命令，根据命令内容调用原子操作以实现所需功能。
+
+使用ARM编译器，根据提供的链接脚本编译出指令二进制文件，由于芯片ITCM空间有限，部分使用频率较低的代码需要放置于DDR中，因此DEVICE端编译出来的指令二进制文件包括两个：device_tcm.bin 和 device_ddr.bin
+
+* 获取device信息
+
+      .. code-block:: c
+
+          unsigned long long bm_global_mem_start_addr();
+          unsigned int bm_local_mem_start_addr();
+          unsigned int bm_local_mem_size_per_npu();
+          unsigned int bm_l2_sram_start_addr();
+          unsigned int bm_l2_sram_size();
+          unsigned int bm_dtcm_start_addr();
+          unsigned int bm_dtcm_size();
+          unsigned int bm_lookup_table_start_addr();
+          unsigned int bm_lookup_table_size();
+          unsigned int bm_npu_num();
+          unsigned int bm_eu_num();
+          unsigned int bm_local_mem_bank_per_npu();
+
+利用以上接口可以获取device memory以及计算单元的一些信息，包括Global memory的起始地址、Local memory的起始地址及其大小、L2-SRAM的起始地址及其大小、DTCM的起始地址及其大小、用于存放查找表的起始地址及其大小、NPU的数量、EU的数量、bank的数量。
+
+其中用于存放查找表的这块空间是预留给lookup-table原子操作的专属空间，在部署时，用户可以在HOST端调用bmkernel_load_lookup_table函数将所有的表项加载到该空间。
+
+      .. code-block:: c
+
+          unsigned char* bm_global_mem_addr(unsigned long long addr); 
+          unsigned char* bm_local_mem_addr(unsigned int idx, unsigned int addr);
+          unsigned char* bm_l2_sram_addr(unsigned int addr);
+          unsigned char* bm_dtcm_addr(unsigned int addr);
+
+利用以上4个接口可以将Global-Memory、Local-Memory、L2-SRAM和DTCM空间的物理地址转为ARM9可以直接访问的指针，ARM9访问Global-Memory和Local-Memory的速度较慢，应该尽量避免使用ARM9直接访问其空间的数据。
+
+在C-Model模式下，使用这4个接口可以查看各个空间中的数据，方便用户开发调试。
+
+
+* 原子操作
+
+DEVICE端编程是用户实现所需功能的主要部分，该部分代码运行于 ARM9 处理器上，可以调用所有的原子操作指令，关于原子操作的介绍会在后续章节介绍。
+
+
+HOST端
+______
+
+需要实现的步骤包括加载二进制文件、向DEVICE端发送命令并执行、等待执行完成。
+
+* 加载二进制文件
+
+该二进制文件是指DEVICE端的代码编译出来的指令二进制文件，需要将这两个文件加载到对应的指令存储空间中。接口形式如下：
+
+
+      .. code-block:: c
+
+         status_t bmkernel_load_firmware(bm_handle_t handle,
+                                         const char *firmware_tcm,
+                                         const char *firmware_ddr);
+
+* 加载查找表
+
+如果用户需要使用查找表的功能，可以在部署时使用以下接口将所需的查找表加载到相应的存储空间，以供lookup-table原子操作使用，加载的起始地址在DEVICE端可以使用bm_lookup_table_start_addr()获取。
+
+      .. code-block:: c
+
+         bm_status_t bmkernel_load_lookup_table(bm_handle_t handle,
+                                                const void* table,
+                                                unsigned int size);
+
+
+* 发送命令并启动执行
+
+由用户自行定义命令的具体内容格式，只要和DEVICE端命令解析的协议一致即可，使用的接口形式如下：
+
+      .. code-block:: c
+
+          bm_status_t bmkernel_launch(bm_handle_t handle,
+                                      const void *args,
+                                      unsigned int size);
+
+
+其中，args是指向用户自定义命令内容的指针，size是命令内容的长度，以byte为单位。
+
+该接口负责发送命令，发送完成后立即返回，DEVICE 端启动执行但不能保证执行完成，这为用户提供了HOST和DEVICE并行编程的功能。
+
+
+* 等待执行完成
+
+由于以上发送命令是非阻塞的，因此需要用户显示的调用同步函数来确认DEVICE端的执行完成。接口形式如下：
+
+      .. code-block:: c
+
+          bm_status_t bm_thread_sync(bm_handle_t handle);
+
+
+如果DEVICE端已经成功执行完成，该接口立即返回BM_SUCCESS，若DEVICE端还未执行完成，则阻塞直到完成后返回。
+
+
+

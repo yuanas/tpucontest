@@ -1,0 +1,39 @@
+sort
+================
+
+该操作可以实现浮点数据的排序（升序/降序），并且支持排序后可以得到原数据所对应的 index。
+
+    .. code-block:: c
+
+          typedef enum {
+              BM_ASCEND,
+              BM_DESCEND
+          }BmSortOrder;
+
+          typedef struct {
+              unsigned long long input_data_addr;
+              unsigned long long input_index_addr;
+              unsigned long long output_data_addr;
+              unsigned long long output_index_addr;
+              unsigned int input_len;
+              unsigned int output_len;
+              BmSortOrder order;
+              bool index_enable;
+              bool index_auto;
+          } SortParam;
+
+          void bm_atomic_sort(const SortParam* param);
+
+参数说明：
+
+* input_data_addr: 存放输入待排数据的地址;
+* input_index_addr: 存放输入数据对应index的地址;
+* output_data_addr: 存放输出已排数据的地址;
+* output_index_addr: 存放输出已排数据对应index的地址;
+* input_len：输入待排数据的长度;
+* output_len：输出已排数据的长度;
+* order：升序还是降序;
+* index_enable: 是否使能 index。如果使能即可输出排序后数据所对应的 index ，否则input_index_addr和output_index_addr这两个参数无效。
+* index_auto: 是否使能自动生成 index 功能。使用该功能的前提是 index_enable 参数为 true，如果该参数也为 true 则表示按照输入数据的存储顺序从 0 开始计数作为 index，参数input_index_addr 便无效，输出结果中排好序数据所对应的index即存放于output_index_addr地址中。
+
+

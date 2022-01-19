@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Programming on Device &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Programming on Host" href="programming_host.html" />
+    <link rel="prev" title="About Function Names" href="refined.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Programming on Device</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#kernel-function">Kernel Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#register-kernel-function">Register Kernel Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hello-world-on-device">Hello World on Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-of-using-gdma-and-bdc">Example of Using GDMA and BDC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gdma-and-bdc-run-parallel">GDMA and BDC Run Parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#divide-tensor-into-parts">Divide Tensor Into Parts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reshape">Reshape</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Programming on Device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/usage/programming_device.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="programming-on-device">
+<span id="id1"></span><h1>Programming on Device<a class="headerlink" href="#programming-on-device" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="kernel-function">
+<h2>Kernel Function<a class="headerlink" href="#kernel-function" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>An acceptable kernel function is required to be in the following form</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">my_kernel_func</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>having only one argument with type <code class="xref cpp cpp-expr docutils literal notranslate"><em class="property"><span class="pre">const</span></em> <span class="pre">void</span> <span class="pre">*</span></code> and no returning.
+The pointer usually points to a user-descript structure containing inputs.
+The structure is the bridge between host and device. For example,</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">packed</span><span class="p">))</span> <span class="n">my_data_t</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">my_kernel_func</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">my_data_t</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">my_data_t</span> <span class="o">*</span><span class="p">)</span><span class="n">args</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In most cases, <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">__attribute__</span><span class="pre">(</span><span class="pre">(</span><span class="pre">packed</span><span class="pre">)</span><span class="pre">)</span></code> is necessary,
+because the structure is compiled by ARM9 32-bit compiler for device, and X86 or aarch64 64-bit compiler for host,
+if unpacked, the size and parsing way of the structure may differ between device and host.
+To avoid potential dangers, <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">__attribute__</span><span class="pre">(</span><span class="pre">(</span><span class="pre">packed</span><span class="pre">)</span><span class="pre">)</span></code> should not be ignored.</p>
+</div></blockquote>
+</div>
+<div class="section" id="register-kernel-function">
+<h2>Register Kernel Function<a class="headerlink" href="#register-kernel-function" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>A kernel function needs to be registered so that it can be used in runtime. For example,</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">my_kernel_func</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="n">OKKERNEL_FUNC_REGISTER</span><span class="p">(</span><span class="n">my_kernel_func</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>the kernel function is registered by macro <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">OKKERNEL_FUNC_REGISTER</span></code>.
+There is a map for storing paires of the kernel function and its name, and the name is the key-value that should be unique.</p>
+</div></blockquote>
+</div>
+<div class="section" id="hello-world-on-device">
+<h2>Hello World on Device<a class="headerlink" href="#hello-world-on-device" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">year</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">month</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">day</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">packed</span><span class="p">))</span> <span class="n">date_t</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">hello_world</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">date_t</span> <span class="o">*</span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="n">date_t</span> <span class="o">*</span><span class="p">)</span><span class="n">args</span><span class="p">;</span>
+    <span class="n">OKKERNEL_LOG</span><span class="p">(</span><span class="s">&quot;Hello World! Today is %d/%d/%d.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">month</span><span class="p">,</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">day</span><span class="p">,</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">year</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">OKKERNEL_FUNC_REGISTER</span><span class="p">(</span><span class="n">hello_world</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="example-of-using-gdma-and-bdc">
+<h2>Example of Using GDMA and BDC<a class="headerlink" href="#example-of-using-gdma-and-bdc" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The following codes show how to use GDMA and BDC functions in kernel function.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">packed</span><span class="p">))</span> <span class="n">param_t</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">plus_one_0</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">param_t</span> <span class="o">*</span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_t</span> <span class="o">*</span><span class="p">)</span><span class="n">args</span><span class="p">;</span>
+    <span class="n">dim4</span> <span class="n">shape</span> <span class="o">=</span> <span class="p">{.</span><span class="n">n</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">N</span><span class="p">,</span> <span class="p">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">C</span><span class="p">,</span> <span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">H</span><span class="p">,</span> <span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">W</span><span class="p">};</span>
+    <span class="n">dim4</span> <span class="n">stride</span><span class="p">;</span>
+    <span class="c1">// The output and input are in the aligned layout.</span>
+    <span class="n">okk_128_byte_aligned_stride_for_32bit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stride</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensor_size</span> <span class="o">=</span> <span class="n">stride</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+    <span class="n">OKKERNEL_ASSERT</span><span class="p">(</span><span class="n">tensor_size</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">okk_local_mem_size_per_npu</span><span class="p">());</span>
+    <span class="c1">// Determine addresses of output and input.</span>
+    <span class="n">local_addr_t</span> <span class="n">output_addr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">local_addr_t</span> <span class="n">input_addr</span> <span class="o">=</span> <span class="n">tensor_size</span><span class="p">;</span>
+    <span class="c1">// Initialize.</span>
+    <span class="n">okk_initialize</span><span class="p">();</span>
+    <span class="c1">// Copy input from global to local.</span>
+    <span class="n">okk_gdma_32bit_cpy_S2L</span><span class="p">(</span><span class="n">input_addr</span><span class="p">,</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">input_addr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// Calculate output = input + 1.</span>
+    <span class="n">okk_bdc_add_C</span><span class="p">(</span><span class="n">output_addr</span><span class="p">,</span> <span class="n">input_addr</span><span class="p">,</span> <span class="mf">1.f</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// Copy output from local to global.</span>
+    <span class="n">okk_gdma_32bit_cpy_L2S</span><span class="p">(</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">output_addr</span><span class="p">,</span> <span class="n">output_addr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// Synchronize.</span>
+    <span class="n">okk_poll</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">OKKERNEL_FUNC_REGISTER</span><span class="p">(</span><span class="n">plus_one_0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This kernel function performs addition of 1.f and the elements of the input tensor with shape (N, C, H, W) and data type fp32,
+and the output tensor stores the result.</p>
+<p>The detailed process is as follows</p>
+<ul class="simple">
+<li>Initialize to use GDMA and BDC functions.</li>
+<li>Copy the input tensor from global memory to local memory by GDMA.</li>
+<li>Perform the addition by BDC.</li>
+<li>Copy the the output tensor from local memory to global memory by GDMA.</li>
+<li>Synchronize to make all GDMA and BDC functions done.</li>
+</ul>
+<p>In the above codes, <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">OKKERNEL_ASSERT</span><span class="pre">(</span><span class="pre">tensor_size</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">&lt;=</span> <a class="reference internal" href="refined.html#_CPPv426okk_local_mem_size_per_npuv" title="okk_local_mem_size_per_npu"><span class="pre">okk_local_mem_size_per_npu</span></a><span class="pre">(</span><span class="pre">)</span><span class="pre">)</span></code> is for checking if local memory is exceeded.
+Such security checks really help sometimes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="gdma-and-bdc-run-parallel">
+<h2>GDMA and BDC Run Parallel<a class="headerlink" href="#gdma-and-bdc-run-parallel" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Since GDMA and BDC functions can run parallel, making good use of this feature can improve performance.</p>
+<p>Supposing N is even, the following codes show how to make use of running GDMA and BDC functions parallel.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">plus_one_1</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">param_t</span> <span class="o">*</span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_t</span> <span class="o">*</span><span class="p">)</span><span class="n">args</span><span class="p">;</span>
+    <span class="n">dim4</span> <span class="n">shape</span> <span class="o">=</span> <span class="p">{.</span><span class="n">n</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">C</span><span class="p">,</span> <span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">H</span><span class="p">,</span> <span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">W</span><span class="p">};</span>
+    <span class="n">dim4</span> <span class="n">stride</span><span class="p">;</span>
+    <span class="c1">// The output and input are in the aligned layout.</span>
+    <span class="n">okk_128_byte_aligned_stride_for_32bit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stride</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensor_size_local</span> <span class="o">=</span> <span class="n">stride</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensor_size_global</span> <span class="o">=</span> <span class="n">shape</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">c</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">h</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+    <span class="n">OKKERNEL_ASSERT</span><span class="p">(</span><span class="n">tensor_size_local</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">&lt;=</span> <span class="n">okk_local_mem_size_per_npu</span><span class="p">());</span>
+    <span class="c1">// Determine addresses of output and input (ping-pong buffers).</span>
+    <span class="n">local_addr_t</span> <span class="n">output_addr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="n">tensor_size_local</span><span class="p">};</span>
+    <span class="n">local_addr_t</span> <span class="n">input_addr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">tensor_size_local</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">tensor_size_local</span> <span class="o">*</span> <span class="mi">3</span><span class="p">};</span>
+    <span class="c1">// Initialize.</span>
+    <span class="n">okk_initialize</span><span class="p">();</span>
+    <span class="c1">////////////////////////////////////////////////////////////////////</span>
+    <span class="c1">// Step 0</span>
+    <span class="c1">// Copy the first part of input from global to local.</span>
+    <span class="n">okk_gdma_32bit_cpy_S2L</span><span class="p">(</span><span class="n">input_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">input_addr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">////////////////////////////////////////////////////////////////////</span>
+    <span class="c1">// Step 1</span>
+    <span class="c1">// Start parallel.</span>
+    <span class="n">okk_parallel_start</span><span class="p">();</span>
+    <span class="c1">// Copy the second part of input from global to local.</span>
+    <span class="n">okk_gdma_32bit_cpy_S2L</span><span class="p">(</span><span class="n">input_addr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">input_addr</span> <span class="o">+</span> <span class="n">tensor_size_global</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// Calculate output = input + 1 for the first part.</span>
+    <span class="n">okk_bdc_add_C</span><span class="p">(</span><span class="n">output_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">input_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.f</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// End parallel.</span>
+    <span class="n">okk_parallel_end</span><span class="p">();</span>
+    <span class="c1">////////////////////////////////////////////////////////////////////</span>
+    <span class="c1">// Step 2</span>
+    <span class="c1">// Start parallel.</span>
+    <span class="n">okk_parallel_start</span><span class="p">();</span>
+    <span class="c1">// Calculate output = input + 1 for the second part.</span>
+    <span class="n">okk_bdc_add_C</span><span class="p">(</span><span class="n">output_addr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">input_addr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">1.f</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// Copy the first part of output from local to global.</span>
+    <span class="n">okk_gdma_32bit_cpy_L2S</span><span class="p">(</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">output_addr</span><span class="p">,</span> <span class="n">output_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// End parallel.</span>
+    <span class="n">okk_parallel_end</span><span class="p">();</span>
+    <span class="c1">////////////////////////////////////////////////////////////////////</span>
+    <span class="c1">// Step 3</span>
+    <span class="c1">// Copy the second part of output from local to global.</span>
+    <span class="n">okk_gdma_32bit_cpy_L2S</span><span class="p">(</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">output_addr</span> <span class="o">+</span> <span class="n">tensor_size_global</span><span class="p">,</span> <span class="n">output_addr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="c1">// Synchronize.</span>
+    <span class="n">okk_poll</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">OKKERNEL_FUNC_REGISTER</span><span class="p">(</span><span class="n">plus_one_1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>There is a pipeline in the process consisting of four steps as follows</p>
+<dl class="docutils">
+<dt>Step 0:</dt>
+<dd><ul class="first last simple">
+<li>Copy the first part of input from global memory to local memory by GDMA.</li>
+</ul>
+</dd>
+<dt>Step 1:</dt>
+<dd><ul class="first last simple">
+<li>Start GDMA and BDC parallel mode.</li>
+<li>Copy the second part of input from global memory to local memory by GDMA.</li>
+<li>Perform the addition for the first part by BDC.</li>
+<li>End GDMA and BDC parallel mode.</li>
+</ul>
+</dd>
+<dt>Step 2:</dt>
+<dd><ul class="first last simple">
+<li>Start GDMA and BDC parallel mode.</li>
+<li>Perform the addition for the second part by BDC.</li>
+<li>Copy the first part of output from local memory to global memory by GDMA.</li>
+<li>End GDMA and BDC parallel mode.</li>
+</ul>
+</dd>
+<dt>Step 3:</dt>
+<dd><ul class="first last simple">
+<li>Copy the second part of output from local memory to global memory by GDMA.</li>
+</ul>
+</dd>
+</dl>
+<p>GDMA and BDC functions run parallel in step 1 and step 2. Note that <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="refined.html#_CPPv416okk_parallel_endv" title="okk_parallel_end"><span class="pre">okk_parallel_end</span></a><span class="pre">(</span><span class="pre">)</span></code> in step 1 and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="refined.html#_CPPv418okk_parallel_startv" title="okk_parallel_start"><span class="pre">okk_parallel_start</span></a><span class="pre">(</span><span class="pre">)</span></code> in step 2 can not be offset,
+because <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">output_addr</span><span class="pre">[</span><span class="pre">0</span><span class="pre">]</span></code> is referred by both step 1 for BDC and step 2 for GDMA,
+and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="refined.html#_CPPv416okk_parallel_endv" title="okk_parallel_end"><span class="pre">okk_parallel_end</span></a><span class="pre">(</span><span class="pre">)</span></code> in step 1 is to guarantee that BDC is completed in step 1 before GDMA begins in step 2.</p>
+<p><strong>When GDMA and BDC run parallel, if the cost of GDMA is balanced with BDC, one will be covered up by the other.
+At this time, the performance is brought into full play, but sometimes more local memory is cost to build up ping-pong buffers for the pipeline</strong>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="divide-tensor-into-parts">
+<h2>Divide Tensor Into Parts<a class="headerlink" href="#divide-tensor-into-parts" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>If a tensor is too big to be stored in local memory, it should be divided into many parts.
+An appropriate number of parts is preferred, it can not only make full use of local memory, but also make the steps as few as possible.</p>
+<p>The following codes show how to find such a number of parts and what the pipeline becomes.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define DIV_UP(a, b) (((a) - 1) / (b) + 1)</span>
+
+<span class="kt">void</span> <span class="nf">plus_one_2</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">param_t</span> <span class="o">*</span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_t</span> <span class="o">*</span><span class="p">)</span><span class="n">args</span><span class="p">;</span>
+    <span class="n">dim4</span> <span class="n">shape_one_batch</span> <span class="o">=</span> <span class="p">{.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="p">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">C</span><span class="p">,</span> <span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">H</span><span class="p">,</span> <span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">W</span><span class="p">};</span>
+    <span class="n">dim4</span> <span class="n">stride_one_batch</span><span class="p">,</span> <span class="n">stride</span><span class="p">;</span>
+    <span class="c1">// Calculate number of working batches.</span>
+    <span class="n">okk_128_byte_aligned_stride_for_32bit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stride_one_batch</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape_one_batch</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensor_size_one_batch_local</span> <span class="o">=</span> <span class="n">stride_one_batch</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+    <span class="n">OKKERNEL_ASSERT</span><span class="p">(</span><span class="n">tensor_size_one_batch_local</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">&lt;=</span> <span class="n">okk_local_mem_size_per_npu</span><span class="p">());</span>
+    <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="n">okk_local_mem_size_per_npu</span><span class="p">()</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">/</span> <span class="n">tensor_size_one_batch_local</span><span class="p">;</span>
+    <span class="n">dim4</span> <span class="n">shape</span> <span class="o">=</span> <span class="p">{.</span><span class="n">n</span> <span class="o">=</span> <span class="n">M</span><span class="p">,</span> <span class="p">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">C</span><span class="p">,</span> <span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">H</span><span class="p">,</span> <span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">W</span><span class="p">};</span>
+    <span class="c1">// The output and input are in the aligned layout.</span>
+    <span class="n">okk_128_byte_aligned_stride_for_32bit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">stride</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensor_size_local</span> <span class="o">=</span> <span class="n">shape</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="n">stride</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensor_size_global</span> <span class="o">=</span> <span class="n">shape</span><span class="p">.</span><span class="n">n</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">c</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">h</span> <span class="o">*</span> <span class="n">shape</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+    <span class="c1">// Determine addresses of output and input (ping-pong buffers).</span>
+    <span class="n">local_addr_t</span> <span class="n">output_addr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="n">tensor_size_local</span><span class="p">};</span>
+    <span class="n">local_addr_t</span> <span class="n">input_addr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">tensor_size_local</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">tensor_size_local</span> <span class="o">*</span> <span class="mi">3</span><span class="p">};</span>
+    <span class="c1">// Get the number of parts and shape of the last part.</span>
+    <span class="kt">int</span> <span class="n">S</span> <span class="o">=</span> <span class="n">DIV_UP</span><span class="p">(</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span>
+    <span class="n">dim4</span> <span class="n">shape_last</span> <span class="o">=</span> <span class="p">{.</span><span class="n">n</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">N</span> <span class="o">-</span> <span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">M</span><span class="p">,</span> <span class="p">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">C</span><span class="p">,</span> <span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">H</span><span class="p">,</span> <span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">W</span><span class="p">};</span>
+    <span class="c1">// Initialize.</span>
+    <span class="n">okk_initialize</span><span class="p">();</span>
+    <span class="c1">// Step 0 ~ Step S + 1</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">S</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Start parallel.</span>
+        <span class="n">okk_parallel_start</span><span class="p">();</span>
+        <span class="c1">// Copy part i of input from global to local.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">S</span><span class="p">)</span>
+            <span class="n">okk_gdma_32bit_cpy_S2L</span><span class="p">(</span><span class="n">input_addr</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">],</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">input_addr</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">tensor_size_global</span><span class="p">,</span> <span class="n">i</span> <span class="o">==</span> <span class="n">S</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">?</span> <span class="o">&amp;</span><span class="nl">shape_last</span> <span class="p">:</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="c1">// Calculate output = input + 1 for part i - 1.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">okk_bdc_add_C</span><span class="p">(</span><span class="n">output_addr</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">],</span> <span class="n">input_addr</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">],</span> <span class="mf">1.f</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">S</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">?</span> <span class="o">&amp;</span><span class="nl">shape_last</span> <span class="p">:</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="c1">// Copy part i - 2 of output from local to global.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">okk_gdma_32bit_cpy_L2S</span><span class="p">(</span><span class="n">param</span><span class="o">-&gt;</span><span class="n">output_addr</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">tensor_size_global</span><span class="p">,</span> <span class="n">output_addr</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">],</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">==</span> <span class="n">S</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">?</span> <span class="o">&amp;</span><span class="nl">shape_last</span> <span class="p">:</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="c1">// End parallel.</span>
+        <span class="n">okk_parallel_end</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="c1">// Synchronize.</span>
+    <span class="n">okk_poll</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">OKKERNEL_FUNC_REGISTER</span><span class="p">(</span><span class="n">plus_one_2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The number of batches is determined to be M in the above codes, and the tensor is divided into S = ceil(N / M) parts.
+The working shape is (M, C, H, W) in each step except the last one, since N may be not divisable by M, the working shape in the last step is (N - (S - 1) * M, C, H, W).</p>
+<p>This pipeline is built up by S + 2 steps as follows (The number in the block is the part index).</p>
+<div class="figure">
+<img alt="../_images/pipeline_parallel.svg" src="../_images/pipeline_parallel.svg" /></div>
+<p>In step K, the first job is copying the Kth part of input from global memory to local memory, the second job is performing addtion for the (K-1)th part,
+and the third job is copying the (K-2)th part of output from local memory to global memory. The first and the third are both of GDMA kind, so they run serially, but the second is of BDC kind,
+it will run parallel with the other two.</p>
+<p><strong>The tensor can be divided according to arbitary dimension and their combinations.
+A recommended order is N-dimension, H-dimension, W-dimension and C-dimension. If according to C-dimension, decreasing the number of channels per NPU is the key</strong>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="reshape">
+<h2>Reshape<a class="headerlink" href="#reshape" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>If N is small while C, H and W are large, the above <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">plus_one_0</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">plus_one_1</span></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">plus_one_2</span></code> can not handle.
+This can be solved by reshaping the tensor as follows.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">plus_one_3</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">param_t</span> <span class="o">*</span><span class="n">param</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_t</span> <span class="o">*</span><span class="p">)</span><span class="n">args</span><span class="p">;</span>
+    <span class="c1">// Calculate the length of input.</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">len</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">N</span> <span class="o">*</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">C</span> <span class="o">*</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">H</span> <span class="o">*</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">W</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">okk_npu_num</span><span class="p">())</span>
+        <span class="n">plus_one_0</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">L</span> <span class="o">=</span> <span class="n">len</span><span class="p">;</span>
+        <span class="n">param_t</span> <span class="n">param_reshape</span> <span class="o">=</span> <span class="p">{.</span><span class="n">output_addr</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">output_addr</span><span class="p">,</span> <span class="p">.</span><span class="n">input_addr</span> <span class="o">=</span> <span class="n">param</span><span class="o">-&gt;</span><span class="n">input_addr</span><span class="p">};</span>
+        <span class="c1">// Reshape.</span>
+        <span class="n">param_reshape</span><span class="p">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">okk_npu_num</span><span class="p">();</span>
+        <span class="n">L</span> <span class="o">/=</span> <span class="n">param_reshape</span><span class="p">.</span><span class="n">C</span><span class="p">;</span>
+        <span class="n">param_reshape</span><span class="p">.</span><span class="n">H</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">param_reshape</span><span class="p">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">L</span> <span class="o">&lt;</span> <span class="mi">32</span> <span class="o">?</span> <span class="nl">L</span> <span class="p">:</span> <span class="mi">32</span><span class="p">;</span>
+        <span class="n">L</span> <span class="o">/=</span> <span class="n">param_reshape</span><span class="p">.</span><span class="n">W</span><span class="p">;</span>
+        <span class="n">param_reshape</span><span class="p">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">L</span><span class="p">;</span>
+        <span class="n">plus_one_2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">param_reshape</span><span class="p">);</span>
+        <span class="c1">// Deal with the tail if it exists.</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">param_reshape</span><span class="p">.</span><span class="n">N</span> <span class="o">*</span> <span class="n">param_reshape</span><span class="p">.</span><span class="n">C</span> <span class="o">*</span> <span class="n">param_reshape</span><span class="p">.</span><span class="n">H</span> <span class="o">*</span> <span class="n">param_reshape</span><span class="p">.</span><span class="n">W</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">L</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">param_reshape</span><span class="p">.</span><span class="n">output_addr</span> <span class="o">+=</span> <span class="p">(</span><span class="n">len</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+            <span class="n">param_reshape</span><span class="p">.</span><span class="n">input_addr</span> <span class="o">+=</span> <span class="p">(</span><span class="n">len</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+            <span class="n">param_reshape</span><span class="p">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">len</span> <span class="o">-</span> <span class="n">L</span><span class="p">;</span>
+            <span class="n">param_reshape</span><span class="p">.</span><span class="n">C</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">param_reshape</span><span class="p">.</span><span class="n">H</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">param_reshape</span><span class="p">.</span><span class="n">W</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">plus_one_3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">param_reshape</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">OKKERNEL_FUNC_REGISTER</span><span class="p">(</span><span class="n">plus_one_3</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>There are two advantages to make C exactly equal to the number of NPUs, first, all NPUs will be used, and second, the number of channels per NPU is just 1, no waste of local memory.</p>
+<p>There are two advantages to make H and W exactly equal to 1 and 32, first, the input and output tensor are in the <a class="reference internal" href="layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>, the C stride is ceil(H * W / 32) * 32 = H * W,
+no waste of local memory, and second, 32 is exactly twice the number of EUs (for BM1684), it will make full use of the execution units.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="programming_host.html" class="btn btn-neutral float-right" title="Programming on Host" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="refined.html" class="btn btn-neutral float-left" title="About Function Names" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

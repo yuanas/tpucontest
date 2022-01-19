@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Convolution &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Convolution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/atomic/conv.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="convolution">
+<h1>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>浮点运算<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>二维卷积浮点运算。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">kernel_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">kernel_val</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">kernel_flip</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ConvParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_conv</span><span class="p">(</span><span class="k">const</span> <span class="n">ConvParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr： 存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>output_c：输出feature map的 C 维度的大小;</li>
+<li>kernel_h/kernel_w：kernel的shape，分别对应HW维度;</li>
+<li>stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>input_stride[4]：存放输入feature map的stride信息，分别对应NCHW四个维度的stride大小;</li>
+<li>kernel_stride[4]：存放权重系数的stride信息，分别对应ICOCKHKW四个维度的stride大小;</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;</li>
+<li>kernel_is_const/kernel_val：kernel是否为常量，如果是其值为kernel_val，否则忽略;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>using_bias：是否含有bias运算;</li>
+<li>kernel_flip：是否对kernel进行旋转，操作为kernel_rotate(n,c,h,w)=kernel(n,c,kh-1-h,kw-1-w)</li>
+<li>result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>定点运算<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>该操作的输入feature map、kernel以及输出feature map为8bits，bias为16bits。</p>
+<p>输入输出feature map以及kernel按照4N模式存储，bias按照1N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span>     <span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_c</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">kernel_is_const</span><span class="p">;</span>
+         <span class="kt">signed</span> <span class="kt">char</span> <span class="n">kernel_val</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">kernel_flip</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">if_relu</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">input_sign</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">weight_sign</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">bias_sign</span><span class="p">;</span>
+     <span class="p">}</span> <span class="n">ConvQuantParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_conv_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">ConvQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr： 存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>output_c：输出feature map的 C 维度的大小;</li>
+<li>kernel_h/kernel_w：kernel的shape，分别对应HW维度;</li>
+<li>stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>input_stride[4]：存放输入feature map的stride信息，分别对应NCHW四个维度的stride大小;</li>
+<li>kernel_stride[4]：存放权重系数的stride信息，分别对应ICOCKHKW四个维度的stride大小;</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;</li>
+<li>kernel_is_const/kernel_val：kernel是否为常量，如果是其值为kernel_val，否则忽略;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>rshift_bit：为了防止溢出，中间的累加结果使用int32表示，该参数表示将int32的中间结果右移rshift_bit位之后得到最后的8bit结果;</li>
+<li>using_bias：是否含有bias运算;</li>
+<li>kernel_flip：是否对kernel进行旋转，操作为kernel_rotate(n,c,h,w)=kernel(n,c,kh-1-h,kw-1-w)</li>
+<li>result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;</li>
+<li>if_relu：是否对输出结果进行relu操作，也就是将relu与conv合并；</li>
+<li>input_sign/weight_sign/bias_sign：分别表示输入feature map、kernel以及bias的值是否为有符号数；</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

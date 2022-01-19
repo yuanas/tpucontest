@@ -1,0 +1,122 @@
+.. role:: bash(code)
+   :language: bash
+
+TPU Architecture
+================
+
+The following is the architecture diagram of Sophon TPU.
+
+.. figure:: ../_static/tpu.svg
+
+Sophon TPU is a multi-core architecture. Each core is called a Neural network Processing Unit (NPU).
+There is an independent local storage and many kinds of Execution Units (EU) in each NPU.
+All NPUs complete a operation in the form of Single Instruction Multiple Data (SIMD).
+The data needs to be copied from system memory (usually global memory) to NPU local memory by GDMA before it can be accessed by EUs.
+CDMA, GDMA and BDC can run parallel.
+
+**The copying of data between system memory and local memory should be reduced as much as possible, so as to effectively give full play to the performance of TPU**.
+
+For BM1684,
+
+    - The number of NPUs is 64, obtained by calling :cpp:func:`okk_npu_num` on device.
+    - The size of local memory in each NPU is 512KB, obtained by calling :cpp:func:`okk_local_mem_size_per_npu` on device.
+
+Memory Types
+============
+
+The TPU contains the following memory types
+
+    - System Memory
+        - Global Memory: Off-chip memory (DDR).
+        - L2-SRAM: On-chip memory，it can be used as intermediate cache.
+        - DTCM: Cache space of ARM9.
+    - Local Memory: On-chip memory，it is mainly used to store the data for BDC.
+
+GDMA can handle data copying between the above four kinds of memories,
+ARM9 can also access all of them. It should be noted that ARM9 is a 32-bit processor, the addresses of local memory, L2-SRAM and DTCM can be accessed directly by using 32-bit addresses,
+among them, DTCM is the fastest, but the address and of global memory are beyond the 32-bit representation range, so it can only be accessed indirectly after mapping (This function is rarely used).
+
+For BM1684,
+
+    - The size of global memory is 12GB.
+    - The size of local memory is 32MB.
+    - The size of L2-SRAM is 4MB, obtained by calling :cpp:func:`okk_l2_sram_size` on device.
+    - The size of DTCM is 512KB, obtained by calling :cpp:func:`okk_dtcm_size` on device.
+
+Heterogeneous Programming
+=========================
+
+OKKernel programming includes the following two parts
+
+    - Host: In SoC mode, it refers to the ARM A53 processor on the chip, and in PCIe mode, it refers to the host used by user.
+    - Device: SoC and PCIe are both the on-chip microprocessors (ARM9).
+
+User compiles the developed codes to form new firmware, and then updates the firmware of device by the new one.
+
+.. figure:: ../_static/heterogeneous_prepare.svg
+
+The above preparation job only needs to be done once, because kernel functions have been registered on device with the firmware update.
+
+To the device where kernel functions have been registered, user can launch kernel from host.
+
+.. figure:: ../_static/heterogeneous_run.svg
+
+Device
+______
+
+On device, it is used to parse the command sent from host and call registered atomic functions.
+For atomic functions can be used on device, see :ref:`functions on device`.
+For more programming details, see :ref:`programming on device`.
+
+The code on device can only be written in C language and compiled by ARM 32-bit compiler.
+The compiling result are two binary files, :bash:`device_tcm.bin` and :bash:`device_ddr.bin` (that can be loaded to device by calling :cpp:func:`okkernel_load_firmware` on host).
+
+Due to the limited space of ITCM which is fast, some low-frequency codes need to be placed in the DDR by naming file with prefix :bash:`ok_device_`.
+
+Host
+____
+
+On host, the steps to be implemented include loading binary files, sending commands to device and executing them synchronously or asynchronously and waiting for execution to complete.
+The APIs are as follows.
+
+.. cpp:function:: bm_status_t okkernel_load_firmware(bm_handle_t handle, const char *firmware_tcm, const char *firmware_ddr)
+
+    Load or reload firmware to device.
+
+    :param handle: Handle of the device.
+    :param firmware_tcm: Path to the firmware file to load to ITCM.
+    :param firmware_ddr: Path to the firmware file to load to DDR.
+
+    :return: Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.
+
+.. cpp:function:: bm_status_t okkernel_launch_sync(bm_handle_t handle, const char *func_name, const void *args, unsigned int size)
+
+    Launch the kernel function on device synchronously.
+
+    :param handle: Handle of the device.
+    :param func_name: Name of the kernel function to launch on device.
+    :param args: Pointer to the user-discript data package.
+    :param size: Size of the user-discript data package in bytes.
+
+    :return: Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.
+
+.. cpp:function:: bm_status_t okkernel_launch_async(bm_handle_t handle, const char *func_name, const void *args, unsigned int size)
+
+    Launch the kernel function on device asynchronously.
+
+    :param handle: Handle of the device.
+    :param func_name: Name of the kernel function to launch on device.
+    :param args: Pointer to the user-discript data package.
+    :param size: Size of the user-discript data package in bytes.
+
+    :return: Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.
+
+.. cpp:function:: bm_status_t okkernel_sync(bm_handle_t handle)
+
+    Synchronize the device.
+
+    :param handle: Handle of the device.
+
+    :return: Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.
+
+For more programming details, see :ref:`programming on host`.

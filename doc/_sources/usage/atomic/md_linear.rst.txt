@@ -1,0 +1,45 @@
+MD-Linear
+================
+
+对四维Tensor的线性操作或平方差和计算。
+
+线性操作：Y(n, c, h, w) = A(n, c, h, w) * S(0, c, 0 , 0) + B(0, c, 0, 0)
+
+平方差和：Y(n, c, h, w) = (A(n, c, h, w) +/- B(0, c, 0, 0))^2
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned int tensorA_addr;
+              unsigned int tensorB_addr;
+              unsigned int tensorS_addr;
+              unsigned int output_addr;
+              unsigned int shape[4];
+              BmAtomicOp op;
+              bool result_add;
+              bool tensorB_is_const;
+              float tensorB_const;
+              bool tensorS_is_const;
+              float tensorS_const;
+          } MDLinearParam;
+
+          void bm_atomic_md_linear(const MDLinearParam* param);
+
+参数说明：
+
+* tensorA_addr: 存放输入tensor A的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tensorB_addr: 存放输入tensor B的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* tensorS_addr: 存放输入tensor S的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* output_addr: 存放输出tensor的Local Memory偏移地址;
+* shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度;
+* op: 操作码，可支持如下操作：
+
+      + BM_MAC: output = tensorA * tensorS + tensorB，输入输出均为float32类型
+      + BM_SQR_SUM：output = (tensorA + tensorB ) ^ 2，输入输出均为float32类型
+      + BM_SQR_DIFF：output = (tensorA - tensorB ) ^ 2，输入输出均为float32类型
+
+* result_add：当运算为BM_MAC时是否累加上原来的结果，也就是将本次计算结果与output_addr本来存放的值进行累加;
+* tensorB_is_const/tensorB_const：tensor B 是否为常数值，如果是则其值为tensorB_const;
+* tensorS_is_const/tensorS_const：tensor S 是否为常数值，如果是则其值为tensorS_const;
+
+

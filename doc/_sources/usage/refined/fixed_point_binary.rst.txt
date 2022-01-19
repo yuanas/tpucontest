@@ -1,0 +1,641 @@
+Fixed Point Binary Functions
+============================
+
+okk_bdc_fixed_point_packed_add
+______________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_add(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride, op_type_t op_type, int rshift)
+
+    Perform addition of the elements of the source_0 and source_1 tensors for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src\_0(n, c, h, w) + src\_1(n, c, h, w) + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) + src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data types of the destination, source_0 and source_1 tensors could be int8, uint8, int16 or uint16, and required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_U8`, :cpp:enumerator:`U8_OP_U8_TO_U16`, :cpp:enumerator:`S16_OP_S16_TO_S8`, :cpp:enumerator:`S16_OP_S16_TO_S16`, :cpp:enumerator:`S16_OP_U16_TO_S8`, :cpp:enumerator:`S16_OP_U16_TO_S16`, :cpp:enumerator:`U16_OP_S16_TO_S8`, :cpp:enumerator:`U16_OP_S16_TO_S16`, :cpp:enumerator:`U16_OP_U16_TO_U8` and :cpp:enumerator:`U16_OP_U16_TO_U16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_add_C
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_add_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, op_type_t op_type, int rshift)
+
+    Perform addition of the elements of the source tensor and a constant value for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src(n, c, h, w) + C + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) + C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to add.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data types of the destination and source tensors could be int8, uint8, int16 or uint16, and required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8, [-32768, 32767] if int16, and [0, 65535] if uint16.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_U8`, :cpp:enumerator:`U8_OP_U8_TO_U16`, :cpp:enumerator:`S16_OP_S16_TO_S8`, :cpp:enumerator:`S16_OP_S16_TO_S16`, :cpp:enumerator:`S16_OP_U16_TO_S8`, :cpp:enumerator:`S16_OP_U16_TO_S16`, :cpp:enumerator:`U16_OP_S16_TO_S8`, :cpp:enumerator:`U16_OP_S16_TO_S16`, :cpp:enumerator:`U16_OP_U16_TO_U8` and :cpp:enumerator:`U16_OP_U16_TO_U16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_sub
+______________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_sub(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride, op_type_t op_type, int rshift)
+
+    Perform subtraction of the elements of the source_0 tensor by the elements of the source_1 tensor for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src\_0(n, c, h, w) - src\_1(n, c, h, w) + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) - src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data types of the destination, source_0 and source_1 tensors are int8, uint8, int16 or uint16, and required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_S16`, :cpp:enumerator:`S16_OP_S16_TO_S8`, :cpp:enumerator:`S16_OP_S16_TO_S16`, :cpp:enumerator:`S16_OP_U16_TO_S8`, :cpp:enumerator:`S16_OP_U16_TO_S16`, :cpp:enumerator:`U16_OP_S16_TO_S8`, :cpp:enumerator:`U16_OP_S16_TO_S16`, :cpp:enumerator:`U16_OP_U16_TO_S8` and :cpp:enumerator:`U16_OP_U16_TO_S16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_sub_C
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_sub_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, op_type_t op_type, int rshift)
+
+    Perform subtraction of the elements of the source tensor by a constant value for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src(n, c, h, w) - C + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) - C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to subtract by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data types of the destination and source tensors are int8, uint8, int16 or uint16, and required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8, [-32768, 32767] if int16, and [0, 65535] if uint16.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_S16`, :cpp:enumerator:`S16_OP_S16_TO_S8`, :cpp:enumerator:`S16_OP_S16_TO_S16`, :cpp:enumerator:`S16_OP_U16_TO_S8`, :cpp:enumerator:`S16_OP_U16_TO_S16`, :cpp:enumerator:`U16_OP_S16_TO_S8`, :cpp:enumerator:`U16_OP_S16_TO_S16`, :cpp:enumerator:`U16_OP_U16_TO_S8` and :cpp:enumerator:`U16_OP_U16_TO_S16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_C_sub
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_C_sub(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, op_type_t op_type, int rshift)
+
+    Perform subtraction of the elements of the source tensor by a constant value for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (C - src(n, c, h, w) + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = C - src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be subtracted.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data types of the destination and source tensors are int8, uint8, int16 or uint16, and required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8, [-32768, 32767] if int16, and [0, 65535] if uint16.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_S16`, :cpp:enumerator:`S16_OP_S16_TO_S8`, :cpp:enumerator:`S16_OP_S16_TO_S16`, :cpp:enumerator:`S16_OP_U16_TO_S8`, :cpp:enumerator:`S16_OP_U16_TO_S16`, :cpp:enumerator:`U16_OP_S16_TO_S8`, :cpp:enumerator:`U16_OP_S16_TO_S16`, :cpp:enumerator:`U16_OP_U16_TO_S8` and :cpp:enumerator:`U16_OP_U16_TO_S16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_mul
+______________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_mul(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride, op_type_t op_type, int rshift)
+
+    Perform multiplication of the elements of the source_0 and source_1 tensors for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src\_0(n, c, h, w) \times src\_1(n, c, h, w) + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) \times src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data type of the source_0 and source_1 tensors is int8 or uint8, the data type of the destination tensor is int8, uint8, int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_U8` and :cpp:enumerator:`U8_OP_U8_TO_U16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_mul_C
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_mul_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, op_type_t op_type, int rshift)
+
+    Perform multiplication of the elements of the source tensor and a constant value for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src(n, c, h, w) \times C + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) \times C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to multiply.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param op_type: Operation type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data type of the source tensor is int8 or uint8, the data type of the destination tensor is int8, uint8, int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S8`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_S8_TO_S16`, :cpp:enumerator:`U8_OP_U8_TO_U8` and :cpp:enumerator:`U8_OP_U8_TO_U16`.
+    - :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_mac
+______________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_mac(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride, bool is_origin_dst_signed, op_type_t op_type, int lshift, int rshift)
+
+    Perform multiply accumulation of the elements of the source_0 and source_1 tensors for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) & = &(dst(n, c, h, w) \times 2^{lshift} + src\_0(n, c, h, w)\times src\_1(n, c, h, w)\\
+                              &   & + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = dst(n, c, h, w) \times 2^{lshift} + src\_0(n, c, h, w)\times src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param is_origin_dst_signed: Flag of the data type of the origin destination tensor, :cpp:expr:`true` means int16, otherwise, uint16.
+    :param op_type: Operation type.
+    :param lshift: Number of the left-shift to the origin elements of the destination tensor.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data type of the source_0 and source_1 tensors is int8 or uint8, the data type of the destination tensor is int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`is_origin_dst_signed = true`, the valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S16` and :cpp:enumerator:`U8_OP_S8_TO_S16`, otherwise, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S16` and :cpp:enumerator:`U8_OP_U8_TO_U16`.
+    - :cpp:expr:`lshift` is in [0, 14], :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_mac_C
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_mac_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, bool is_origin_dst_signed, op_type_t op_type, int lshift, int rshift)
+
+    Perform multiply accumulation of the elements of the source_0 and source_1 tensors for fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (dst(n, c, h, w) \times 2^{lshift} + src(n, c, h, w)\times C + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = dst(n, c, h, w) \times 2^{lshift} + src(n, c, h, w)\times C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to multiply.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param is_origin_dst_signed: Flag of the data type of the origin destination tensor, :cpp:expr:`true` means int16, otherwise, uint16.
+    :param op_type: Operation type.
+    :param lshift: Number of the left-shift to the origin elements of the destination tensor.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data type of the source tensor is int8 or uint8, the data type of the destination tensor is int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`is_origin_dst_signed = true`, the valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S16` and :cpp:enumerator:`U8_OP_S8_TO_S16`, otherwise, :cpp:enumerator:`S8_OP_S8_TO_S16`, :cpp:enumerator:`S8_OP_U8_TO_S16`, :cpp:enumerator:`U8_OP_S8_TO_S16` and :cpp:enumerator:`U8_OP_U8_TO_U16`.
+    - :cpp:expr:`lshift` is in [0, 14], :cpp:expr:`rshift` is in [0, 31].
+
+okk_bdc_fixed_point_packed_max
+______________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_max(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride, op_type_t op_type)
+
+    Perform maximum operation of the elements of the source_0 and source_1 tensors for fixed-point data type.
+
+    .. math:: dst(n, c, h, w) = \max(src\_0(n, c, h, w), src\_1(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param op_type: Operation type.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is int8, uint8, int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_U8`, :cpp:enumerator:`S16_OP_S16_TO_S16` and :cpp:enumerator:`U16_OP_U16_TO_U16`.
+
+okk_bdc_fixed_point_packed_max_C
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_max_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, op_type_t op_type)
+
+    Perform maximum operation of the elements of the source tensor and a constant value for fixed-point data type.
+
+    .. math:: dst(n, c, h, w) = \max(src(n, c, h, w), C)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source_0 tensor.
+    :param C: Constant value to be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param op_type: Operation type.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int8, uint8, int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8, [-32768, 32767] if int16, and [0, 65535] if uint16.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_U8`, :cpp:enumerator:`S16_OP_S16_TO_S16` and :cpp:enumerator:`U16_OP_U16_TO_U16`.
+
+okk_bdc_fixed_point_packed_min
+______________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_min(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride, op_type_t op_type)
+
+    Perform minimum operation of the elements of the source_0 and source_1 tensors for fixed-point data type.
+
+    .. math:: dst(n, c, h, w) = \min(src\_0(n, c, h, w), src\_1(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param op_type: Operation type.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is int8, uint8, int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_U8`, :cpp:enumerator:`S16_OP_S16_TO_S16` and :cpp:enumerator:`U16_OP_U16_TO_U16`.
+
+okk_bdc_fixed_point_packed_min_C
+________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_min_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, op_type_t op_type)
+
+    Perform minimum operation of the elements of the source tensor and a constant value for fixed-point data type.
+
+    .. math:: dst(n, c, h, w) = \min(src(n, c, h, w), C)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source_0 tensor.
+    :param C: Constant value to be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param op_type: Operation type.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int8, uint8, int16 or uint16, and the data types are required to match :cpp:expr:`op_type`.
+    - The tensor is in the :ref:`4N-mode` if its data type is int8 or uint8, :ref:`2N-mode` if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`C` is in [-128, 127] if the data type of it is int8, [0, 255] if uint8, [-32768, 32767] if int16, and [0, 65535] if uint16.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`op_type` are :cpp:enumerator:`S8_OP_S8_TO_S8`, :cpp:enumerator:`U8_OP_U8_TO_U8`, :cpp:enumerator:`S16_OP_S16_TO_S16` and :cpp:enumerator:`U16_OP_U16_TO_U16`.
+
+okk_bdc_fixed_point_packed_16bit_arithmetic_shift
+_________________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_arithmetic_shift(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform arithmetic shift operation of the elements of the source_0 tensor by the elements of the source_1 tensor for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src\_0(n, c, h, w)\ \mathbf{LSH}\ src\_1(n, c, h, w)&{\text{if }}src\_1(n, c, h, w)>0,\\src\_0(n, c, h, w)\ \mathbf{RSH}\ -src\_1(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is int16.
+    - The destination, source_0 and source_1 tensors are in the :ref:`2N-mode`.
+    - The elements of the source_1 tensor are in [-16, 16], positive one performs left-shift and negative one performs right-shift.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_logical_shift
+______________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_logical_shift(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform logical shift operation of the elements of the source_0 tensor by the elements of the source_1 tensor for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src\_0(n, c, h, w)\ \mathbf{LSH}\ src\_1(n, c, h, w)&{\text{if }}src\_1(n, c, h, w)>0,\\src\_0(n, c, h, w)\ \mathbf{RSH}\ -src\_1(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is uint16, the data type of the source_1 tensor is int16.
+    - The destination, source_0 and source_1 tensors are in the :ref:`2N-mode`.
+    - The elements of the source_1 tensor are in [-16, 16], positive one performs left-shift and negative one performs right-shift.
+    - The destination, source_0 and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_arithmetic_shift_C
+___________________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_arithmetic_shift_C(local_addr_t dst_addr, local_addr_t src_addr, short C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform arithmetic shift operation of the elements of the source tensor by a constant value for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)\ \mathbf{LSH}\ C&{\text{if }}C>0,\\src(n, c, h, w)\ \mathbf{RSH}\ -C&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to shift by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int16.
+    - The destination and source tensors are in the :ref:`2N-mode`.
+    - The constant value C is in [-16, 16], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_logical_shift_C
+________________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_logical_shift_C(local_addr_t dst_addr, local_addr_t src_addr, short C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform logical shift operation of the elements of the source tensor by a constant value for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)\ \mathbf{LSH}\ C&{\text{if }}C>0,\\src(n, c, h, w)\ \mathbf{RSH}\ -C&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to shift by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is uint16.
+    - The destination and source tensors are in the :ref:`2N-mode`.
+    - The constant value C is in [-16, 16], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_C_arithmetic_shift
+___________________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_C_arithmetic_shift(local_addr_t dst_addr, local_addr_t src_addr, short C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform arithmetic shift operation of a constant value by the elements of the source tensor for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}C\ \mathbf{LSH}\ src(n, c, h, w)&{\text{if }}src(n, c, h, w)>0,\\C\ \mathbf{RSH}\ -src(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be shifted.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int16.
+    - The destination and source tensors are in the :ref:`2N-mode`.
+    - The elements of the source tensor are in [-16, 16], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_C_logical_shift
+________________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_C_logical_shift(local_addr_t dst_addr, local_addr_t src_addr, unsigned short C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform logical shift operation of a constant value by the elements of the source tensor for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}C\ \mathbf{LSH}\ src(n, c, h, w)&{\text{if }}src(n, c, h, w)>0,\\C\ \mathbf{RSH}\ -src(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be shifted.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination tensor is uint16, the data type of the source tensor is int16.
+    - The destination and source tensors are in the :ref:`2N-mode`.
+    - The elements of the source tensor are in [-16, 16], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_mul_8bit
+_________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_mul_8bit(local_addr_t dst_addr, local_addr_t src0_high_addr, local_addr_t src0_low_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_high_stride, const dim4 *src0_low_stride, const dim4 *src1_stride, mul_type_t mul_type, int rshift)
+
+    Perform multiplication of the elements of the source_0 (16-bit) and source_1 (8-bit) tensors for mixed fixed-point data type.
+
+    If :cpp:expr:`rshift > 0`
+
+    .. math:: dst(n, c, h, w) = (src\_0(n, c, h, w) \times src\_1(n, c, h, w) + 2^{rshift - 1}) \ \mathbf{RSH}\ rshift
+
+    else
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) \times src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_high_addr: Address of the source_0_high tensor.
+    :param src0_low_addr: Address of the source_0_low tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0_high, source_0_low and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_high_stride: Pointer to the stride of the source_0_high tensor.
+    :param src0_low_stride: Pointer to the stride of the source_0_low tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+    :param mul_type: Multiplication type.
+    :param rshift: Number of the arithmetic right-shift to the result.
+
+    **Remarks**
+
+    - The data type of the source_0 tensor is int16 or uint16, the data type of the source_1 tensor is int8 or uint8, the data type of the destination tensor is int16 or uint16, and the data types are required to match :cpp:expr:`mul_type`.
+    - The source_0_high and source_0_low tensors respectively store the most and least significant 8 bits of elements of the source_0 tensor. (See :cpp:func:`okk_bdc_fixed_point_packed_16bit_split_high_8bit` and :cpp:func:`okk_bdc_fixed_point_packed_16bit_split_low_8bit`)
+    - The destination tensor is in the :ref:`2N-mode`, the source_0_high, source_0_low and source_1 tensors are in the :ref:`4N-mode`.
+    - The destination, source_0_high, source_0_low and source_1 tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_high_addr`, :cpp:expr:`src0_low_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_high_stride`, :cpp:expr:`src0_low_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The valid choices of :cpp:expr:`mul_type` are :cpp:enumerator:`S16_MUL_S8_TO_S16`, :cpp:enumerator:`U16_MUL_S8_TO_S16` and :cpp:enumerator:`U16_MUL_U8_TO_U16`.
+      For some unexpected reasons, :cpp:enumerator:`S16_MUL_U8_TO_S16` is unsupported for BM1684.
+    - :cpp:expr:`rshift` is in [0, 31].

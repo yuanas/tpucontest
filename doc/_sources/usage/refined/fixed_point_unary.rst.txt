@@ -1,0 +1,49 @@
+Fixed Point Unary Functions
+===========================
+
+okk_bdc_fixed_point_packed_16bit_split_high_8bit
+________________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_split_high_8bit(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Split the most significant 8 bits from the elements of the source tensor of 16-bit data type.
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the source tensor is int16 or uint16, the data type of the destination tensor is int8 or uint8.
+    - The tensor is in the 4N-mode if its data type is int8 or uint8, 2N-mode if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_fixed_point_packed_16bit_split_low_8bit
+_______________________________________________
+
+.. cpp:function:: void okk_bdc_fixed_point_packed_16bit_split_low_8bit(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, const dim4 *work_stride)
+
+    Split the least significant 8 bits from the elements of the source tensor of 16-bit data type.
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param src_stride: Pointer to the stride of the work tensor.
+
+    **Remarks**
+
+    - The data type of the source and work tensors is int16 or uint16, the data type of the destination tensor is int8 or uint8.
+    - The tensor is in the 4N-mode if its data type is int8 or uint8, 2N-mode if int16 or uint16.
+    - The destination and source tensors start at the first NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src_stride` or :cpp:expr:`work_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` is not allowed.

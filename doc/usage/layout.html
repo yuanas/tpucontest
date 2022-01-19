@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Address of Tensor in Local Memory &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="About Function Names" href="refined.html" />
+    <link rel="prev" title="TPU Architecture" href="architecture.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#layouts">Layouts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#continuous-layout">Continuous Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#byte-aligned-layout">128-Byte Aligned Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compact-layout">Compact Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matrix-layout">Matrix Layout</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#storage-modes">Storage Modes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#n-mode">4N-mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2N-mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ic-mode">2IC-mode</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Address of Tensor in Local Memory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/usage/layout.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="address-of-tensor-in-local-memory">
+<h1>Address of Tensor in Local Memory<a class="headerlink" href="#address-of-tensor-in-local-memory" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>In local memory, a tensor has a unique address.
+Suppose there are X NPUs and the size of local memory in each NPU is S bytes.
+A valid address of tensor in local memory is in [0, X * S - 1].</p>
+<p>Given an address A of a tensor, there exists A = Q * S + R, where Q = floor(A / S) and R = A mod S, meaning that <strong>the tensor starts at NPU Q with offset R</strong>.</p>
+<p>To illustrate simply, let X = 4 and S = 1024.</p>
+<p>The following figure shows where the four addresses A = 340, B = 1472, C = 2300 and D = 3088 are (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/address.svg" src="../_images/address.svg" /></div>
+</div></blockquote>
+</div>
+<div class="section" id="scatter-features-to-different-npus">
+<h1>Scatter Features to Different NPUs<a class="headerlink" href="#scatter-features-to-different-npus" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>For a tensor with shape (N, C, H, W), it has N * C features, if copied to local memory, the features will be scattered to different NPUs.
+Denote the feature (n, c, :, :) simply by (n, c), where n is in [0, N - 1] and c is in [0, C - 1]. Let the number of NPUs be X.</p>
+<p>Another important concept is the number of channels per NPU. <strong>Supposing the tensor starts at NPU Q, the number of channels per NPU is ceil((Q + C) / X)</strong>,
+obtained by calling <a class="reference internal" href="refined.html#_CPPv423okk_channle_num_per_npuii" title="okk_channle_num_per_npu"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_channle_num_per_npu()</span></code></a>.</p>
+<p>Supposing C = X - 1 and the tensor starts at NPU 0, the following figure shows how the features are scattered (Note that each block represents a memory area for storing a feature).</p>
+<div class="figure">
+<img alt="../_images/scatter_0.svg" src="../_images/scatter_0.svg" /></div>
+<p>No features are scattered to NPU X - 1, the feature (1, 0) is not in NPU X - 1, instead, it is in NPU 0.
+It is found that the features (*, c) are in the same NPU for arbitary fixed c in [0, C - 1]. The number of channels per NPU is ceil((0 + X - 1) / X) = 1.</p>
+<p>Supposing C = X - 1 and the tensor starts at NPU 1, the following figure shows how the features are scattered.</p>
+<div class="figure">
+<img alt="../_images/scatter_1.svg" src="../_images/scatter_1.svg" /></div>
+<p>No features are scattered to NPU 0, like NPU X - 1 in the previous case. Still, the number of channels per NPU is ceil((1 + X - 1) / X) = 1.</p>
+<p>Supposing C = X + 2 and the tensor starts at NPU 0, the following figure shows how the features are scattered.</p>
+<div class="figure">
+<img alt="../_images/scatter_2.svg" src="../_images/scatter_2.svg" /></div>
+<p>The features (*, X) and (*, X + 1) are scattered to NPU 0 and NPU 1, respectively.
+In the second block row, there are X - 2 empty blocks storing nothing about this tensor.
+The number of channels per NPU is ceil((0 + X + 2) / X) = 2.</p>
+<p>In this case, not only the features (*, c) are in the same NPU, but also (*, c + X) if c + X is in [0, C - 1].
+<strong>The features (*, c_0) and (*, c_1) are in the same NPU if and only if c_0 mod X = c_1 mod X</strong>.</p>
+<p>Supposing C = X + 2 and the tensor starts at NPU X - 1, the following figure shows how the features are scattered.</p>
+<div class="figure">
+<img alt="../_images/scatter_3.svg" src="../_images/scatter_3.svg" /></div>
+<p>Three block rows are used to store the C features of one batch with X - 1 empty blocks in each the first and third row.
+The number of channels per NPU is ceil((X - 1 + X + 2) / X) = 3. Such a storage is terrible and causes a lot of waste of local memory.</p>
+<p>If reusing the empty blocks to store some other tensors, it should be much careful and know the TPU well,
+otherwise, the data in these tensors may be destroyed when NPUs work parallel. <strong>Try not to reuse the empty blocks</strong>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="strides-in-local-memory">
+<h1>Strides in Local Memory<a class="headerlink" href="#strides-in-local-memory" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>A tensor in local memory can not be described only by the address, shape and data type, the strides are also necessary.
+For a 4D tensor with shape (N, C, H, W), there are four relative strides named N stride, C stride, H stride and W stride.</p>
+<p>For arbitary n in [0, N - 1], c in [0, C - 1], h in [0, H - 1] and w in [0, W - 1],</p>
+<ul class="simple">
+<li>N stride: number of elements from (n, c, h, w) to (n + 1, c, h, w).</li>
+<li>C stride: number of elements from (n, c, h, w) to (n, c + X, h, w), where X is the number of NPUs.</li>
+<li>H stride: number of elements from (n, c, h, w) to (n, c, h + 1, w).</li>
+<li>W stride: number of elements from (n, c, h, w) to (n, c, h, w + 1).</li>
+</ul>
+<p>To illustrate simply, the number of the NPUs is set to 4.</p>
+<p>Given a tensor with shape (N = 2, C = 5, H = 3, W = 4) and data type fp32 starting at NPU 0, W stride = 2, H stride = 16, C stride = 56 and N stride = 120,
+the following figure shows how it is posed in local memory (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/stride_local_0.svg" src="../_images/stride_local_0.svg" /></div>
+<p><strong>When W = 1, H = 1 or N = 1, the relative stride makes no sense. For C stride, it makes no sense when the number of channels per NPU is 1</strong> (See the following case).</p>
+<p>Given a tensor with shape (N = 2, C = 3, H = 1, W = 10) and data type fp32 starting at NPU 1, W stride = 2 and N stride = 120, the following figure shows how it is posed in local memory.</p>
+<div class="figure">
+<img alt="../_images/stride_local_1.svg" src="../_images/stride_local_1.svg" /></div>
+<p>Since H = 1 and the number of channels per NPU is ceil((1 + 3) / 4) = 1, H stride and C stride both make no sense.</p>
+</div></blockquote>
+</div>
+<div class="section" id="strides-in-system-memory">
+<h1>Strides in System Memory<a class="headerlink" href="#strides-in-system-memory" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>A tensor in system memory can not be described only by the address, shape and data type, the strides are also necessary. For a 4D tensor with shape (N, C, H, W), there are four relative strides named N stride, C stride, H stride and W stride.</p>
+<p>For arbitary n in [0, N - 1], c in [0, C - 1], h in [0, H - 1] and w in [0, W - 1],</p>
+<ul class="simple">
+<li>N stride: number of elements from (n, c, h, w) to (n + 1, c, h, w).</li>
+<li>C stride: number of elements from (n, c, h, w) to (n, c + 1, h, w).</li>
+<li>H stride: number of elements from (n, c, h, w) to (n, c, h + 1, w).</li>
+<li>W stride: number of elements from (n, c, h, w) to (n, c, h, w + 1).</li>
+</ul>
+<p><strong>When W = 1, H = 1, C = 1 or N = 1, the relative stride makes no sense</strong>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="layouts">
+<h1>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="continuous-layout">
+<span id="id1"></span><h2>Continuous Layout<a class="headerlink" href="#continuous-layout" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Continuous layout is a layout of tensor in system memory. If a tensor with shape (N, C, H, W) is in the continuous layout, it is required that</p>
+<ul class="simple">
+<li>The W stride is 1.</li>
+<li>The H stride is W.</li>
+<li>The C stride is H * W.</li>
+<li>The N stride is C * H * W.</li>
+</ul>
+<p>The strides can be obtained by calling <a class="reference internal" href="refined.html#_CPPv421okk_continuous_strideP4dim4PK4dim4" title="okk_continuous_stride"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_continuous_stride()</span></code></a>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="byte-aligned-layout">
+<span id="id2"></span><h2>128-Byte Aligned Layout<a class="headerlink" href="#byte-aligned-layout" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>128-byte aligned layout is a layout of 4D tensor in local memory. If a tensor with shape (N, C, H, W) is in the aligned layout, it is required that</p>
+<ul class="simple">
+<li>The address of the tensor is divisable by 128.</li>
+<li>The W stride is 1.</li>
+<li>The H stride is W.</li>
+<li>The C stride is ceil(H * W / 32) * 32 if the data type is 32-bit, ceil(H * W / 64) * 64 if the data type is 16-bit, ceil(H * W / 128) * 128 if the data type is 8-bit.</li>
+<li>The N stride is the C stride multiply by the number of channels per NPU.</li>
+</ul>
+<p>The strides can be obtained by calling <a class="reference internal" href="refined.html#_CPPv437okk_128_byte_aligned_stride_for_32bitP4dim4iPK4dim4" title="okk_128_byte_aligned_stride_for_32bit"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_128_byte_aligned_stride_for_32bit()</span></code></a>, <a class="reference internal" href="refined.html#_CPPv437okk_128_byte_aligned_stride_for_16bitP4dim4iPK4dim4" title="okk_128_byte_aligned_stride_for_16bit"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_128_byte_aligned_stride_for_16bit()</span></code></a> or <a class="reference internal" href="refined.html#_CPPv436okk_128_byte_aligned_stride_for_8bitP4dim4iPK4dim4" title="okk_128_byte_aligned_stride_for_8bit"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_128_byte_aligned_stride_for_8bit()</span></code></a>.</p>
+<p>To illustrate simply, the number of the NPUs is set to 4.</p>
+<p>Given a tensor with shape (N = 2, C = 3, H = 4, W = 5) and data type fp32, the following figure shows how it is in the aligned layout (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/align_fp32_start_0_2_3_4_5.svg" src="../_images/align_fp32_start_0_2_3_4_5.svg" /></div>
+<p>In this case, C stride is ceil(4 * 5 / 32) * 32 = 32, explaining why 32 - 4 * 5 = 12 empty blocks are appended to each feature.
+The number of channels per NPU is 1, so C stride makes no sense and N stride is 32 * 1 = 32.</p>
+<p>Supposing the tensor starts at NPU 2, the following figure shows how the tensor is in the aligned layout.</p>
+<div class="figure">
+<img alt="../_images/align_fp32_start_2_2_3_4_5.svg" src="../_images/align_fp32_start_2_2_3_4_5.svg" /></div>
+<p>Now, C stride is still 32, but the number of channels per NPU is 2, so C stride is useful and N stride is 32 * 2 = 64.</p>
+</div></blockquote>
+</div>
+<div class="section" id="compact-layout">
+<span id="id3"></span><h2>Compact Layout<a class="headerlink" href="#compact-layout" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Compact layout is a layout of 4D tensor in local memory. If a tensor with shape (N, C, H, W) is in the compact layout, it is required that</p>
+<ul class="simple">
+<li>The address of the tensor is divisable by 4.</li>
+<li>The W stride is 1.</li>
+<li>The H stride is W.</li>
+<li>The C stride is H * W.</li>
+<li>The N stride is the C stride multiply by the number of channels per NPU.</li>
+</ul>
+<p>The strides can be obtained by calling <a class="reference internal" href="refined.html#_CPPv418okk_compact_strideP4dim4iPK4dim4" title="okk_compact_stride"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_compact_stride()</span></code></a>.</p>
+<p>To illustrate simply, the number of the NPUs is set to 4.</p>
+<p>Given a tensor with shape (N = 2, C = 3, H = 4, W = 5) and data type fp32, the following figure shows how it is in the compact layout (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/compact_fp32_start_0_2_3_4_5.svg" src="../_images/compact_fp32_start_0_2_3_4_5.svg" /></div>
+<p>Supposing the tensor starts at NPU 2, the following figure shows how the tensor is in the compact layout.</p>
+<div class="figure">
+<img alt="../_images/compact_fp32_start_2_2_3_4_5.svg" src="../_images/compact_fp32_start_2_2_3_4_5.svg" /></div>
+</div></blockquote>
+</div>
+<div class="section" id="matrix-layout">
+<span id="id4"></span><h2>Matrix Layout<a class="headerlink" href="#matrix-layout" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Matrix layout is a layout of matrix in local memory. If a matrix with size N-by-M is in the matrix layout, it could be viewed as a 4D tensor with shape (N = N, C = ceil(M / W), H = 1, W = W) in the <a class="reference internal" href="#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>, where W is in [1, M] and given by user.</p>
+<p>To illustrate simply, the number of the NPUs is set to 4.</p>
+<p>Given a matrix with size 2-by-40 and data type fp32, W = 40, the following figure shows how it is in the matrix layout (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/matrix_w_40.svg" src="../_images/matrix_w_40.svg" /></div>
+<p>All the columns of the matrix are in NPU 0 since C = ceil(40 / 40) = 1. To be in the aligned layout, one row of the matrix takes ceil(40 / 32) * 32 = 64 blocks to be stored in each NPU.</p>
+<p>Taking W = 20, the following figure shows how the matrix is in the matrix layout.</p>
+<div class="figure">
+<img alt="../_images/matrix_w_20.svg" src="../_images/matrix_w_20.svg" /></div>
+<p>The columns of the matrix are evenly divided into NPU 0 and NPU 1, and one row of the matrix takes ceil(20 / 32) * 32 = 32 blocks to be stored in each NPU.
+It is found that decreasing W can help relieve storage pressure.</p>
+<p>Taking W = 10, the following figure shows how the matrix is in the matrix layout.</p>
+<div class="figure">
+<img alt="../_images/matrix_w_10.svg" src="../_images/matrix_w_10.svg" /></div>
+<p>One row of the matrix still takes ceil(10 / 32) * 32 = 32 blocks to be stored in each NPU, but the columns of the matrix are evenly divided into all NPUs.</p>
+<p>Keeping decreasing W and taking W = 8, the following figure shows how the matrix is in the matrix layout.</p>
+<div class="figure">
+<img alt="../_images/matrix_w_8.svg" src="../_images/matrix_w_8.svg" /></div>
+<p>Although W is decreased, C = ceil(40 / 8) = 5 is greater than the number of NPUs, instead, more blocks are used to store one row of the matrix.
+<strong>By selecting an appropriate W can the storage achieve the best</strong>.</p>
+<p>In the previous cases, M is divisable by W, if not, for instance, taking W = 15, the following figure shows how the matrix is in the matrix layout.</p>
+<div class="figure">
+<img alt="../_images/matrix_w_15.svg" src="../_images/matrix_w_15.svg" /></div>
+<p>In NPU 0 and NPU 1, the number of the elements of one row is 15, but in NPU 2, the number is 40 - 15 * 2 = 10. <strong>If M is not divisable by W, the last channel only contains M - W * floor(M / W) elements</strong>.</p>
+<p>Taking W = 6, the following figure shows how the matrix tensor is in the matrix layout in local memory.</p>
+<div class="figure">
+<img alt="../_images/matrix_w_6.svg" src="../_images/matrix_w_6.svg" /></div>
+<p>More memory is used to store the matrix for W = 6 than W = 15. <strong>It is suggested that W should be modertately small for using more NPUs to store the matrix, but C is better not greater than the number of NPUs</strong>.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="storage-modes">
+<h1>Storage Modes<a class="headerlink" href="#storage-modes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="n-mode">
+<span id="id5"></span><h2>4N-mode<a class="headerlink" href="#n-mode" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>4N-mode is a storage mode for a tensor of data type int8 or uint8 in local memory.</p>
+<p>If a tensor with shape (N, C, H, W) and data type int8 or uint8 is in the 4N-mode,
+it is required that the four elements at (4 * m, c, h, w), (4 * m + 1, c, h, w), (4 * m + 2, c, h, w) and (4 * m + 3, c, h, w)
+are continuous in storage for arbitary m in [0, M - 1], c in [0, C - 1], h in [0, H - 1] and w in [0, W - 1], where M = ceil(N / 4).</p>
+<p>For convenience, the data type of the tensor in the 4N-mode could be viewed as (int8, int8, int8, int8) denoted by int8x4 other than int8,
+or (uint8, uint8, uint8, uint8) denoted by uint8x4 other than uint8. The new data type is 32-bit.</p>
+<p>Against the new data type, the shape could also be viewed as (M, C, H, W) other than (N, C, H, W),
+and <strong>the strides of the tensor in the 4N-mode are always against the new data type and the new shape</strong>.</p>
+<p><strong>If N is not divisable by 4, 4 - (N mod 4) dummy element(s) should be appended to make up the 4N-mode</strong>.</p>
+<p>To illustrate simply, the number of the NPUs is set to 4.</p>
+<p>Given a tensor with shape (N = 6, C = 5, H = 4, W = 5) and data type int8, the following figure shows how it is in the 4N-mode and the aligned layout (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/aligned_4N.svg" src="../_images/aligned_4N.svg" /></div>
+<p>The new shape of the tensor against data type int8x4 is (M = 2, C = 5, H = 4, W = 5).</p>
+<p>N = 6 is not divisable by 4, so 4 - (6 mod 4) = 2 dummy elements are appended,
+e.g., the int8x4 element at (1, 0, 0, 0) of the new shape contains two int8 elements at (4, 0, 0, 0) and (5, 0, 0, 0) of the original shape and two dummy ones.</p>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<span id="id7"></span><h2>2N-mode<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>2N-mode is a storage mode for a tensor of data type int16 or uint16 in local memory.</p>
+<p>If a tensor with shape (N, C, H, W) and data type int16 or uint16 is in the 2N-mode,
+it is required that the two elements at (2 * m, c, h, w), (2 * m + 1, c, h, w)
+are continuous in storage for arbitary m in [0, M - 1], c in [0, C - 1], h in [0, H - 1] and w in [0, W - 1], where M = ceil(N / 2).</p>
+<p>For convenience, the data type of the tensor in the 2N-mode could be viewed as (int16, int16) denoted by int16x2 other than int16,
+or (uint16, uint16) denoted by uint16x2 other than uint16. The new data type is 32-bit.</p>
+<p>Against the new data type, the shape of the tensor could also be viewed as (M, C, H, W) other than (N, C, H, W),
+and <strong>the strides of the tensor in the 2N-mode are always against the new data type and the new shape</strong>.</p>
+<p><strong>If N is odd, a dummy element should be appended to make up the 2N-mode</strong>.</p>
+<p>To illustrate simply, the number of the NPUs is set to 4.</p>
+<p>Given a tensor with shape (N = 3, C = 5, H = 4, W = 5) and data type int16, the following figure shows how it is in the 2N-mode and the aligned layout (Note that each block has size of 4 bytes).</p>
+<div class="figure">
+<img alt="../_images/aligned_2N.svg" src="../_images/aligned_2N.svg" /></div>
+<p>The new shape of the tensor against data type int16x2 is (M = 2, C = 5, H = 4, W = 5)</p>
+<p>N = 3 is odd, so a dummy element is appended, e.g., the int16x2 element at (1, 0, 0, 0) of the new shape contains an int8 element at (2, 0, 0, 0) of the original shape and a dummy one.</p>
+</div></blockquote>
+</div>
+<div class="section" id="ic-mode">
+<span id="id8"></span><h2>2IC-mode<a class="headerlink" href="#ic-mode" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>2IC-mode is a storage mode for a 2D convolution weight tensor of data type fp32 in local memory.</p>
+<p>The shape of a 2D convolution weight tensor in local memory is [I, O, H, W], where I is the number of input channels, O is the number of output channels, H and W are the kernel height and width.
+If such a weight tensor is in the 2IC-mode, it is required that the two elements at (2 * j, o, h, w), (2 * j + 1, o, h, w)
+are continuous in storage for arbitary j in [0, J - 1], o in [0, O - 1], h in [0, H - 1] and w in [0, W - 1], where J = ceil(I / 2).</p>
+<p>For convenience, the data type of the tensor in the 2IC-mode could be viewed as (fp32, fp32) denoted by fp32x2 other than fp32.
+The new data type is 64-bit.</p>
+<p>Against the new data type, the shape of the weight tensor could also be viewed as (J, O, H, W) other than (I, O, H, W),
+and <strong>the strides of the weight tensor in the 2IC-mode are always against the new data type and the new shape</strong>.</p>
+<p><strong>If I is odd, a dummy element should be appended to make up the 2IC-mode</strong>.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="refined.html" class="btn btn-neutral float-right" title="About Function Names" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="architecture.html" class="btn btn-neutral float-left" title="TPU Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

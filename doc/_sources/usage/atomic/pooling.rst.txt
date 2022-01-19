@@ -1,0 +1,131 @@
+Pooling
+===========
+
+浮点运算
+________
+
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned int input_addr;
+              unsigned int output_addr;
+              unsigned int input_shape[4];
+              unsigned int kernel_h;
+              unsigned int kernel_w;
+              unsigned int stride_h;
+              unsigned int stride_w;
+              unsigned int ins_h;
+              unsigned int ins_w;
+              unsigned int pad[4];
+          } PoolParam;
+
+          typedef struct {
+              unsigned int input_addr;
+              unsigned int output_addr;
+              unsigned int input_shape[4];
+              unsigned int kernel_h;
+              unsigned int kernel_w;
+              unsigned int stride_h;
+              unsigned int stride_w;
+              unsigned int ins_h;
+              unsigned int ins_w;
+              unsigned int pad[4];
+              float coeff;
+          } SumPoolParam;
+
+
+参数说明：
+
+* input_addr：存放输入feature map的Local Memory偏移地址;
+* output_addr：存放输出feature map的Local Memory偏移地址;
+* input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;
+* kernel_h/kernel_w：滑动窗口的大小，分别对应HW维度;
+* stride_h/stride_w：滑动窗口在输入feature map上滑动的步长，分别对应HW维度;
+* ins_h/ins_w：对输入feature map的行/列之间进行插0的个数;
+* pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;
+* coeff：当进行求和池化操作时，该参数为求和之后的乘数因子，如果只是简单的求和，则该参数设为1即可。
+
+
+平均池化操作
+>>>>>>>>>>>>>
+
+    .. code-block:: c
+
+        void bm_atomic_avg_pool(const PoolParam* param);
+
+
+最大池化操作
+>>>>>>>>>>>>
+
+    .. code-block:: c
+
+        void bm_atomic_max_pool(const PoolParam* param);
+
+
+求和池化操作
+>>>>>>>>>>>>
+
+    .. code-block:: c
+
+        void bm_atomic_sum_pool(const SumPoolParam* param);
+
+
+
+定点运算
+________
+
+可以实现avg-pooling、max-pooling，输入输出均为 int8 类型。
+
+输入输出均按照4N模式存储。
+
+    .. code-block:: c
+
+        typedef struct {
+            unsigned int input_addr;
+            unsigned int output_addr;
+            unsigned int input_shape[4];
+            unsigned int kernel_h;
+            unsigned int kernel_w;
+            unsigned int stride_h;
+            unsigned int stride_w;
+            unsigned int ins_h;
+            unsigned int ins_w;
+            unsigned int dilate_h;
+            unsigned int dilate_w;
+            unsigned int pad[4];
+            unsigned int rshift_bit;
+            bool input_sign;
+            bool if_relu;
+        } PoolQuantParam;
+
+
+参数说明：
+
+* input_addr：存放输入feature map的Local Memory偏移地址;
+* output_addr：存放输出feature map的Local Memory偏移地址;
+* input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;
+* kernel_h/kernel_w：滑动窗口的大小，分别对应HW维度;
+* stride_h/stride_w：滑动窗口在输入feature map上滑动的步长，分别对应HW维度;
+* ins_h/ins_w：对输入feature map的行/列之间进行插0的个数;
+* dilate_h/dilate_w：对kernel进行dilate操作的信息;
+* pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;
+* rshift_bit：由于输入均为int8,为了防止溢出中间运算的累加结果均为int32，该参数表示对int32的结果右移r_shift后得到最终的int8结果;
+* input_sign：输入feature map 的值是否为有符号数;
+* if_relu：是否对pooling或者depthwise的结果再进行relu操作，相当与将relu层与该操作合并;
+
+
+平均池化操作
+>>>>>>>>>>>>>
+
+    .. code-block:: c
+
+            void bm_atomic_avg_pool_quantized(const PoolQuantParam* param);
+
+最大池化操作
+>>>>>>>>>>>>
+
+    .. code-block:: c
+
+            void bm_atomic_max_pool_quantized(const PoolQuantParam* param);
+

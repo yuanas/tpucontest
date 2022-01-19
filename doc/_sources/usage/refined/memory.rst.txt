@@ -1,0 +1,45 @@
+Memory Functions
+=======================
+
+okk_bdc_32bit_cpy
+_______________________
+
+.. cpp:function:: void okk_bdc_32bit_cpy(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy the elements of the source tensor to the destination tensor for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensor is 32-bit.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_set_C
+_________________________
+
+.. cpp:function:: void okk_bdc_32bit_set_C(local_addr_t dst_addr, x32 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor to be a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of the destination tensor is 32-bit.
+    - :cpp:expr:`dst_addr` is divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.

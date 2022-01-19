@@ -1,0 +1,520 @@
+FP32 Binary Functions
+=====================
+
+okk_bdc_add
+_________________
+
+.. cpp:function:: void okk_bdc_add(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform addition of the elements of the source_0 and source_1 tensors for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) + src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_add_C
+___________________
+
+.. cpp:function:: void okk_bdc_add_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform addition of the elements of the source tensor and a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) + C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to add.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_sub
+_________________
+
+.. cpp:function:: void okk_bdc_sub(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform subtraction of the elements of the source_0 and source_1 tensors for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) - src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_sub_C
+___________________
+
+.. cpp:function:: void okk_bdc_sub_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform subtraction of the elements of the source tensor by a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) - C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to subtract by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_C_sub
+___________________
+
+.. cpp:function:: void okk_bdc_C_sub(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform subtraction of a constant value by the elements of the source tensor for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = C - src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be subtracted.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_mul
+_________________
+
+.. cpp:function:: void okk_bdc_mul(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform multiplication of the elements of the source_0 and source_1 tensors for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w) \times src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_mul_C
+___________________
+
+.. cpp:function:: void okk_bdc_mul_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform multiplication of the elements of the source tensor and a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) \times C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to multiply.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_div
+_________________
+
+.. cpp:function:: void okk_bdc_div(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform division of the elements of the source_0 tensor by the elements of the source_1 tensor for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \frac{src\_0(n, c, h, w)}{src\_1(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_div_C
+___________________
+
+.. cpp:function:: void okk_bdc_div_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform division of the elements of the source tensor by a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \frac{src(n, c, h, w)}{C}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to divide by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_C_div
+___________________
+
+.. cpp:function:: void okk_bdc_C_div(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform division of a constant value by the elements of the source tensor for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \frac{C}{src(n, c, h, w)}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be divided.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_mac
+_________________
+
+.. cpp:function:: void okk_bdc_mac(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform multiply accumulation of the elements of the source_0 and source_1 tensors for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = dst(n, c, h, w) + src\_0(n, c, h, w) \times src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_mac_C
+___________________
+
+.. cpp:function:: void okk_bdc_mac_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform multiply accumulation of the elements of the source and a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = dst(n, c, h, w) + src(n, c, h, w) \times C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to multiply.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_max
+_________________
+
+.. cpp:function:: void okk_bdc_max(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform maximum operation of the elements of the source_0 and source_1 tensors for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \max(src\_0(n, c, h, w), src\_1(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_max_C
+___________________
+
+.. cpp:function:: void okk_bdc_max_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform maximum operation of the elements of the source tensor and a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \max(src(n, c, h, w), C)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_min
+_________________
+
+.. cpp:function:: void okk_bdc_min(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform minimum operation of the elements of the source_0 and source_1 tensors for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \min(src\_0(n, c, h, w), src\_1(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is fp32.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_min_C
+___________________
+
+.. cpp:function:: void okk_bdc_min_C(local_addr_t dst_addr, local_addr_t src_addr, float C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform minimum operation of the elements of the source tensor and a constant value for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = \min(src(n, c, h, w), C)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_greater_select_value
+__________________________________
+
+.. cpp:function:: void okk_bdc_greater_select_value(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, x32 select_val, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform greater comparing of the elements of the source_0 and source_1 tensors for fp32 data type and then select a consant value or zero to be the result.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}select\_val&{\text{if }}src\_0(n, c, h, w)>src\_1(n, c, h, w),\\0&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param select_val: Constant value to select.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the source_0 and source_1 tensors is fp32, the data type of the destination tensor is some 32-bit type.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_greater_C_select_value
+____________________________________
+
+.. cpp:function:: void okk_bdc_greater_C_select_value(local_addr_t dst_addr, local_addr_t src_addr, float C, x32 select_val, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform greater comparing of the elements of the source tensor and a constant value for fp32 data type and then select another consant value or zero to be the result.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}select\_val&{\text{if }}src(n, c, h, w)>C,\\0&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value be operated.
+    :param select_val: Constant value to select.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the source tensor is fp32, the data type of the destination tensor is some 32-bit type.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_C_greater_select_value
+____________________________________
+
+.. cpp:function:: void okk_bdc_C_greater_select_value(local_addr_t dst_addr, local_addr_t src_addr, float C, x32 select_val, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform greater comparing of a constant value and the elements of the source tensor for fp32 data type and then select another consant value or zero to be the result.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}select\_val&{\text{if }}C>src(n, c, h, w),\\0&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value be operated.
+    :param select_val: Constant value to select.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the source tensor is fp32, the data type of the destination tensor is some 32-bit type.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_equal_select_value
+________________________________
+
+.. cpp:function:: void okk_bdc_equal_select_value(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, x32 select_val, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform equal comparing of a constant value and the elements of the source tensor for fp32 data type and then select another consant value or zero to be the result.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}select\_val&{\text{if }}src\_0(n, c, h, w)=src\_1(n, c, h, w),\\0&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param select_val: Constant value to select.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the source_0 and source_1 tensors is fp32, the data type of the destination tensor is some 32-bit type.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_equal_C_select_value
+__________________________________
+
+.. cpp:function:: void okk_bdc_equal_C_select_value(local_addr_t dst_addr, local_addr_t src_addr, float C, x32 select_val, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform equal comparing of the elements of the source tensor and a constant value for fp32 data type and then select another consant value or zero to be the result.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}select\_val&{\text{if }}src(n, c, h, w)=C,\\0&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value be operated.
+    :param select_val: Constant value to select.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the source tensor is fp32, the data type of the destination tensor is some 32-bit type.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.

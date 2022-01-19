@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>TPU Architecture &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Address of Tensor in Local Memory" href="layout.html" />
+    <link rel="prev" title="Introduction" href="abstract.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html#history">History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#heterogeneous-programming">Heterogeneous Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#device">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#host">Host</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>TPU Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/usage/architecture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tpu-architecture">
+<h1>TPU Architecture<a class="headerlink" href="#tpu-architecture" title="Permalink to this headline">¶</a></h1>
+<p>The following is the architecture diagram of Sophon TPU.</p>
+<div class="figure">
+<img alt="../_images/tpu.svg" src="../_images/tpu.svg" /></div>
+<p>Sophon TPU is a multi-core architecture. Each core is called a Neural network Processing Unit (NPU).
+There is an independent local storage and many kinds of Execution Units (EU) in each NPU.
+All NPUs complete a operation in the form of Single Instruction Multiple Data (SIMD).
+The data needs to be copied from system memory (usually global memory) to NPU local memory by GDMA before it can be accessed by EUs.
+CDMA, GDMA and BDC can run parallel.</p>
+<p><strong>The copying of data between system memory and local memory should be reduced as much as possible, so as to effectively give full play to the performance of TPU</strong>.</p>
+<p>For BM1684,</p>
+<blockquote>
+<div><ul class="simple">
+<li>The number of NPUs is 64, obtained by calling <a class="reference internal" href="refined.html#_CPPv411okk_npu_numv" title="okk_npu_num"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_npu_num()</span></code></a> on device.</li>
+<li>The size of local memory in each NPU is 512KB, obtained by calling <a class="reference internal" href="refined.html#_CPPv426okk_local_mem_size_per_npuv" title="okk_local_mem_size_per_npu"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_local_mem_size_per_npu()</span></code></a> on device.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="memory-types">
+<h1>Memory Types<a class="headerlink" href="#memory-types" title="Permalink to this headline">¶</a></h1>
+<p>The TPU contains the following memory types</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt>System Memory</dt>
+<dd><ul class="first last">
+<li>Global Memory: Off-chip memory (DDR).</li>
+<li>L2-SRAM: On-chip memory，it can be used as intermediate cache.</li>
+<li>DTCM: Cache space of ARM9.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Local Memory: On-chip memory，it is mainly used to store the data for BDC.</li>
+</ul>
+</div></blockquote>
+<p>GDMA can handle data copying between the above four kinds of memories,
+ARM9 can also access all of them. It should be noted that ARM9 is a 32-bit processor, the addresses of local memory, L2-SRAM and DTCM can be accessed directly by using 32-bit addresses,
+among them, DTCM is the fastest, but the address and of global memory are beyond the 32-bit representation range, so it can only be accessed indirectly after mapping (This function is rarely used).</p>
+<p>For BM1684,</p>
+<blockquote>
+<div><ul class="simple">
+<li>The size of global memory is 12GB.</li>
+<li>The size of local memory is 32MB.</li>
+<li>The size of L2-SRAM is 4MB, obtained by calling <a class="reference internal" href="refined.html#_CPPv416okk_l2_sram_sizev" title="okk_l2_sram_size"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_l2_sram_size()</span></code></a> on device.</li>
+<li>The size of DTCM is 512KB, obtained by calling <a class="reference internal" href="refined.html#_CPPv413okk_dtcm_sizev" title="okk_dtcm_size"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okk_dtcm_size()</span></code></a> on device.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="heterogeneous-programming">
+<h1>Heterogeneous Programming<a class="headerlink" href="#heterogeneous-programming" title="Permalink to this headline">¶</a></h1>
+<p>OKKernel programming includes the following two parts</p>
+<blockquote>
+<div><ul class="simple">
+<li>Host: In SoC mode, it refers to the ARM A53 processor on the chip, and in PCIe mode, it refers to the host used by user.</li>
+<li>Device: SoC and PCIe are both the on-chip microprocessors (ARM9).</li>
+</ul>
+</div></blockquote>
+<p>User compiles the developed codes to form new firmware, and then updates the firmware of device by the new one.</p>
+<div class="figure">
+<img alt="../_images/heterogeneous_prepare.svg" src="../_images/heterogeneous_prepare.svg" /></div>
+<p>The above preparation job only needs to be done once, because kernel functions have been registered on device with the firmware update.</p>
+<p>To the device where kernel functions have been registered, user can launch kernel from host.</p>
+<div class="figure">
+<img alt="../_images/heterogeneous_run.svg" src="../_images/heterogeneous_run.svg" /></div>
+<div class="section" id="device">
+<h2>Device<a class="headerlink" href="#device" title="Permalink to this headline">¶</a></h2>
+<p>On device, it is used to parse the command sent from host and call registered atomic functions.
+For atomic functions can be used on device, see <a class="reference internal" href="../index.html#functions-on-device"><span class="std std-ref">Atomic Functions</span></a>.
+For more programming details, see <a class="reference internal" href="programming_device.html#programming-on-device"><span class="std std-ref">Programming on Device</span></a>.</p>
+<p>The code on device can only be written in C language and compiled by ARM 32-bit compiler.
+The compiling result are two binary files, <code class="code bash docutils literal notranslate"><span class="pre">device_tcm.bin</span></code> and <code class="code bash docutils literal notranslate"><span class="pre">device_ddr.bin</span></code> (that can be loaded to device by calling <a class="reference internal" href="#_CPPv422okkernel_load_firmware11bm_handle_tPKcPKc" title="okkernel_load_firmware"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">okkernel_load_firmware()</span></code></a> on host).</p>
+<p>Due to the limited space of ITCM which is fast, some low-frequency codes need to be placed in the DDR by naming file with prefix <code class="code bash docutils literal notranslate"><span class="pre">ok_device_</span></code>.</p>
+</div>
+<div class="section" id="host">
+<h2>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h2>
+<p>On host, the steps to be implemented include loading binary files, sending commands to device and executing them synchronously or asynchronously and waiting for execution to complete.
+The APIs are as follows.</p>
+<dl class="function">
+<dt id="_CPPv422okkernel_load_firmware11bm_handle_tPKcPKc">
+<span id="_CPPv322okkernel_load_firmware11bm_handle_tPKcPKc"></span><span id="_CPPv222okkernel_load_firmware11bm_handle_tPKcPKc"></span><span id="okkernel_load_firmware__bm_handle_t.cCP.cCP"></span>bm_status_t <code class="descname">okkernel_load_firmware</code><span class="sig-paren">(</span>bm_handle_t <em>handle</em>, <em class="property">const</em> char *<em>firmware_tcm</em>, <em class="property">const</em> char *<em>firmware_ddr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv422okkernel_load_firmware11bm_handle_tPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Load or reload firmware to device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>handle</strong> – Handle of the device.</li>
+<li><strong>firmware_tcm</strong> – Path to the firmware file to load to ITCM.</li>
+<li><strong>firmware_ddr</strong> – Path to the firmware file to load to DDR.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv420okkernel_launch_sync11bm_handle_tPKcPKvj">
+<span id="_CPPv320okkernel_launch_sync11bm_handle_tPKcPKvj"></span><span id="_CPPv220okkernel_launch_sync11bm_handle_tPKcPKvj"></span><span id="okkernel_launch_sync__bm_handle_t.cCP.voidCP.unsigned-i"></span>bm_status_t <code class="descname">okkernel_launch_sync</code><span class="sig-paren">(</span>bm_handle_t <em>handle</em>, <em class="property">const</em> char *<em>func_name</em>, <em class="property">const</em> void *<em>args</em>, unsigned int <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420okkernel_launch_sync11bm_handle_tPKcPKvj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Launch the kernel function on device synchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>handle</strong> – Handle of the device.</li>
+<li><strong>func_name</strong> – Name of the kernel function to launch on device.</li>
+<li><strong>args</strong> – Pointer to the user-discript data package.</li>
+<li><strong>size</strong> – Size of the user-discript data package in bytes.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421okkernel_launch_async11bm_handle_tPKcPKvj">
+<span id="_CPPv321okkernel_launch_async11bm_handle_tPKcPKvj"></span><span id="_CPPv221okkernel_launch_async11bm_handle_tPKcPKvj"></span><span id="okkernel_launch_async__bm_handle_t.cCP.voidCP.unsigned-i"></span>bm_status_t <code class="descname">okkernel_launch_async</code><span class="sig-paren">(</span>bm_handle_t <em>handle</em>, <em class="property">const</em> char *<em>func_name</em>, <em class="property">const</em> void *<em>args</em>, unsigned int <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421okkernel_launch_async11bm_handle_tPKcPKvj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Launch the kernel function on device asynchronously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>handle</strong> – Handle of the device.</li>
+<li><strong>func_name</strong> – Name of the kernel function to launch on device.</li>
+<li><strong>args</strong> – Pointer to the user-discript data package.</li>
+<li><strong>size</strong> – Size of the user-discript data package in bytes.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv413okkernel_sync11bm_handle_t">
+<span id="_CPPv313okkernel_sync11bm_handle_t"></span><span id="_CPPv213okkernel_sync11bm_handle_t"></span><span id="okkernel_sync__bm_handle_t"></span>bm_status_t <code class="descname">okkernel_sync</code><span class="sig-paren">(</span>bm_handle_t <em>handle</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413okkernel_sync11bm_handle_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Synchronize the device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handle</strong> – Handle of the device.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Status of launching kernel function, BM_SUCCESS means succeeded, otherwise, some errors caught.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>For more programming details, see <a class="reference internal" href="programming_host.html#programming-on-host"><span class="std std-ref">Programming on Host</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="layout.html" class="btn btn-neutral float-right" title="Address of Tensor in Local Memory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="abstract.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

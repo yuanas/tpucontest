@@ -1,0 +1,424 @@
+GDMA Functions
+==============
+
+okk_gdma_32bit_cpy_S2L
+____________________________
+
+.. cpp:function:: void okk_gdma_32bit_cpy_S2L(local_addr_t dst_addr, system_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from system memory to local memory for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 32-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`continuous layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_32bit_cpy_L2S
+____________________________
+
+.. cpp:function:: void okk_gdma_32bit_cpy_L2S(system_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from local memory to system memory for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 32-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`128-byte aligned layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_32bit_cpy_L2L
+____________________________
+
+.. cpp:function:: void okk_gdma_32bit_cpy_L2L(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from local memory to local memory for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 32-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`128-byte aligned layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_32bit_cpy_S2S
+____________________________
+
+.. cpp:function:: void okk_gdma_32bit_cpy_S2S(system_addr_t dst_addr, system_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from system memory to system memory for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 32-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`continuous layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_32bit_matrix_S2L
+_______________________________
+
+.. cpp:function:: void okk_gdma_32bit_matrix_S2L(local_addr_t dst_addr, system_addr_t src_addr, int rows, int cols, int cols_per_channel, int row_stride)
+
+    Copy matrix from system memory to local memory for 32-bit data type.
+
+    .. math:: dst(x, y) = src(x, y)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param rows: Number of the rows of the matrix.
+    :param cols: Number of the columns of the matrix.
+    :param cols_per_channel: Number of the columns per channel of the destination matrix tensor.
+    :param row_stride: Stride of the row of the source matrix tensor.
+
+    **Remarks**
+
+    - The destination tensor is in the :ref:`matrix layout`.
+    - The elements of each row of the source matrix are continuous.
+    - The data type of the destination and source tensors is 32-bit.
+
+okk_gdma_32bit_matrix_L2S
+_______________________________
+
+.. cpp:function:: void okk_gdma_32bit_matrix_L2S(system_addr_t dst_addr, local_addr_t src_addr, int rows, int cols, int cols_per_channel, int row_stride)
+
+    Copy matrix from local memory to system memory for 32-bit data type.
+
+    .. math:: dst(x, y) = src(x, y)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param rows: Number of the rows of the matrix.
+    :param cols: Number of the columns of the matrix.
+    :param cols_per_channel: Number of the columns per channel of the source matrix tensor.
+    :param row_stride: Stride of the row of the destination matrix tensor.
+
+    **Remarks**
+
+    - The elements of each row of the destination matrix are continuous.
+    - The source tensor is in the :ref:`matrix layout`.
+    - The data type of the destination and source tensors is 32-bit.
+
+okk_gdma_32bit_set_C_system
+_________________________________
+
+.. cpp:function:: void okk_gdma_32bit_set_C_system(system_addr_t dst_addr, x32 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor in system memory to be a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param C: Constant value of 32-bit to set.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of destination tensor is 32-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+
+okk_gdma_32bit_set_C_local
+________________________________
+
+.. cpp:function:: void okk_gdma_32bit_set_C_local(local_addr_t dst_addr, x32 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor in local memory to be a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param C: Constant value of 32-bit to set.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of destination tensor is 32-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+
+okk_gdma_16bit_cpy_S2L
+____________________________
+
+.. cpp:function:: void okk_gdma_16bit_cpy_S2L(local_addr_t dst_addr, system_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from system memory to local memory for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 16-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`continuous layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_16bit_cpy_L2S
+____________________________
+
+.. cpp:function:: void okk_gdma_16bit_cpy_L2S(system_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from local memory to system memory for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 16-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`128-byte aligned layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_16bit_cpy_L2L
+____________________________
+
+.. cpp:function:: void okk_gdma_16bit_cpy_L2L(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from local memory to local memory for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 16-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`128-byte aligned layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_16bit_cpy_S2S
+____________________________
+
+.. cpp:function:: void okk_gdma_16bit_cpy_S2S(system_addr_t dst_addr, system_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from system memory to system memory for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 16-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`continuous layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_16bit_set_C_system
+_________________________________
+
+.. cpp:function:: void okk_gdma_16bit_set_C_system(system_addr_t dst_addr, x16 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor in system memory to be a constant value for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param C: Constant value of 16-bit to set.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of destination tensor is 16-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+
+okk_gdma_16bit_set_C_local
+________________________________
+
+.. cpp:function:: void okk_gdma_16bit_set_C_local(local_addr_t dst_addr, x16 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor in local memory to be a constant value for 16-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param C: Constant value of 16-bit to set.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of destination tensor is 16-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+
+okk_gdma_8bit_cpy_S2L
+___________________________
+
+.. cpp:function:: void okk_gdma_8bit_cpy_S2L(local_addr_t dst_addr, system_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor to the destination tensor from system memory to local memory for 8-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 8-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`continuous layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_8bit_cpy_L2S
+___________________________
+
+.. cpp:function:: void okk_gdma_8bit_cpy_L2S(system_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from local memory to system memory for 8-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 8-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`128-byte aligned layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_8bit_cpy_L2L
+___________________________
+
+.. cpp:function:: void okk_gdma_8bit_cpy_L2L(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy the elements of the source tensor to the destination tensor from local memory to local memory for 8-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param src_addr: Address of the source tensor in local memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is some 8-bit type.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`128-byte aligned layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_8bit_cpy_S2S
+___________________________
+
+.. cpp:function:: void okk_gdma_8bit_cpy_S2S(system_addr_t dst_addr, system_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Copy tensor from system memory to system memory for 8-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param src_addr: Address of the source tensor in system memory.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is 8-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+    - If :cpp:expr:`src_stride` is NULL, the source tensor is in the :ref:`continuous layout`.
+    - :cpp:expr:`dst_stride->w` and :cpp:expr:`src_stride->w` are only allowed to be one.
+
+okk_gdma_8bit_set_C_system
+________________________________
+
+.. cpp:function:: void okk_gdma_8bit_set_C_system(system_addr_t dst_addr, x8 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor in system memory to be a constant value for 8-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor in system memory.
+    :param C: Constant value of 8-bit to set.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of destination tensor is 8-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`continuous layout`.
+
+okk_gdma_8bit_set_C_local
+_______________________________
+
+.. cpp:function:: void okk_gdma_8bit_set_C_local(local_addr_t dst_addr, x8 C, const dim4 *shape, const dim4 *dst_stride)
+
+    Set all the elements of the destination tensor in local memory to be a constant value for 8-bit data type.
+
+    .. math:: dst(n, c, h, w) = C
+
+    :param dst_addr: Address of the destination tensor in local memory.
+    :param C: Constant value of 8-bit to set.
+    :param shape: Pointer to the shape of the destination tensor.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+
+    **Remarks**
+
+    - The data type of destination tensor is 8-bit.
+    - If :cpp:expr:`dst_stride` is NULL, the destination tensor is in the :ref:`128-byte aligned layout`.

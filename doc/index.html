@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OKKernel 用户开发文档 &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="usage/abstract.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>OKKernel 用户开发文档</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="okkernel">
+<h1>OKKernel 用户开发文档<a class="headerlink" href="#okkernel" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/sophon.png"><img alt="_images/sophon.png" src="_images/sophon.png" style="width: 200.0px; height: 200.0px;" /></a>
+</div>
+<div class="line-block">
+<div class="line"><strong>法律声明</strong></div>
+<div class="line">版权所有 © 北京算能科技有限公司 2019。 保留一切权利。</div>
+<div class="line">非经本公司书面许可，任何单位和个人不得擅自摘抄、复制本文档内容的部分或全部，并不得以任何形式传播。</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>注意</strong></div>
+<div class="line">您购买的产品、服务或特性等应受比特大陆公司商业合同和条款的约束，本文档中描述的全部或部分产品、服务或特性可能不在您的购买或使用范围之内。除非合同另有约定，比特大陆公司对本文档内容不做任何明示或默示的声明或保证。由于产品版本升级或其他原因，本文档内容会不定期进行更新。除非另有约定，本文档仅作为使用指导，本文档中的所有陈述、信息和建议不构成任何明示或暗示的担保。</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>技术支持</strong></div>
+<div class="line">北京算能科技有限公司</div>
+<div class="line">地址：北京市海淀区丰豪东路9号院2号楼</div>
+<div class="line">邮编：100192</div>
+<div class="line">网址：<a class="reference external" href="https://www.sophgo.com/">https://www.sophgo.com/</a></div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/abstract.html#history">History</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="about-tpu">
+<h2>About TPU<a class="headerlink" href="#about-tpu" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/architecture.html#heterogeneous-programming">Heterogeneous Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/architecture.html#device">Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/architecture.html#host">Host</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="address-strides-and-layouts">
+<h2>Address, Strides and Layouts<a class="headerlink" href="#address-strides-and-layouts" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#layouts">Layouts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#continuous-layout">Continuous Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#byte-aligned-layout">128-Byte Aligned Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#compact-layout">Compact Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#matrix-layout">Matrix Layout</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/layout.html#storage-modes">Storage Modes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#n-mode">4N-mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#id6">2N-mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/layout.html#ic-mode">2IC-mode</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="atomic-functions">
+<span id="functions-on-device"></span><h2>Atomic Functions<a class="headerlink" href="#atomic-functions" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#common-functions">Common Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-initialize">okk_initialize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-poll">okk_poll</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-parallel-start">okk_parallel_start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-parallel-end">okk_parallel_end</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-is-parallel-state">okk_is_parallel_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-local-mem-size-per-npu">okk_local_mem_size_per_npu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-l2-sram-size">okk_l2_sram_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-dtcm-size">okk_dtcm_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-npu-num">okk_npu_num</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#utils-functions">Utils Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-start-npu-index">okk_start_npu_index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-channle-num-per-npu">okk_channle_num_per_npu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-128-byte-aligned-stride-for-32bit">okk_128_byte_aligned_stride_for_32bit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-128-byte-aligned-stride-for-16bit">okk_128_byte_aligned_stride_for_16bit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-128-byte-aligned-stride-for-8bit">okk_128_byte_aligned_stride_for_8bit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-compact-stride">okk_compact_stride</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-continuous-stride">okk_continuous_stride</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#gdma-functions">GDMA Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-cpy-s2l">okk_gdma_32bit_cpy_S2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-cpy-l2s">okk_gdma_32bit_cpy_L2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-cpy-l2l">okk_gdma_32bit_cpy_L2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-cpy-s2s">okk_gdma_32bit_cpy_S2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-matrix-s2l">okk_gdma_32bit_matrix_S2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-matrix-l2s">okk_gdma_32bit_matrix_L2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-set-c-system">okk_gdma_32bit_set_C_system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-32bit-set-c-local">okk_gdma_32bit_set_C_local</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-16bit-cpy-s2l">okk_gdma_16bit_cpy_S2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-16bit-cpy-l2s">okk_gdma_16bit_cpy_L2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-16bit-cpy-l2l">okk_gdma_16bit_cpy_L2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-16bit-cpy-s2s">okk_gdma_16bit_cpy_S2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-16bit-set-c-system">okk_gdma_16bit_set_C_system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-16bit-set-c-local">okk_gdma_16bit_set_C_local</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-8bit-cpy-s2l">okk_gdma_8bit_cpy_S2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-8bit-cpy-l2s">okk_gdma_8bit_cpy_L2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-8bit-cpy-l2l">okk_gdma_8bit_cpy_L2L</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-8bit-cpy-s2s">okk_gdma_8bit_cpy_S2S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-8bit-set-c-system">okk_gdma_8bit_set_C_system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-gdma-8bit-set-c-local">okk_gdma_8bit_set_C_local</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#memory-functions">Memory Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-cpy">okk_bdc_32bit_cpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-set-c">okk_bdc_32bit_set_C</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#data-type-converting-functions">Data Type Converting Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fp32-to-int32">okk_bdc_fp32_to_int32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-lookup-int32-to-fp32">okk_bdc_lookup_int32_to_fp32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-4n-int8-to-fp32">okk_bdc_4N_int8_to_fp32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-int8-to-fp32">okk_bdc_int8_to_fp32</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fp32-binary-functions">FP32 Binary Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-add">okk_bdc_add</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-add-c">okk_bdc_add_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-sub">okk_bdc_sub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-sub-c">okk_bdc_sub_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-c-sub">okk_bdc_C_sub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-mul">okk_bdc_mul</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-mul-c">okk_bdc_mul_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-div">okk_bdc_div</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-div-c">okk_bdc_div_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-c-div">okk_bdc_C_div</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-mac">okk_bdc_mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-mac-c">okk_bdc_mac_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-max">okk_bdc_max</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-max-c">okk_bdc_max_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-min">okk_bdc_min</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-min-c">okk_bdc_min_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-greater-select-value">okk_bdc_greater_select_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-greater-c-select-value">okk_bdc_greater_C_select_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-c-greater-select-value">okk_bdc_C_greater_select_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-equal-select-value">okk_bdc_equal_select_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-equal-c-select-value">okk_bdc_equal_C_select_value</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#bit-binary-functions">32-Bit Binary Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-and">okk_bdc_32bit_and</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-and-c">okk_bdc_32bit_and_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-or">okk_bdc_32bit_or</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-or-c">okk_bdc_32bit_or_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-xor">okk_bdc_32bit_xor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-xor-c">okk_bdc_32bit_xor_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-arithmetic-shift">okk_bdc_32bit_arithmetic_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-logical-shift">okk_bdc_32bit_logical_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-arithmetic-shift-c">okk_bdc_32bit_arithmetic_shift_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-logical-shift-c">okk_bdc_32bit_logical_shift_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-c-arithmetic-shift">okk_bdc_32bit_C_arithmetic_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-32bit-c-logical-shift">okk_bdc_32bit_C_logical_shift</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fp32-unary-functions">FP32 Unary Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-rsqrt">okk_bdc_rsqrt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-sqrt">okk_bdc_sqrt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-taylor-exp">okk_bdc_taylor_exp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-lookup-exp">okk_bdc_lookup_exp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-exp">okk_bdc_exp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-exp-tunable">okk_bdc_exp_tunable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-sigmoid">okk_bdc_sigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-sigmoid-tunable">okk_bdc_sigmoid_tunable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-tanh">okk_bdc_tanh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-tanh-tunable">okk_bdc_tanh_tunable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-reciprocal">okk_bdc_reciprocal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-neg">okk_bdc_neg</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-relu">okk_bdc_relu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-bias">okk_bdc_bias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-scale">okk_bdc_scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-scale-bias">okk_bdc_scale_bias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-conv2d">okk_bdc_conv2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-depthwise2d">okk_bdc_depthwise2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-avg-pool2d">okk_bdc_avg_pool2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-max-pool2d">okk_bdc_max_pool2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-matmul">okk_bdc_matmul</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-add">okk_bdc_fixed_point_packed_add</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-add-c">okk_bdc_fixed_point_packed_add_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-sub">okk_bdc_fixed_point_packed_sub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-sub-c">okk_bdc_fixed_point_packed_sub_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-c-sub">okk_bdc_fixed_point_packed_C_sub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-mul">okk_bdc_fixed_point_packed_mul</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-mul-c">okk_bdc_fixed_point_packed_mul_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-mac">okk_bdc_fixed_point_packed_mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-mac-c">okk_bdc_fixed_point_packed_mac_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-max">okk_bdc_fixed_point_packed_max</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-max-c">okk_bdc_fixed_point_packed_max_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-min">okk_bdc_fixed_point_packed_min</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-min-c">okk_bdc_fixed_point_packed_min_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-arithmetic-shift">okk_bdc_fixed_point_packed_16bit_arithmetic_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-logical-shift">okk_bdc_fixed_point_packed_16bit_logical_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-arithmetic-shift-c">okk_bdc_fixed_point_packed_16bit_arithmetic_shift_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-logical-shift-c">okk_bdc_fixed_point_packed_16bit_logical_shift_C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-c-arithmetic-shift">okk_bdc_fixed_point_packed_16bit_C_arithmetic_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-c-logical-shift">okk_bdc_fixed_point_packed_16bit_C_logical_shift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-mul-8bit">okk_bdc_fixed_point_packed_16bit_mul_8bit</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-split-high-8bit">okk_bdc_fixed_point_packed_16bit_split_high_8bit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/refined.html#okk-bdc-fixed-point-packed-16bit-split-low-8bit">okk_bdc_fixed_point_packed_16bit_split_low_8bit</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="programming">
+<h2>Programming<a class="headerlink" href="#programming" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/programming_device.html">Programming on Device</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#kernel-function">Kernel Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#register-kernel-function">Register Kernel Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#hello-world-on-device">Hello World on Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#example-of-using-gdma-and-bdc">Example of Using GDMA and BDC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#gdma-and-bdc-run-parallel">GDMA and BDC Run Parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#divide-tensor-into-parts">Divide Tensor Into Parts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_device.html#reshape">Reshape</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/programming_host.html">Programming on Host</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_host.html#launch-kernel-function">Launch Kernel Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/programming_host.html#hello-world-on-host">Hello World on Host</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="demo">
+<h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/demo.html#execute">Execute</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="usage/abstract.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

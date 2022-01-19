@@ -1,0 +1,166 @@
+
+Tensor Arithmetic
+==================
+
+该原子操作可以实现两个4维tensor各个元素element-wise的一些运算。
+
+TensorC(n,c,h,w) = F(TensorA(n,c,h,w), tensorB(n,c,h,w))
+
+其中，tensorA和TensorB支持是常数， tensorB的N、H以及W维度支持广播操作。
+
+该芯片的原子操作所支持的所有操作码均包含在BmAtomicOp枚举中，该tensor arithmetic操作具体支持哪些会在下边介绍中详细说明。
+
+    .. code-block:: c
+
+            typedef enum {
+                BM_MUL = 0,
+                BM_MAC = 1,
+                BM_ADD = 2,
+                BM_SUB = 3,
+                BM_MAX = 4,
+                BM_MIN = 5,
+                BM_SHIFT = 6,
+                BM_AND = 7,
+                BM_OR = 8,
+                BM_XOR = 9,
+                BM_SG = 10,
+                BM_SE = 11,
+                BM_DIV = 12,
+                BM_TAYLOR = 13,
+                BM_FP32_INT32 = 14,
+                BM_NORMALIZE_INT32 = 15,
+                BM_NORMALIZE_FP32 = 16,
+                BM_RSQRT = 17,
+                BM_CPY = 19,
+                BM_SQR_SUM = 20,
+                BM_SQR_DIFF = 21
+            } BmAtomicOp;
+
+
+浮点运算
+________
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input0_addr;
+             unsigned int input1_addr;
+             unsigned int output_addr;
+             unsigned int shape[4];
+             unsigned int input0_stride[4];
+             unsigned int input1_stride[4];
+             unsigned int output_stride[4];
+             BmAtomicOp op;
+             bool input0_is_const;
+             float input0_const;
+             bool input1_is_const;
+             float input1_const;
+             float select_value;
+             int shift_type;
+         } ArithParam;
+
+         void bm_atomic_tensor_arithmetic(const ArithParam* param);
+
+参数说明：
+
+* input0_addr: 存放第一个输入tensor的Local Memory偏移地址;
+* input1_addr: 存放第二个输入tensor的Local Memory偏移地址;
+* output_addr: 存放输出tensor的Local Memory偏移地址;
+* shape[4]: 输入输出tensor的shape，分别为NCHW四个维度的值;
+* input0_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;
+* input1_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;
+* output_stride[4]: 输出tensor的stride信息，分别为NCHW4个维度的stride大小;
+* op: 操作码，可支持如下操作。
+
+   +  BM_ADD: float32 tensor 加法
+   +  BM_SUB: float32 tensor 减法
+   +  BM_MUL: float32 tensor 乘法
+   +  BM_DIV: float32 tensor 除法
+   +  BM_MAC: float32 tensor 乘累加，即input0与input1的积累加上output_addr原本存放的值
+   +  BM_MAX: float32 tensor 取最大值
+   +  BM_MIN: float32 tensor 取最小值
+   +  BM_AND: 32位 tensor 逻辑与操作
+   +  BM_OR : 32位 tensor 逻辑或操作
+   +  BM_XOR: 32位 tensor 逻辑异或操作
+   +  BM_SHIFT: 32位 tensor 移位操作， 即 output = input0 << input1, 其中input0、input1和output均为32bit，input1只有低6位有效，input1大于0表示左移，小于0表示右移;
+   +  BM_SG : 条件选择操作，即output = (input0 > input1) ? select_val : 0
+   +  BM_SE : 条件选择操作，即output = (input0 == input1) ? select_val : 0, 这里指32位比特一致，而不限于float32
+   +  BM_CPY: 32位 tensor拷贝操作
+
+* input0_is_const/input0_const: 第一个输入tensor是否是常数，如果是则其值为input0_const;
+* input1_is_const/input1_const: 第二个输入tensor是否是常数，如果是则其值为input1_const;
+* select_value: 给 BM_SG 和 BM_SE 这两个操作使用;
+* shift_type: 当op为BM_SHIFT时才有效，0表示逻辑移位，1表示算数移位
+
+
+定点运算
+________
+
+所有的输入输出，如果是int8类型则按照4N模式存储，如果是int16类型则按照2N模式存储。
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input0_addr;
+             unsigned int input1_addr;
+             unsigned int output_addr;
+             unsigned int shape[4];
+             unsigned int input0_stride[4];
+             unsigned int input1_stride[4];
+             unsigned int output_stride[4];
+             BmAtomicOp op;
+             bool input0_is_const;
+             bool input1_is_const;
+             unsigned int rshift_bit;
+             unsigned int lshift_bit;
+             unsigned int shift_type;
+             bool input0_sign;
+             bool input1_sign;
+             bool output_sign;
+             bool input0_8bit;
+             bool input1_8bit;
+             bool output_8bit;
+             bool input1_n_is1;
+             bool input1_h_is1;
+             bool input1_w_is1;
+         } ArithQuantParam;
+
+         void bm_atomic_tensor_arithmetic_quantized(const ArithQuantParam* param);
+
+参数说明：
+
+* input0_addr: 存放第一个输入tensor的Local Memory偏移地址;
+* input1_addr: 存放第二个输入tensor的Local Memory偏移地址;
+* output_addr: 存放输出tensor的Local Memory偏移地址;
+* shape[4]: 输入输出tensor的shape，分别为NCHW四个维度的值;
+* input0_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;
+* input1_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;
+* output_stride[4]: 输出tensor的stride信息，分别为NCHW4个维度的stride大小;
+* op: 操作码，可支持如下操作。
+
+   +  BM_ADD: output = input0 + input1，其中input0和input1同为int8或者int16，output可选int8或者int16
+   +  BM_SUB: output = input0 - input1，其中input0和input1同为int8或者int16，output可选int8或者int16
+   +  BM_MUL: output = input0 * input1 >> m，其中input0和input1均为int8，output可选int8或者int16
+   +  BM_MAC: output = (input0 * input1 + output << n) >> m，其中input0和input1均为int8，output为int16
+   +  BM_MAX: output = max(input0, input1)，其中input0、input1以及output同为int8或者int16
+   +  BM_MIN: output = min(input0, input1)，其中input0、input1以及output同为int8或者int16
+   +  BM_SHIFT: output = input0 << input1，其中input0、input1以及output均为int16, input1大于0表示左移，小于0表示右移
+   +  BM_AND: output = input0 & input1，其中input0、input1以及output同为int8或者int16
+   +  BM_OR : output = input0 | input1，其中input0、input1以及output同为int8或者int16
+   +  BM_XOR: output = input0 ^ input1，其中input0、input1以及output同为int8或者int16
+   +  BM_CPY: output = input0，input0和output同为int8
+
+* input0_is_const: 第一个输入tensor是否是常数，如果是则其值为input0_addr;
+* input1_is_const: 第二个输入tensor是否是常数，如果是则其值为input1_addr;
+* rshift_bit: 对输入tensor计算结果右移的位数m，BM_MUL和BM_MAC操作中有效;
+* lshift_bit: 如果是BM_MAC操作，该参数就是左移位数n。
+* shift_type: 如果是BM_SHIFT操作，0表示逻辑移位，1表示算数移位;
+* input0_sign: 输入input0是否为有符号数；
+* input1_sign: 输入input1是否为有符号数；
+* input0_8bit: 输入input0是否为int8，否则为int16；
+* input1_8bit: 输入input1是否为int8，否则为int16；
+* output_8bit: 输出output是否为int8，否则为int16；
+* input1_n_is1: 第二个输入的 N 维度为1, 即在 N 维度进行广播;
+* input1_h_is1: 第二个输入的 H 维度为1, 即在 W 维度进行广播;
+* input1_w_is1: 第二个输入的 W 维度为1, 即在 W 维度进行广播;
+

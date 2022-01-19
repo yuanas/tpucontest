@@ -1,0 +1,24 @@
+Introduction
+============
+
+
+OKKernel is an underlying programming interface for Sophon TPU for users. At present, the supported chip is BM1684.
+
+It provides users with a series of atomic functions.
+The so-called atomic function is a set of interfaces according to the chip instruction set.
+Users can use these atomic functions to achieve the target functions and give full play to the programmable ability of the chip.
+
+History
+=======
+
+The historical update information is as follows
+
+    +-----------------+---------------------------------+----------------+
+    | 版本            | 功能增加                        | 发布时间       |
+    +=================+=================================+================+
+    | OKKernel v1.0   | 用户开发文档首次发布            | 2020.12        |
+    +-----------------+---------------------------------+----------------+
+    | OKKernel v1.1   | 增加DEMO的开发使用说明          | 2021.03        |
+    +-----------------+---------------------------------+----------------+
+    | OKKernel v1.2   | Refine documentations           | 2021.10        |
+    +-----------------+---------------------------------+----------------+

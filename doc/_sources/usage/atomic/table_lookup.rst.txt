@@ -1,0 +1,33 @@
+
+
+Table Lookup
+================
+
+查找表功能，可以实现 C = A[B]， 其中tensor A为一张table，每一表项的位宽是32bits，表的深度不超过256，B是一个位宽为8bits或32bits的tensor，但无论是8bits或32bits，都只有低8bits有效，作为表A的索引地址。输出tensor C的shape与B相同，但C只能是32bits。
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned int table_addr;
+              unsigned int index_addr;
+              unsigned int output_addr;
+              unsigned int input_n;
+              unsigned int input_c;
+              unsigned int input_h;
+              unsigned int input_w;
+              unsigned int table_len;
+              unsigned int index_prec;
+          } TableLookupParam;
+
+          void bm_atomic_table_lookup(const TableLookupParam* param);
+
+参数说明：
+
+* table_addr: 存放表项tensor的地址，其首地址可以使用bm_lookup_table_start_addr()获取;
+* index_addr: 存放索引tensor的Local Memory偏移地址;
+* output_addr: 存放输出tensor的Local Memory偏移地址;
+* input_n/input_c/input_h/input_w: 索引以及输出tensor的shape，分别对应NCHW四个维度;
+* table_len: 表项的长度;
+* index_prec: 索引tensor的位长，0表示8bits，1表示32bits;
+
+

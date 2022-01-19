@@ -1,0 +1,20 @@
+.. role:: bash(code)
+   :language: bash
+
+About Function Names
+====================
+
+The GDMA type functions are named with prefix :bash:`okk_gdma_` and the BDC type functions are named with prefix :bash:`okk_bdc_`.
+
+.. include:: refined/def.rst
+.. include:: refined/common.rst
+.. include:: refined/utils.rst
+.. include:: refined/gdma.rst
+.. include:: refined/memory.rst
+.. include:: refined/cast.rst
+.. include:: refined/fp32_binary.rst
+.. include:: refined/32bit_binary.rst
+.. include:: refined/fp32_unary.rst
+.. include:: refined/fp32_nn.rst
+.. include:: refined/fixed_point_binary.rst
+.. include:: refined/fixed_point_unary.rst

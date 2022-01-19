@@ -1,0 +1,32 @@
+gather data
+================
+
+该操作可以完成特定规则的数据整理，输入包括原始数据和index两部分，输出为以index作为偏移从原始数据中读出的数据，输入输出均存放于L2 SRAM中，原始数据和输出数据类型一致，可以是8bit、32bit或者128bit。
+
+    .. code-block:: c
+
+          typedef enum {
+              BM_GD_8BIT = 0,
+              BM_GD_32BIT = 2,
+              BM_GD_128BIT = 4
+          } BmGDType;
+
+          typedef struct {
+              unsigned int data_addr;
+              unsigned int index_addr;
+              unsigned int output_addr;
+              unsigned int length;
+              BmGDType type;
+          } GatherDataParam;
+
+          void bm_atomic_gather_data(const GatherDataParam* param);
+
+参数说明：
+
+* data_addr: 存放输入原始数据的L2 SRAM地址;
+* index_addr: 存放输入index的L2 SRAM地址;
+* output_addr: 存放输出的L2 SRAM地址;
+* length: index的长度，output与之相同；
+* type: 数据类型，8 bits、32 bits还是128 bits，如果是128 bits，那么输入原始数据的地址data_addr和输出数据的地址output_addr必须满足128bits对齐。
+
+

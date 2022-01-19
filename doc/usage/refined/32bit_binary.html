@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>32-Bit Binary Functions &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>32-Bit Binary Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/refined/32bit_binary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bit-binary-functions">
+<h1>32-Bit Binary Functions<a class="headerlink" href="#bit-binary-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="okk-bdc-32bit-and">
+<h2>okk_bdc_32bit_and<a class="headerlink" href="#okk-bdc-32bit-and" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv317okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv217okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_and__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_and</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src0_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src1_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src0_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src1_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform bit-wise AND operation of the elements of the source_0 and source_1 tensors for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src\_0(n, c, h, w)\ \mathbf{AND}\ src\_1(n, c, h, w)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src0_addr</strong> – Address of the source_0 tensor.</li>
+<li><strong>src1_addr</strong> – Address of the source_1 tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source_0 and source_1 tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src0_stride</strong> – Pointer to the stride of the source_0 tensor.</li>
+<li><strong>src1_stride</strong> – Pointer to the stride of the source_1 tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination, source_0 and source_1 tensors is 32-bit.</li>
+<li>The destination, source_0 and source_1 tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::src0_addr"><span class="pre">src0_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::src1_addr"><span class="pre">src1_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::dst_stride"><span class="pre">dst_stride</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::src0_stride"><span class="pre">src0_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_and12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and::src1_stride"><span class="pre">src1_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-and-c">
+<h2>okk_bdc_32bit_and_C<a class="headerlink" href="#okk-bdc-32bit-and-c" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv319okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv219okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_and_C__local_addr_t.local_addr_t.x32.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_and_C</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv43x32" title="x32">x32</a> <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform bit-wise AND operation of the elements of the source tensor and a constant value for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src(n, c, h, w)\ \mathbf{AND}\ C\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value of 32-bit to be operated.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensor is 32-bit.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_and_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_and_C::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-or">
+<h2>okk_bdc_32bit_or<a class="headerlink" href="#okk-bdc-32bit-or" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv316okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv216okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_or__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_or</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src0_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src1_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src0_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src1_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform bit-wise OR operation of the elements of the source_0 and source_1 tensors for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src\_0(n, c, h, w)\ \mathbf{OR}\ src\_1(n, c, h, w)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src0_addr</strong> – Address of the source_0 tensor.</li>
+<li><strong>src1_addr</strong> – Address of the source_1 tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source_0 and source_1 tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src0_stride</strong> – Pointer to the stride of the source_0 tensor.</li>
+<li><strong>src1_stride</strong> – Pointer to the stride of the source_1 tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination, source_0 and source_1 tensors is 32-bit.</li>
+<li>The destination, source_0 and source_1 tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::src0_addr"><span class="pre">src0_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::src1_addr"><span class="pre">src1_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::dst_stride"><span class="pre">dst_stride</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::src0_stride"><span class="pre">src0_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv416okk_bdc_32bit_or12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or::src1_stride"><span class="pre">src1_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-or-c">
+<h2>okk_bdc_32bit_or_C<a class="headerlink" href="#okk-bdc-32bit-or-c" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv318okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv218okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_or_C__local_addr_t.local_addr_t.x32.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_or_C</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv43x32" title="x32">x32</a> <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform bit-wise OR operation of the elements of the source tensor and a constant value for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src(n, c, h, w)\ \mathbf{OR}\ C\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value of 32-bit to be operated.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensor is 32-bit.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv418okk_bdc_32bit_or_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_or_C::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-xor">
+<h2>okk_bdc_32bit_xor<a class="headerlink" href="#okk-bdc-32bit-xor" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv317okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv217okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_xor__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_xor</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src0_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src1_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src0_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src1_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform bit-wise XOR operation of the elements of the source_0 and source_1 tensors for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src\_0(n, c, h, w)\ \mathbf{XOR}\ src\_1(n, c, h, w)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src0_addr</strong> – Address of the source_0 tensor.</li>
+<li><strong>src1_addr</strong> – Address of the source_1 tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source_0 and source_1 tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src0_stride</strong> – Pointer to the stride of the source_0 tensor.</li>
+<li><strong>src1_stride</strong> – Pointer to the stride of the source_1 tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination, source_0 and source_1 tensors is 32-bit.</li>
+<li>The destination, source_0 and source_1 tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::src0_addr"><span class="pre">src0_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::src1_addr"><span class="pre">src1_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::dst_stride"><span class="pre">dst_stride</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::src0_stride"><span class="pre">src0_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv417okk_bdc_32bit_xor12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor::src1_stride"><span class="pre">src1_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-xor-c">
+<h2>okk_bdc_32bit_xor_C<a class="headerlink" href="#okk-bdc-32bit-xor-c" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv319okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv219okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_xor_C__local_addr_t.local_addr_t.x32.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_xor_C</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv43x32" title="x32">x32</a> <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform bit-wise XOR operation of the elements of the source tensor and a constant value for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = src(n, c, h, w)\ \mathbf{XOR}\ C\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value of 32-bit to be operated.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensor is 32-bit.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv419okk_bdc_32bit_xor_C12local_addr_t12local_addr_t3x32PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_xor_C::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-arithmetic-shift">
+<h2>okk_bdc_32bit_arithmetic_shift<a class="headerlink" href="#okk-bdc-32bit-arithmetic-shift" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv330okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv230okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_arithmetic_shift__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_arithmetic_shift</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src0_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src1_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src0_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src1_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform arithmetic shift operation of the elements of the source_0 tensor by the elements of the source_1 tensor for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}src\_0(n, c, h, w)\ \mathbf{LSH}\ src\_1(n, c, h, w)&amp;{\text{if }}src\_1(n, c, h, w)&gt;0,\\src\_0(n, c, h, w)\ \mathbf{RSH}\ -src\_1(n, c, h, w)&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src0_addr</strong> – Address of the source_0 tensor.</li>
+<li><strong>src1_addr</strong> – Address of the source_1 tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source_0 and source_1 tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src0_stride</strong> – Pointer to the stride of the source_0 tensor.</li>
+<li><strong>src1_stride</strong> – Pointer to the stride of the source_1 tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination, source_0 and source_1 tensors is int32.</li>
+<li>The elements of the source_1 tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.</li>
+<li>The destination, source_0 and source_1 tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::src0_addr"><span class="pre">src0_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::src1_addr"><span class="pre">src1_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::dst_stride"><span class="pre">dst_stride</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::src0_stride"><span class="pre">src0_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv430okk_bdc_32bit_arithmetic_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift::src1_stride"><span class="pre">src1_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-logical-shift">
+<h2>okk_bdc_32bit_logical_shift<a class="headerlink" href="#okk-bdc-32bit-logical-shift" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4">
+<span id="_CPPv327okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="_CPPv227okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_logical_shift__local_addr_t.local_addr_t.local_addr_t.dim4CP.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_logical_shift</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src0_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src1_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src0_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src1_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform logical shift operation of the elements of the source_0 tensor by the elements of the source_1 tensor for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}src\_0(n, c, h, w)\ \mathbf{LSH}\ src\_1(n, c, h, w)&amp;{\text{if }}src\_1(n, c, h, w)&gt;0,\\src\_0(n, c, h, w)\ \mathbf{RSH}\ -src\_1(n, c, h, w)&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src0_addr</strong> – Address of the source_0 tensor.</li>
+<li><strong>src1_addr</strong> – Address of the source_1 tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source_0 and source_1 tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src0_stride</strong> – Pointer to the stride of the source_0 tensor.</li>
+<li><strong>src1_stride</strong> – Pointer to the stride of the source_1 tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source_0 tensors is uint32, the data type of the source_1 tensor is int32.</li>
+<li>The elements of the source_1 tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.</li>
+<li>The destination, source_0 and source_1 tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::src0_addr"><span class="pre">src0_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::src1_addr"><span class="pre">src1_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::dst_stride"><span class="pre">dst_stride</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::src0_stride"><span class="pre">src0_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv427okk_bdc_32bit_logical_shift12local_addr_t12local_addr_t12local_addr_tPK4dim4PK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift::src1_stride"><span class="pre">src1_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-arithmetic-shift-c">
+<h2>okk_bdc_32bit_arithmetic_shift_C<a class="headerlink" href="#okk-bdc-32bit-arithmetic-shift-c" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4">
+<span id="_CPPv332okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4"></span><span id="_CPPv232okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_arithmetic_shift_C__local_addr_t.local_addr_t.i.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_arithmetic_shift_C</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, int <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform arithmetic shift operation of the elements of the source tensor by a constant value for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)\ \mathbf{LSH}\ C&amp;{\text{if }}C&gt;0,\\src(n, c, h, w)\ \mathbf{RSH}\ -C&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value to shift by.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensors is int32.</li>
+<li>The constant value <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::C"><span class="pre">C</span></a></code> is in [-32, 32], positive one performs left-shift and negative one performs right-shift.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_arithmetic_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_arithmetic_shift_C::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-logical-shift-c">
+<h2>okk_bdc_32bit_logical_shift_C<a class="headerlink" href="#okk-bdc-32bit-logical-shift-c" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4">
+<span id="_CPPv329okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4"></span><span id="_CPPv229okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_logical_shift_C__local_addr_t.local_addr_t.i.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_logical_shift_C</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, int <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform logical shift operation of the elements of the source tensor by a constant value for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)\ \mathbf{LSH}\ C&amp;{\text{if }}C&gt;0,\\src(n, c, h, w)\ \mathbf{RSH}\ -C&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value to shift by.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensors is uint32.</li>
+<li>The constant value <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::C"><span class="pre">C</span></a></code> is in [-32, 32], positive one performs left-shift and negative one performs right-shift.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_logical_shift_C12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_logical_shift_C::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-c-arithmetic-shift">
+<h2>okk_bdc_32bit_C_arithmetic_shift<a class="headerlink" href="#okk-bdc-32bit-c-arithmetic-shift" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4">
+<span id="_CPPv332okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4"></span><span id="_CPPv232okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_C_arithmetic_shift__local_addr_t.local_addr_t.i.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_C_arithmetic_shift</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, int <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform arithmetic shift operation of a constant value by the elements of the source tensor for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}C\ \mathbf{LSH}\ src(n, c, h, w)&amp;{\text{if }}src(n, c, h, w)&gt;0,\\C\ \mathbf{RSH}\ -src(n, c, h, w)&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value to be shifted.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensors is int32.</li>
+<li>The elements of the source tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv432okk_bdc_32bit_C_arithmetic_shift12local_addr_t12local_addr_tiPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_arithmetic_shift::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-32bit-c-logical-shift">
+<h2>okk_bdc_32bit_C_logical_shift<a class="headerlink" href="#okk-bdc-32bit-c-logical-shift" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4">
+<span id="_CPPv329okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4"></span><span id="_CPPv229okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4"></span><span id="okk_bdc_32bit_C_logical_shift__local_addr_t.local_addr_t.unsigned-i.dim4CP.dim4CP.dim4CP"></span>void <code class="descname">okk_bdc_32bit_C_logical_shift</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, unsigned int <em>C</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>dst_stride</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>src_stride</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Perform logical shift operation of a constant value by the elements of the source tensor for 32-bit data type.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}dst(n, c, h, w) = {\begin{cases}C\ \mathbf{LSH}\ src(n, c, h, w)&amp;{\text{if }}src(n, c, h, w)&gt;0,\\C\ \mathbf{RSH}\ -src(n, c, h, w)&amp;{\text{otherwise}}.\end{cases}}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>C</strong> – Constant value to be shifted.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+<li><strong>dst_stride</strong> – Pointer to the stride of the destination tensor.</li>
+<li><strong>src_stride</strong> – Pointer to the stride of the source tensor.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The data type of the destination and source tensors is int32.</li>
+<li>The elements of the source tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>If <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::dst_stride"><span class="pre">dst_stride</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv429okk_bdc_32bit_C_logical_shift12local_addr_t12local_addr_tjPK4dim4PK4dim4PK4dim4" title="okk_bdc_32bit_C_logical_shift::src_stride"><span class="pre">src_stride</span></a></code> is NULL, the relative tensor is in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

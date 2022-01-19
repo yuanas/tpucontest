@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Some Definitions &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Some Definitions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/refined/def.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="some-definitions">
+<h1>Some Definitions<a class="headerlink" href="#some-definitions" title="Permalink to this headline">¶</a></h1>
+<dl class="type">
+<dt id="_CPPv412local_addr_t">
+<span id="_CPPv312local_addr_t"></span><span id="_CPPv212local_addr_t"></span><span id="local_addr_t"></span><em class="property">typedef </em>unsigned int <code class="descname">local_addr_t</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv413system_addr_t">
+<span id="_CPPv313system_addr_t"></span><span id="_CPPv213system_addr_t"></span><span id="system_addr_t"></span><em class="property">typedef </em>unsigned long long <code class="descname">system_addr_t</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv413global_addr_t">
+<span id="_CPPv313global_addr_t"></span><span id="_CPPv213global_addr_t"></span><span id="global_addr_t"></span><em class="property">typedef </em>unsigned long long <code class="descname">global_addr_t</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv44s8x4">
+<span id="_CPPv34s8x4"></span><span id="_CPPv24s8x4"></span><span id="s8x4"></span><em class="property">typedef </em>char <code class="descname">s8x4</code>[4]<br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv44u8x4">
+<span id="_CPPv34u8x4"></span><span id="_CPPv24u8x4"></span><span id="u8x4"></span><em class="property">typedef </em>unsigned char <code class="descname">u8x4</code>[4]<br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv45s16x2">
+<span id="_CPPv35s16x2"></span><span id="_CPPv25s16x2"></span><span id="s16x2"></span><em class="property">typedef </em>short <code class="descname">s16x2</code>[2]<br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv45u16x2">
+<span id="_CPPv35u16x2"></span><span id="_CPPv25u16x2"></span><span id="u16x2"></span><em class="property">typedef </em>unsigned short <code class="descname">u16x2</code>[2]<br /></dt>
+<dd></dd></dl>
+
+<dl class="union">
+<dt id="_CPPv43x32">
+<span id="_CPPv33x32"></span><span id="_CPPv23x32"></span><em class="property">union </em><code class="descname">x32</code><br /></dt>
+<dd><dl class="var">
+<dt id="_CPPv4N3x324fp32E">
+<span id="_CPPv3N3x324fp32E"></span><span id="_CPPv2N3x324fp32E"></span><span id="x32::fp32__float"></span>float <code class="descname">fp32</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x323s32E">
+<span id="_CPPv3N3x323s32E"></span><span id="_CPPv2N3x323s32E"></span><span id="x32::s32__i"></span>int <code class="descname">s32</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x323u32E">
+<span id="_CPPv3N3x323u32E"></span><span id="_CPPv2N3x323u32E"></span><span id="x32::u32__unsigned-i"></span>unsigned int <code class="descname">u32</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x326_4N_s8E">
+<span id="_CPPv3N3x326_4N_s8E"></span><span id="_CPPv2N3x326_4N_s8E"></span><span id="x32::_4N_s8__s8x4"></span><a class="reference internal" href="../refined.html#_CPPv44s8x4" title="s8x4">s8x4</a> <code class="descname">_4N_s8</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x326_4N_u8E">
+<span id="_CPPv3N3x326_4N_u8E"></span><span id="_CPPv2N3x326_4N_u8E"></span><span id="x32::_4N_u8__u8x4"></span><a class="reference internal" href="../refined.html#_CPPv44u8x4" title="u8x4">u8x4</a> <code class="descname">_4N_u8</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x327_2N_s16E">
+<span id="_CPPv3N3x327_2N_s16E"></span><span id="_CPPv2N3x327_2N_s16E"></span><span id="x32::_2N_s16__s16x2"></span><a class="reference internal" href="../refined.html#_CPPv45s16x2" title="s16x2">s16x2</a> <code class="descname">_2N_s16</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x327_2N_u16E">
+<span id="_CPPv3N3x327_2N_u16E"></span><span id="_CPPv2N3x327_2N_u16E"></span><span id="x32::_2N_u16__u16x2"></span><a class="reference internal" href="../refined.html#_CPPv45u16x2" title="u16x2">u16x2</a> <code class="descname">_2N_u16</code><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="union">
+<dt id="_CPPv43x16">
+<span id="_CPPv33x16"></span><span id="_CPPv23x16"></span><em class="property">union </em><code class="descname">x16</code><br /></dt>
+<dd><dl class="var">
+<dt id="_CPPv4N3x163s16E">
+<span id="_CPPv3N3x163s16E"></span><span id="_CPPv2N3x163s16E"></span><span id="x16::s16__short"></span>short <code class="descname">s16</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N3x163u16E">
+<span id="_CPPv3N3x163u16E"></span><span id="_CPPv2N3x163u16E"></span><span id="x16::u16__unsigned-short"></span>unsigned short <code class="descname">u16</code><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="union">
+<dt id="_CPPv42x8">
+<span id="_CPPv32x8"></span><span id="_CPPv22x8"></span><em class="property">union </em><code class="descname">x8</code><br /></dt>
+<dd><dl class="var">
+<dt id="_CPPv4N2x82s8E">
+<span id="_CPPv3N2x82s8E"></span><span id="_CPPv2N2x82s8E"></span><span id="x8::s8__c"></span>char <code class="descname">s8</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N2x82u8E">
+<span id="_CPPv3N2x82u8E"></span><span id="_CPPv2N2x82u8E"></span><span id="x8::u8__unsigned-c"></span>unsigned char <code class="descname">u8</code><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="_CPPv44dim4">
+<span id="_CPPv34dim4"></span><span id="_CPPv24dim4"></span><span id="dim4"></span><em class="property">class </em><code class="descname">dim4</code><br /></dt>
+<dd><dl class="var">
+<dt id="_CPPv4N4dim41nE">
+<span id="_CPPv3N4dim41nE"></span><span id="_CPPv2N4dim41nE"></span><span id="dim4::n__i"></span>int <code class="descname">n</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N4dim41cE">
+<span id="_CPPv3N4dim41cE"></span><span id="_CPPv2N4dim41cE"></span><span id="dim4::c__i"></span>int <code class="descname">c</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N4dim41hE">
+<span id="_CPPv3N4dim41hE"></span><span id="_CPPv2N4dim41hE"></span><span id="dim4::h__i"></span>int <code class="descname">h</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N4dim41wE">
+<span id="_CPPv3N4dim41wE"></span><span id="_CPPv2N4dim41wE"></span><span id="dim4::w__i"></span>int <code class="descname">w</code><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="_CPPv44dim2">
+<span id="_CPPv34dim2"></span><span id="_CPPv24dim2"></span><span id="dim2"></span><em class="property">class </em><code class="descname">dim2</code><br /></dt>
+<dd><dl class="var">
+<dt id="_CPPv4N4dim21hE">
+<span id="_CPPv3N4dim21hE"></span><span id="_CPPv2N4dim21hE"></span><span id="dim2::h__i"></span>int <code class="descname">h</code><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv4N4dim21wE">
+<span id="_CPPv3N4dim21wE"></span><span id="_CPPv2N4dim21wE"></span><span id="dim2::w__i"></span>int <code class="descname">w</code><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="enum">
+<dt id="_CPPv49op_type_t">
+<span id="_CPPv39op_type_t"></span><span id="_CPPv29op_type_t"></span><em class="property">enum </em><code class="descname">op_type_t</code><br /></dt>
+<dd><p>Operation type of the fixed point binary operation.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv414S8_OP_S8_TO_S8">
+<span id="_CPPv314S8_OP_S8_TO_S8"></span><span id="_CPPv214S8_OP_S8_TO_S8"></span><em class="property">enumerator </em><code class="descname">S8_OP_S8_TO_S8</code> = 31<br /></dt>
+<dd><p>Value of int8 operates value of int8 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv415S8_OP_S8_TO_S16">
+<span id="_CPPv315S8_OP_S8_TO_S16"></span><span id="_CPPv215S8_OP_S8_TO_S16"></span><em class="property">enumerator </em><code class="descname">S8_OP_S8_TO_S16</code> = 23<br /></dt>
+<dd><p>Value of int8 operates value of int8 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv414S8_OP_U8_TO_S8">
+<span id="_CPPv314S8_OP_U8_TO_S8"></span><span id="_CPPv214S8_OP_U8_TO_S8"></span><em class="property">enumerator </em><code class="descname">S8_OP_U8_TO_S8</code> = 27<br /></dt>
+<dd><p>Value of int8 operates value of uint8 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv415S8_OP_U8_TO_S16">
+<span id="_CPPv315S8_OP_U8_TO_S16"></span><span id="_CPPv215S8_OP_U8_TO_S16"></span><em class="property">enumerator </em><code class="descname">S8_OP_U8_TO_S16</code> = 19<br /></dt>
+<dd><p>Value of int8 operates value of uint8 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv414U8_OP_S8_TO_S8">
+<span id="_CPPv314U8_OP_S8_TO_S8"></span><span id="_CPPv214U8_OP_S8_TO_S8"></span><em class="property">enumerator </em><code class="descname">U8_OP_S8_TO_S8</code> = 29<br /></dt>
+<dd><p>Value of uint8 operates value of int8 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv415U8_OP_S8_TO_S16">
+<span id="_CPPv315U8_OP_S8_TO_S16"></span><span id="_CPPv215U8_OP_S8_TO_S16"></span><em class="property">enumerator </em><code class="descname">U8_OP_S8_TO_S16</code> = 21<br /></dt>
+<dd><p>Value of uint8 operates value of int8 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv414U8_OP_U8_TO_S8">
+<span id="_CPPv314U8_OP_U8_TO_S8"></span><span id="_CPPv214U8_OP_U8_TO_S8"></span><em class="property">enumerator </em><code class="descname">U8_OP_U8_TO_S8</code> = 25<br /></dt>
+<dd><p>Value of uint8 operate value of uint8 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv415U8_OP_U8_TO_S16">
+<span id="_CPPv315U8_OP_U8_TO_S16"></span><span id="_CPPv215U8_OP_U8_TO_S16"></span><em class="property">enumerator </em><code class="descname">U8_OP_U8_TO_S16</code> = 17<br /></dt>
+<dd><p>Value of uint8 operates value of uint8 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv414U8_OP_U8_TO_U8">
+<span id="_CPPv314U8_OP_U8_TO_U8"></span><span id="_CPPv214U8_OP_U8_TO_U8"></span><em class="property">enumerator </em><code class="descname">U8_OP_U8_TO_U8</code> = 9<br /></dt>
+<dd><p>Value of uint8 operates value of uint8 to value of uint8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv415U8_OP_U8_TO_U16">
+<span id="_CPPv315U8_OP_U8_TO_U16"></span><span id="_CPPv215U8_OP_U8_TO_U16"></span><em class="property">enumerator </em><code class="descname">U8_OP_U8_TO_U16</code> = 1<br /></dt>
+<dd><p>Value of uint8 operates value of uint8 to value of uint16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv416S16_OP_S16_TO_S8">
+<span id="_CPPv316S16_OP_S16_TO_S8"></span><span id="_CPPv216S16_OP_S16_TO_S8"></span><em class="property">enumerator </em><code class="descname">S16_OP_S16_TO_S8</code> = 30<br /></dt>
+<dd><p>Value of int16 operates value of int16 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417S16_OP_S16_TO_S16">
+<span id="_CPPv317S16_OP_S16_TO_S16"></span><span id="_CPPv217S16_OP_S16_TO_S16"></span><em class="property">enumerator </em><code class="descname">S16_OP_S16_TO_S16</code> = 22<br /></dt>
+<dd><p>Value of int16 operates value of int16 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv416S16_OP_U16_TO_S8">
+<span id="_CPPv316S16_OP_U16_TO_S8"></span><span id="_CPPv216S16_OP_U16_TO_S8"></span><em class="property">enumerator </em><code class="descname">S16_OP_U16_TO_S8</code> = 26<br /></dt>
+<dd><p>Value of int16 operates value of uint16 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417S16_OP_U16_TO_S16">
+<span id="_CPPv317S16_OP_U16_TO_S16"></span><span id="_CPPv217S16_OP_U16_TO_S16"></span><em class="property">enumerator </em><code class="descname">S16_OP_U16_TO_S16</code> = 18<br /></dt>
+<dd><p>Value of int16 operates value of uint16 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv416U16_OP_S16_TO_S8">
+<span id="_CPPv316U16_OP_S16_TO_S8"></span><span id="_CPPv216U16_OP_S16_TO_S8"></span><em class="property">enumerator </em><code class="descname">U16_OP_S16_TO_S8</code> = 28<br /></dt>
+<dd><p>Value of uint16 operates value of int16 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417U16_OP_S16_TO_S16">
+<span id="_CPPv317U16_OP_S16_TO_S16"></span><span id="_CPPv217U16_OP_S16_TO_S16"></span><em class="property">enumerator </em><code class="descname">U16_OP_S16_TO_S16</code> = 20<br /></dt>
+<dd><p>Value of int16 operates value of int16 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv416U16_OP_U16_TO_S8">
+<span id="_CPPv316U16_OP_U16_TO_S8"></span><span id="_CPPv216U16_OP_U16_TO_S8"></span><em class="property">enumerator </em><code class="descname">U16_OP_U16_TO_S8</code> = 24<br /></dt>
+<dd><p>Value of uint16 operates value of uint16 to value of int8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417U16_OP_U16_TO_S16">
+<span id="_CPPv317U16_OP_U16_TO_S16"></span><span id="_CPPv217U16_OP_U16_TO_S16"></span><em class="property">enumerator </em><code class="descname">U16_OP_U16_TO_S16</code> = 16<br /></dt>
+<dd><p>Value of uint16 operates value of uint16 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv416U16_OP_U16_TO_U8">
+<span id="_CPPv316U16_OP_U16_TO_U8"></span><span id="_CPPv216U16_OP_U16_TO_U8"></span><em class="property">enumerator </em><code class="descname">U16_OP_U16_TO_U8</code> = 8<br /></dt>
+<dd><p>Value of uint16 operates value of uint16 to value of uint8.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417U16_OP_U16_TO_U16">
+<span id="_CPPv317U16_OP_U16_TO_U16"></span><span id="_CPPv217U16_OP_U16_TO_U16"></span><em class="property">enumerator </em><code class="descname">U16_OP_U16_TO_U16</code> = 0<br /></dt>
+<dd><p>Value of uint16 operates value of uint16 to value of uint16.</p>
+</dd></dl>
+
+<dl class="enum">
+<dt id="_CPPv410mul_type_t">
+<span id="_CPPv310mul_type_t"></span><span id="_CPPv210mul_type_t"></span><em class="property">enum </em><code class="descname">mul_type_t</code><br /></dt>
+<dd><p>Type of the fixed point multiplication.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417S16_MUL_S8_TO_S16">
+<span id="_CPPv317S16_MUL_S8_TO_S16"></span><span id="_CPPv217S16_MUL_S8_TO_S16"></span><em class="property">enumerator </em><code class="descname">S16_MUL_S8_TO_S16</code> = 7<br /></dt>
+<dd><p>Value of int16 multiplies by value of int8 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417U16_MUL_S8_TO_S16">
+<span id="_CPPv317U16_MUL_S8_TO_S16"></span><span id="_CPPv217U16_MUL_S8_TO_S16"></span><em class="property">enumerator </em><code class="descname">U16_MUL_S8_TO_S16</code> = 6<br /></dt>
+<dd><p>Value of uint16 multiplies by value of int8 to value of int16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417U16_MUL_U8_TO_U16">
+<span id="_CPPv317U16_MUL_U8_TO_U16"></span><span id="_CPPv217U16_MUL_U8_TO_U16"></span><em class="property">enumerator </em><code class="descname">U16_MUL_U8_TO_U16</code> = 0<br /></dt>
+<dd><p>Value of uint16 multiplies by value of uint8 to value of uint16.</p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv417S16_MUL_U8_TO_S16">
+<span id="_CPPv317S16_MUL_U8_TO_S16"></span><span id="_CPPv217S16_MUL_U8_TO_S16"></span><em class="property">enumerator </em><code class="descname">S16_MUL_U8_TO_S16</code> = 5<br /></dt>
+<dd><p>Value of int16 multiplies by value of uint8 to value of int16.</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.DIV_UP">
+<code class="descname">DIV_UP</code><a class="headerlink" href="#c.DIV_UP" title="Permalink to this definition">¶</a></dt>
+<dd><p>DIV_UP(a, b) (((a) - 1) / (b) + 1)</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.ALIGN">
+<code class="descname">ALIGN</code><a class="headerlink" href="#c.ALIGN" title="Permalink to this definition">¶</a></dt>
+<dd><p>ALIGN(a, b) <a class="reference internal" href="#c.DIV_UP" title="DIV_UP"><code class="xref c c-macro docutils literal notranslate"><span class="pre">DIV_UP</span></code></a> (a, b) * (b)</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+Data Type Converting Functions
+==============================
+
+okk_bdc_fp32_to_int32
+___________________________
+
+.. cpp:function:: void okk_bdc_fp32_to_int32(local_addr_t  dst_addr, local_addr_t  src_addr, const dim4 *shape)
+
+    Convert the elements of the source tensor from int32 to fp32 by lookup table.
+
+    .. math:: dst(n, c, h, w) = \mathbf{INT32}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+
+    **Remarks**
+
+    - The destination and source tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the source tensor is fp32, the data type of the destination tensor is int32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+
+
+okk_bdc_lookup_int32_to_fp32
+__________________________________
+
+.. cpp:function:: void okk_bdc_lookup_int32_to_fp32(local_addr_t  dst_addr, local_addr_t  src_addr, const dim4 *shape)
+
+    Convert the elements of the source tensor from int32 to fp32 by lookup table.
+
+    .. math:: dst(n, c, h, w) = \mathbf{FP32}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+
+    **Remarks**
+
+    - The destination and source tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the source tensor is int32, the data type of the destination tensor is fp32.
+    - The elements of the source tensor are in [-128, 127].
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+
+okk_bdc_4N_int8_to_fp32
+_____________________________
+
+.. cpp:function:: void okk_bdc_4N_int8_to_fp32(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape, bool is_signed, bool is_aligned_layout)
+
+    Convert the elements of the source tensor from int8 or uint8 to fp32.
+
+    .. math:: dst(n, c, h, w) = \mathbf{FP32}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param is_signed: Flag of the data type of the source tensor, true means int8, otherwise, uint8.
+    :param is_aligned_layout: Flag of the layout of the destination, source and work tensor, true means :ref:`128-byte aligned layout`, otherwise, :ref:`compact layout`.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout` or :ref:`compact layout` simutanously.
+    - The data type of the source and work tensors is int8 or uint8, the data type of the destination tensor is fp32.
+    - The source and work tensors are in the 4N-mode.
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` is not allowed.
+
+okk_bdc_int8_to_fp32
+__________________________
+
+.. cpp:function:: void okk_bdc_int8_to_fp32(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t work_addr, const dim4 *shape, bool is_signed, bool is_aligned_layout)
+
+    Convert the elements of the source tensor from int8 or uint8 to fp32.
+
+    .. math:: dst(n, c, h, w) = \mathbf{FP32}(src(n, c, h, w))
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param work_addr: Address of the work tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param is_signed: Flag of the data type of the source tensor, true means int8, otherwise, uint8.
+    :param is_aligned_layout: Flag of the layout of the destination, source and work tensor, true means :ref:`128-byte aligned layout`, otherwise, :ref:`compact layout`.
+
+    **Remarks**
+
+    - The destination, source and work tensors are in the :ref:`128-byte aligned layout` or :ref:`compact layout` simutanously.
+    - The data type of the source and work tensors is int8 or uint8, the data type of the destination tensor is fp32.
+    - The destination, source and work tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`work_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - The work tensor is a workspace to store temporary tensor with the same size as the source tensor, :cpp:expr:`dst_addr = work_addr` is not allowed.
+    - If the source and work tensors are in the :ref:`compact layout`, another restriction is required that C stride is :c:macro:`ALIGN` (:cpp:expr:`shape->h * shape->w`, 4) other than :cpp:expr:`shape->h * shape->w`,
+      so the source and work tensors are in an approximate :ref:`compact layout`.

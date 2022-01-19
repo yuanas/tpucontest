@@ -1,0 +1,301 @@
+32-Bit Binary Functions
+=======================
+
+okk_bdc_32bit_and
+_______________________
+
+.. cpp:function:: void okk_bdc_32bit_and(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform bit-wise AND operation of the elements of the source_0 and source_1 tensors for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w)\ \mathbf{AND}\ src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is 32-bit.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_and_C
+_________________________
+
+.. cpp:function:: void okk_bdc_32bit_and_C(local_addr_t dst_addr, local_addr_t src_addr, x32 C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform bit-wise AND operation of the elements of the source tensor and a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)\ \mathbf{AND}\ C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value of 32-bit to be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensor is 32-bit.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_or
+______________________
+
+.. cpp:function:: void okk_bdc_32bit_or(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform bit-wise OR operation of the elements of the source_0 and source_1 tensors for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w)\ \mathbf{OR}\ src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is 32-bit.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_or_C
+________________________
+
+.. cpp:function:: void okk_bdc_32bit_or_C(local_addr_t dst_addr, local_addr_t src_addr, x32 C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform bit-wise OR operation of the elements of the source tensor and a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)\ \mathbf{OR}\ C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value of 32-bit to be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensor is 32-bit.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_xor
+_______________________
+
+.. cpp:function:: void okk_bdc_32bit_xor(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform bit-wise XOR operation of the elements of the source_0 and source_1 tensors for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src\_0(n, c, h, w)\ \mathbf{XOR}\ src\_1(n, c, h, w)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is 32-bit.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_xor_C
+_________________________
+
+.. cpp:function:: void okk_bdc_32bit_xor_C(local_addr_t dst_addr, local_addr_t src_addr, x32 C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform bit-wise XOR operation of the elements of the source tensor and a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)\ \mathbf{XOR}\ C
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value of 32-bit to be operated.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensor is 32-bit.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_arithmetic_shift
+____________________________________
+
+.. cpp:function:: void okk_bdc_32bit_arithmetic_shift(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform arithmetic shift operation of the elements of the source_0 tensor by the elements of the source_1 tensor for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src\_0(n, c, h, w)\ \mathbf{LSH}\ src\_1(n, c, h, w)&{\text{if }}src\_1(n, c, h, w)>0,\\src\_0(n, c, h, w)\ \mathbf{RSH}\ -src\_1(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination, source_0 and source_1 tensors is int32.
+    - The elements of the source_1 tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_logical_shift
+_________________________________
+
+.. cpp:function:: void okk_bdc_32bit_logical_shift(local_addr_t dst_addr, local_addr_t src0_addr, local_addr_t src1_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src0_stride, const dim4 *src1_stride)
+
+    Perform logical shift operation of the elements of the source_0 tensor by the elements of the source_1 tensor for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src\_0(n, c, h, w)\ \mathbf{LSH}\ src\_1(n, c, h, w)&{\text{if }}src\_1(n, c, h, w)>0,\\src\_0(n, c, h, w)\ \mathbf{RSH}\ -src\_1(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src0_addr: Address of the source_0 tensor.
+    :param src1_addr: Address of the source_1 tensor.
+    :param shape: Pointer to the shape of the destination, source_0 and source_1 tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src0_stride: Pointer to the stride of the source_0 tensor.
+    :param src1_stride: Pointer to the stride of the source_1 tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source_0 tensors is uint32, the data type of the source_1 tensor is int32.
+    - The elements of the source_1 tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.
+    - The destination, source_0 and source_1 tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src0_addr` and :cpp:expr:`src1_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride`, :cpp:expr:`src0_stride` or :cpp:expr:`src1_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_arithmetic_shift_C
+______________________________________
+
+.. cpp:function:: void okk_bdc_32bit_arithmetic_shift_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform arithmetic shift operation of the elements of the source tensor by a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)\ \mathbf{LSH}\ C&{\text{if }}C>0,\\src(n, c, h, w)\ \mathbf{RSH}\ -C&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to shift by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int32.
+    - The constant value :cpp:expr:`C` is in [-32, 32], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_logical_shift_C
+___________________________________
+
+.. cpp:function:: void okk_bdc_32bit_logical_shift_C(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform logical shift operation of the elements of the source tensor by a constant value for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)\ \mathbf{LSH}\ C&{\text{if }}C>0,\\src(n, c, h, w)\ \mathbf{RSH}\ -C&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to shift by.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is uint32.
+    - The constant value :cpp:expr:`C` is in [-32, 32], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_C_arithmetic_shift
+______________________________________
+
+.. cpp:function:: void okk_bdc_32bit_C_arithmetic_shift(local_addr_t dst_addr, local_addr_t src_addr, int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform arithmetic shift operation of a constant value by the elements of the source tensor for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}C\ \mathbf{LSH}\ src(n, c, h, w)&{\text{if }}src(n, c, h, w)>0,\\C\ \mathbf{RSH}\ -src(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be shifted.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int32.
+    - The elements of the source tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_32bit_C_logical_shift
+___________________________________
+
+.. cpp:function:: void okk_bdc_32bit_C_logical_shift(local_addr_t dst_addr, local_addr_t src_addr, unsigned int C, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform logical shift operation of a constant value by the elements of the source tensor for 32-bit data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}C\ \mathbf{LSH}\ src(n, c, h, w)&{\text{if }}src(n, c, h, w)>0,\\C\ \mathbf{RSH}\ -src(n, c, h, w)&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param C: Constant value to be shifted.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is int32.
+    - The elements of the source tensor are in [-32, 32], positive one performs left-shift and negative one performs right-shift.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.

@@ -1,0 +1,1533 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GDMA 操作 &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>GDMA 操作</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/usage/atomic.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>所有的原子操作指令可以分为两类：数据搬运和运算。</p>
+<ul class="simple">
+<li>数据搬运：由GDMA模块完成，负责Global memory、Local memory以及L2-SRAM之间的数据搬运。</li>
+<li>运算：主要由NPU模块完成，可以实现Convolution、Pooling、tensor-arithmetic等功能。</li>
+</ul>
+<p>由于这两类原子操作指令是属于不同功能模块，因此可以并行执行，这也是优化性能的重要思路之一。TPU是典型的SIMD架构，由n个NPU构成，每个NPU内部有各自独立的存储空间（Local Memory），也就是NPU运算所需的输入数据以及得到的结果只能存放于各自Local Memory之内，因此在计算开始前，需要使用GDMA将数据从DDR（Global memory）搬运至NPU内部的Local Memory。通过使用合理的数据切割、流水操作等技巧可以使搬运与计算并行，从而提高性能。</p>
+<p>下面分别介绍所有的原子操作指令。</p>
+<div class="section" id="gdma">
+<h1>GDMA 操作<a class="headerlink" href="#gdma" title="Permalink to this headline">¶</a></h1>
+<p>该部分介绍所有的使用GDMA引擎完成的操作。</p>
+<p>其中，搬运的数据类型包括：</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_GDMA_FORMAT_FLOAT32</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_INT16</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_UINT8</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_INT8</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_FLOAT16</span>
+<span class="p">}</span> <span class="n">BmGDMAFormat</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>数据搬运的方向包括以下，S表示Global Memory、L2-SRAM以及DTCM，L表示Local Memory。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_GDMA_DIR_S2L</span><span class="p">,</span>
+    <span class="n">BM_GDMA_DIR_L2S</span><span class="p">,</span>
+    <span class="n">BM_GDMA_DIR_S2S</span><span class="p">,</span>
+    <span class="n">BM_GDMA_DIR_L2L</span>
+<span class="p">}</span> <span class="n">BmGDMADir</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="id1">
+<h2>一维数据搬运<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>通用的线性方式搬运。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="n">BmGDMADir</span> <span class="n">direction</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemCpy1DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memcpy_1D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemCpy1DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>src_addr: 源地址;</li>
+<li>dst_addr: 目的地址;</li>
+<li>length: 搬运的数据长度;</li>
+<li>format: 搬运的数据类型;</li>
+<li>direction: 搬运方向;</li>
+</ul>
+</div>
+<div class="section" id="matrix">
+<h2>二维matrix的搬运<a class="headerlink" href="#matrix" title="Permalink to this headline">¶</a></h2>
+<p>该操作可以实现二维matrix在global memory和local memory之间的搬运。</p>
+<p>在global memory中，数据以二维matrix的形式存储，row行col列，支持带有row_stride的数据访问。</p>
+<p>在local memory中，将数据切割成多份，依次放置于于不同的NPU中，每份sec_size大小。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">global_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_mem_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">row</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">col</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">row_stride</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sec_size</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="n">BmGDMADir</span> <span class="n">direction</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">transpose</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemCpy2DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memcpy_2D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemCpy2DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>global_mem_addr: global memory的地址;</li>
+<li>local_mem_addr: local memory的地址;</li>
+<li>local_mem_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;</li>
+<li>row: matrix在global memory存储的行数；</li>
+<li>col: matrix在global memory存储的列数；</li>
+<li>row_stride: matrix在global memory存储的row stride大小；</li>
+<li>sec_size: 数据在local memory中存储在每个NPU的大小；</li>
+<li>format: 数据的类型;</li>
+<li>direction: 搬运的方向;</li>
+<li>transpose: 是否进行转置;</li>
+<li>rasult_add: 搬运的数据是否与目的地址的原数据累加，该功能仅支持float32的数据类型。</li>
+</ul>
+</div>
+<div class="section" id="tensor">
+<h2>四维Tensor的搬运<a class="headerlink" href="#tensor" title="Permalink to this headline">¶</a></h2>
+<p>可以支持读取和写入的Tensor的shape不同，但是总大小必须一致，即:</p>
+<p>src_shape[0] * src_shape[1] * src_shape[2] * src_shape[3] =</p>
+<p>dst_shape[0] * dst_shape[1] * dst_shape[2] * dst_shape[3]</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">src_format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">dst_format</span><span class="p">;</span>
+    <span class="n">BmGDMADir</span> <span class="n">direction</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">transpose</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemCpy4DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memcpy_4D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemCpy4DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>src_addr: 源地址;</li>
+<li>src_local_idx: 当源是local Memory时才有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;</li>
+<li>src_shape[4]: 从源地址读取tensor的shape，分别表示NCHW维度的大小;</li>
+<li>src_stride[4]: 读取tensor在源地址存储的stride信息，分别表示NCHW四个维度stride大小;</li>
+<li>src_format: 源数据的类型;</li>
+<li>dst_addr: 目的地址;</li>
+<li>dst_local_idx: 当目的是local Memory时才有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;</li>
+<li>dst_shape[4]: 向目的地址写入tensor的shape，分别表示NCHW维度的大小;</li>
+<li>dst_stride[4]: 写入tensor在目的地址存储的stride信息，分别表示NCHW四个维度stride大小;</li>
+<li>dst_format: 目的数据的类型;</li>
+<li>direction: 搬运的方向;</li>
+<li>transpose: 是否做N维度和C维度的转置;</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>常数填充<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>该操作可用于向Global Memory和Local Memory中填充常数。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">start_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">const_val</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">is_local_mem</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_idx</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemSet4DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memset_4D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemSet4DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>start_addr: 需要写入的Memory的地址，可以是local memory也可以是global memory，由参数is_local_mem决定是否为local memory;</li>
+<li>shape[4]: 填充空间的shape，分别表示NCHW四维的大小；</li>
+<li>stride[4]: 填充空间存储的stride信息，分别表示NCHW四维的stride大小；</li>
+<li>const_val; 该指针指向向目的地址中写入的常数;</li>
+<li>format: 写入数据的类型;</li>
+<li>is_local_mem: 是否填充local memory，否则为global memory；</li>
+<li>local_idx: 当is_local_mem为真时该参数有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始写入;</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>转置操作<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>可以对Local Memory的tensor在C和W两个维度上进行转置。</p>
+<p>src tensor shape: (1, CI, 1, WI)</p>
+<p>dst tensor shape: (1, WI, 1, CI)</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_w</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_c_stride</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_c_stride</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">CWTransParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_cwtrans</span><span class="p">(</span><span class="k">const</span> <span class="n">CWTransParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>src_addr: 源的Local Memory偏移地址;</li>
+<li>src_local_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始读取;</li>
+<li>dst_addr: 目的的Local Memory偏移地址;</li>
+<li>dst_local_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始写入;</li>
+<li>src_c/src_w: 源数据的shape，分别表示CW维度的大小;</li>
+<li>format: 搬运的数据类型;</li>
+<li>src_c_stride: 源数据存储的C维度的stride大小;</li>
+<li>dst_c_stride: 目的数据存储的C维度的stride大小;</li>
+</ul>
+</div>
+<div class="section" id="masktensor">
+<h2>支持mask的四维Tensor搬运<a class="headerlink" href="#masktensor" title="Permalink to this headline">¶</a></h2>
+<p>GDMA可以将源数据按照mask有选择性的进行搬移，如果mask大小和源数据大小一一对应，如果mask为0则表示对应位置的源数据被舍弃，否则搬运至目的地址。</p>
+<p>当搬运完成后，调用函数bm_get_mask_memcpy_res_num()可以获取搬运到目的地址的数据的数量。</p>
+<p>该操作仅支持从Local Memory到Global Memory方向的搬运。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">data_local_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">mask_local_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_mem_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">dst_global_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">MaskMemCpy4DPram</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_mask_memcpy_4D</span><span class="p">(</span><span class="k">const</span> <span class="n">MaskMemCpy4DPram</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">bm_get_mask_memcpy_res_num</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>data_local_mem_addr: 源数据的Local Memory偏移地址;</li>
+<li>mask_local_mem_addr: 源数据mask的Local Memory偏移地址;</li>
+<li>local_mem_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始读取;</li>
+<li>dst_global_mem_addr: 目的数据的Global Memory地址;</li>
+<li>shape[4]: 源数据的shape， 分别表示NCHW四个维度的大小。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="convolution">
+<h1>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id4">
+<h2>浮点运算<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>二维卷积浮点运算。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">kernel_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">kernel_val</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">kernel_flip</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ConvParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_conv</span><span class="p">(</span><span class="k">const</span> <span class="n">ConvParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr： 存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>output_c：输出feature map的 C 维度的大小;</li>
+<li>kernel_h/kernel_w：kernel的shape，分别对应HW维度;</li>
+<li>stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>input_stride[4]：存放输入feature map的stride信息，分别对应NCHW四个维度的stride大小;</li>
+<li>kernel_stride[4]：存放权重系数的stride信息，分别对应ICOCKHKW四个维度的stride大小;</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;</li>
+<li>kernel_is_const/kernel_val：kernel是否为常量，如果是其值为kernel_val，否则忽略;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>using_bias：是否含有bias运算;</li>
+<li>kernel_flip：是否对kernel进行旋转，操作为kernel_rotate(n,c,h,w)=kernel(n,c,kh-1-h,kw-1-w)</li>
+<li>result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2>定点运算<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>该操作的输入feature map、kernel以及输出feature map为8bits，bias为16bits。</p>
+<p>输入输出feature map以及kernel按照4N模式存储，bias按照1N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span>     <span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_c</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">kernel_is_const</span><span class="p">;</span>
+         <span class="kt">signed</span> <span class="kt">char</span> <span class="n">kernel_val</span><span class="p">;</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">kernel_flip</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">if_relu</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">input_sign</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">weight_sign</span><span class="p">;</span>
+         <span class="kt">bool</span> <span class="n">bias_sign</span><span class="p">;</span>
+     <span class="p">}</span> <span class="n">ConvQuantParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_conv_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">ConvQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr： 存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>output_c：输出feature map的 C 维度的大小;</li>
+<li>kernel_h/kernel_w：kernel的shape，分别对应HW维度;</li>
+<li>stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>input_stride[4]：存放输入feature map的stride信息，分别对应NCHW四个维度的stride大小;</li>
+<li>kernel_stride[4]：存放权重系数的stride信息，分别对应ICOCKHKW四个维度的stride大小;</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;</li>
+<li>kernel_is_const/kernel_val：kernel是否为常量，如果是其值为kernel_val，否则忽略;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>rshift_bit：为了防止溢出，中间的累加结果使用int32表示，该参数表示将int32的中间结果右移rshift_bit位之后得到最后的8bit结果;</li>
+<li>using_bias：是否含有bias运算;</li>
+<li>kernel_flip：是否对kernel进行旋转，操作为kernel_rotate(n,c,h,w)=kernel(n,c,kh-1-h,kw-1-w)</li>
+<li>result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;</li>
+<li>if_relu：是否对输出结果进行relu操作，也就是将relu与conv合并；</li>
+<li>input_sign/weight_sign/bias_sign：分别表示输入feature map、kernel以及bias的值是否为有符号数；</li>
+</ul>
+</div>
+</div>
+<div class="section" id="winograd">
+<h1>Winograd<a class="headerlink" href="#winograd" title="Permalink to this headline">¶</a></h1>
+<p>Winograd算法可以实现对二维卷积计算加速，目前针对卷及提供的加速实现必须满足以下要求：</p>
+<ol class="arabic simple">
+<li>kernel 大小为3×3;</li>
+<li>窗口滑动步长 stride_h=1 且 stride_w=1</li>
+<li>不支持对kernel dilation操作</li>
+</ol>
+<div class="section" id="id6">
+<h2>定点运算<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>该操作的输入feature map、kernel以及输出feature map为8bits，bias为16bits。</p>
+<p>输入输出的feature map以及kernel均按照4N模式存储，bias按照1N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">if_relu</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">bias_sign</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">WinoQuantParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_winograd_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">WinoQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr： 存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>output_c：输出feature map的 C 维度的大小;</li>
+<li>input_stride[4]：存放输入feature map的stride信息，分表对应NCHW四个维度stride的大小</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>rshift_bit：为了防止溢出，中间的累加结果使用int32表示，该参数表示将int32的中间结果右移rshift_bits位之后得到最后的8bits结果;</li>
+<li>using_bias：是否含有bias运算;</li>
+<li>result_add：是否累加上原来的结果，也就是将本次卷积结果与output_addr本来存放的值进行累加;</li>
+<li>if_relu：是否对卷积的结果再进行relu操作;</li>
+<li>input_sign/bias_sign：分别表示输入feature map以及bias的值是否为有符号数。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pooling">
+<h1>Pooling<a class="headerlink" href="#pooling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id7">
+<h2>浮点运算<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">PoolParam</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">float</span> <span class="n">coeff</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">SumPoolParam</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>kernel_h/kernel_w：滑动窗口的大小，分别对应HW维度;</li>
+<li>stride_h/stride_w：滑动窗口在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>ins_h/ins_w：对输入feature map的行/列之间进行插0的个数;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>coeff：当进行求和池化操作时，该参数为求和之后的乘数因子，如果只是简单的求和，则该参数设为1即可。</li>
+</ul>
+<div class="section" id="id8">
+<h3>平均池化操作<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">bm_atomic_avg_pool</span><span class="p">(</span><span class="k">const</span> <span class="n">PoolParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id9">
+<h3>最大池化操作<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">bm_atomic_max_pool</span><span class="p">(</span><span class="k">const</span> <span class="n">PoolParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id10">
+<h3>求和池化操作<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">bm_atomic_sum_pool</span><span class="p">(</span><span class="k">const</span> <span class="n">SumPoolParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>定点运算<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>可以实现avg-pooling、max-pooling，输入输出均为 int8 类型。</p>
+<p>输入输出均按照4N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">if_relu</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">PoolQuantParam</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>kernel_h/kernel_w：滑动窗口的大小，分别对应HW维度;</li>
+<li>stride_h/stride_w：滑动窗口在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>ins_h/ins_w：对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作的信息;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>rshift_bit：由于输入均为int8,为了防止溢出中间运算的累加结果均为int32，该参数表示对int32的结果右移r_shift后得到最终的int8结果;</li>
+<li>input_sign：输入feature map 的值是否为有符号数;</li>
+<li>if_relu：是否对pooling或者depthwise的结果再进行relu操作，相当与将relu层与该操作合并;</li>
+</ul>
+<div class="section" id="id12">
+<h3>平均池化操作<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">bm_atomic_avg_pool_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">PoolQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h3>最大池化操作<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">bm_atomic_max_pool_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">PoolQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="depthwise">
+<h1>Depthwise<a class="headerlink" href="#depthwise" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id14">
+<h2>浮点运算<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">DepthwiseParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_depthwise</span><span class="p">(</span><span class="k">const</span> <span class="n">DepthwiseParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr：存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>kernel_h/kernel_w：kernel的shape，分别对应HW维度;</li>
+<li>stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>using_bias：是否含有bias运算;</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h2>定点运算<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>该操作的输入feature map、kernel以及输出feature map为8bits，bias为16bits。</p>
+<p>输入输出的feature map以及kernel均按照4N模式存储，bias按照1N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weight_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">kernel_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ins_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dilate_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">if_relu</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">weight_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">bias_sign</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">DepthwiseQuantParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_depthwise_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">DepthwiseQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_addr：存放输入feature map的Local Memory偏移地址;</li>
+<li>weight_addr：存放权重系数的Local Memory偏移地址;</li>
+<li>bias_addr： 存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放输出feature map的Local Memory偏移地址;</li>
+<li>input_shape[4]：输入feature map的shape，分别对应NCHW四个维度;</li>
+<li>kernel_h/kernel_w：kernel的shape，分别对应HW维度;</li>
+<li>stride_h/stride_w：kernel在输入feature map上滑动的步长，分别对应HW维度;</li>
+<li>ins_h/ins_w： 对输入feature map的行/列之间进行插0的个数;</li>
+<li>dilate_h/dilate_w：对kernel进行dilate操作素需要的参数;</li>
+<li>pad[4]：对输入feature map进行padding的信息，分别对应上下左右的大小;</li>
+<li>rshift_bit：为了防止溢出，中间的累加结果使用int32表示，该参数表示将int32的中间结果右移rshift_bits位之后得到最后的8bits结果;</li>
+<li>using_bias：是否含有bias运算;</li>
+<li>if_relu：是否对卷积的结果再进行relu操作;</li>
+<li>input_sign/weight_sign/bias_sign：分别表示输入feature map、weight以及bias的值是否为有符号数;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="matrix-multiply">
+<h1>Matrix Multiply<a class="headerlink" href="#matrix-multiply" title="Permalink to this headline">¶</a></h1>
+<p>由于在Local Memory中数据都是按照tensor的方式存储的，因此需要将2维矩阵拆分成4维的tensor形式。</p>
+<p>假设矩阵有Y行X列，而tensor的几何尺寸为 NCHW，那么：</p>
+<p>N = Y</p>
+<p>C = (X + W - 1) / W</p>
+<p>H = 1</p>
+<p>W = W</p>
+<p>也就是将矩阵的列分解到C和W两个维度，具体分配由用户决定，接口如下。</p>
+<div class="section" id="id16">
+<h2>浮点运算<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<p>浮点矩阵乘法运算，可以实现 Y = L * R + B 或者 Y = trans(L) * R + B。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_l_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_r_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_row</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_col</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_tensor_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_tensor_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">r_tensor_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">r_tensor_c</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">l_trans</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MatmulParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_matmul</span><span class="p">(</span><span class="k">const</span> <span class="n">MatmulParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_l_addr：存放左矩阵的Local Memory偏移地址;</li>
+<li>input_r_addr：存放右矩阵的Local Memory偏移地址;</li>
+<li>bias_addr：存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放结果矩阵的Local Memory偏移地址;</li>
+<li>l_row：左矩阵的行数;</li>
+<li>l_col：左矩阵的列数;</li>
+<li>l_tensor_w：左矩阵的列分解后，分配给W维度的大小;</li>
+<li>l_tensor_c：左矩阵的列分解后，分配给C维度的大小;</li>
+<li>r_tensor_w：右矩阵的列分解后，分配给W维度的大小;</li>
+<li>r_tensor_c：右矩阵的列分解后，分配给C维度的大小;</li>
+<li>l_trans： 左矩阵是否要进行转置操作</li>
+<li>using_bias： 是否含有bias运算</li>
+<li>result_add： 是否累加上原来的结果，也就是将本次矩阵乘法结果与output_addr本来存放的值进行累加;</li>
+</ul>
+</div>
+<div class="section" id="id17">
+<h2>定点运算<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<p>定点矩阵乘法运算，左矩阵、右矩阵均为8bit，bias为16bits，结果可以是8bits或者16bits，可以实现以下功能：</p>
+<p>Y[7:0] = (L[7:0] * R[7:0] + B[15:0]) &gt;&gt; m</p>
+<p>或者</p>
+<p>Y[15:0] = (L[7:0] * R[7:0] + B[15:0]) &gt;&gt; m</p>
+<p>或者</p>
+<p>Y[7:0] = (L[7:0] * R[7:0] + B[15:0] + (Y[15:0] &lt;&lt; n)) &gt;&gt; m</p>
+<p>或者</p>
+<p>Y[15:0] = (L[7:0] * R[7:0] + B[15:0] + (Y[15:0] &lt;&lt; n)) &gt;&gt; m</p>
+<p>所有输入输出均按照1N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_l_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_r_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bias_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_row</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_col</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_tensor_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">l_tensor_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">r_tensor_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">r_tensor_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">lshfit_bit</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">l_trans</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">using_bias</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">if_relu</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input_l_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input_r_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">bias_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">output_16bit</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MatmulQuantParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_matmul_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">MatmulQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_l_addr：存放左矩阵的Local Memory偏移地址;</li>
+<li>input_r_addr：存放右矩阵的Local Memory偏移地址;</li>
+<li>bias_addr：存放bias系数的Local Memory偏移地址;</li>
+<li>output_addr：存放结果矩阵的Local Memory偏移地址;</li>
+<li>l_row：左矩阵的行数;</li>
+<li>l_col：左矩阵的列数;</li>
+<li>l_tensor_w：左矩阵的列分解后，分配给W维度的大小;</li>
+<li>l_tensor_c：左矩阵的列分解后，分配给C维度的大小;</li>
+<li>r_tensor_w：右矩阵的列分解后，分配给W维度的大小;</li>
+<li>r_tensor_c：右矩阵的列分解后，分配给C维度的大小;</li>
+<li>lshift_bit： 如果result_add 为真，output_addr本来存放的值可以左移后与该矩阵乘法结果累加，该参数表示左移位数;</li>
+<li>rshift_bit： add result之后的结果右移位数;</li>
+<li>l_trans： 左矩阵是否要进行转置操作</li>
+<li>using_bias： 是否含有bias运算</li>
+<li>result_add： 是否累加上原来的结果，也就是将本次矩阵乘法结果与output_addr本来存放的值进行累加;</li>
+<li>result_add_sign： 如果if_add_result为真，那么该参数表示Y_start_addr本来存放的值是否为有符号数;</li>
+<li>if_relu： 是否对最终的结果做relu操作;</li>
+<li>input_l_sign/input_r_sign/bias_sign：分别表示左矩阵、右矩阵以及bias的值是否为有符号数;</li>
+<li>output_16bit： 输出结果是否为16bits。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tensor-arithmetic">
+<h1>Tensor Arithmetic<a class="headerlink" href="#tensor-arithmetic" title="Permalink to this headline">¶</a></h1>
+<p>该原子操作可以实现两个4维tensor各个元素element-wise的一些运算。</p>
+<p>TensorC(n,c,h,w) = F(TensorA(n,c,h,w), tensorB(n,c,h,w))</p>
+<p>其中，tensorA和TensorB支持是常数， tensorB的N、H以及W维度支持广播操作。</p>
+<p>该芯片的原子操作所支持的所有操作码均包含在BmAtomicOp枚举中，该tensor arithmetic操作具体支持哪些会在下边介绍中详细说明。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_MUL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">BM_MAC</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">BM_ADD</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">BM_SUB</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">BM_MAX</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">BM_MIN</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">BM_SHIFT</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="n">BM_AND</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="n">BM_OR</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">BM_XOR</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">BM_SG</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">BM_SE</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="n">BM_DIV</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="n">BM_TAYLOR</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="n">BM_FP32_INT32</span> <span class="o">=</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="n">BM_NORMALIZE_INT32</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">BM_NORMALIZE_FP32</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="n">BM_RSQRT</span> <span class="o">=</span> <span class="mi">17</span><span class="p">,</span>
+    <span class="n">BM_CPY</span> <span class="o">=</span> <span class="mi">19</span><span class="p">,</span>
+    <span class="n">BM_SQR_SUM</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">BM_SQR_DIFF</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="p">}</span> <span class="n">BmAtomicOp</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="id18">
+<h2>浮点运算<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmAtomicOp</span> <span class="n">op</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input0_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">input0_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">input1_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">select_value</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">shift_type</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ArithParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_tensor_arithmetic</span><span class="p">(</span><span class="k">const</span> <span class="n">ArithParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p class="first">input0_addr: 存放第一个输入tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">input1_addr: 存放第二个输入tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">output_addr: 存放输出tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">shape[4]: 输入输出tensor的shape，分别为NCHW四个维度的值;</p>
+</li>
+<li><p class="first">input0_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;</p>
+</li>
+<li><p class="first">input1_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;</p>
+</li>
+<li><p class="first">output_stride[4]: 输出tensor的stride信息，分别为NCHW4个维度的stride大小;</p>
+</li>
+<li><p class="first">op: 操作码，可支持如下操作。</p>
+<blockquote>
+<div><ul class="simple">
+<li>BM_ADD: float32 tensor 加法</li>
+<li>BM_SUB: float32 tensor 减法</li>
+<li>BM_MUL: float32 tensor 乘法</li>
+<li>BM_DIV: float32 tensor 除法</li>
+<li>BM_MAC: float32 tensor 乘累加，即input0与input1的积累加上output_addr原本存放的值</li>
+<li>BM_MAX: float32 tensor 取最大值</li>
+<li>BM_MIN: float32 tensor 取最小值</li>
+<li>BM_AND: 32位 tensor 逻辑与操作</li>
+<li>BM_OR : 32位 tensor 逻辑或操作</li>
+<li>BM_XOR: 32位 tensor 逻辑异或操作</li>
+<li>BM_SHIFT: 32位 tensor 移位操作， 即 output = input0 &lt;&lt; input1, 其中input0、input1和output均为32bit，input1只有低6位有效，input1大于0表示左移，小于0表示右移;</li>
+<li>BM_SG : 条件选择操作，即output = (input0 &gt; input1) ? select_val : 0</li>
+<li>BM_SE : 条件选择操作，即output = (input0 == input1) ? select_val : 0, 这里指32位比特一致，而不限于float32</li>
+<li>BM_CPY: 32位 tensor拷贝操作</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">input0_is_const/input0_const: 第一个输入tensor是否是常数，如果是则其值为input0_const;</p>
+</li>
+<li><p class="first">input1_is_const/input1_const: 第二个输入tensor是否是常数，如果是则其值为input1_const;</p>
+</li>
+<li><p class="first">select_value: 给 BM_SG 和 BM_SE 这两个操作使用;</p>
+</li>
+<li><p class="first">shift_type: 当op为BM_SHIFT时才有效，0表示逻辑移位，1表示算数移位</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id19">
+<h2>定点运算<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<p>所有的输入输出，如果是int8类型则按照4N模式存储，如果是int16类型则按照2N模式存储。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmAtomicOp</span> <span class="n">op</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input0_is_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_is_const</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rshift_bit</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">lshift_bit</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shift_type</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input0_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">output_sign</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input0_8bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_8bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">output_8bit</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_n_is1</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_h_is1</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_w_is1</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ArithQuantParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_tensor_arithmetic_quantized</span><span class="p">(</span><span class="k">const</span> <span class="n">ArithQuantParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p class="first">input0_addr: 存放第一个输入tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">input1_addr: 存放第二个输入tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">output_addr: 存放输出tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">shape[4]: 输入输出tensor的shape，分别为NCHW四个维度的值;</p>
+</li>
+<li><p class="first">input0_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;</p>
+</li>
+<li><p class="first">input1_stride[4]: 第一个输入tensor的stride信息，分别为NCHW四个维度的stride大小;</p>
+</li>
+<li><p class="first">output_stride[4]: 输出tensor的stride信息，分别为NCHW4个维度的stride大小;</p>
+</li>
+<li><p class="first">op: 操作码，可支持如下操作。</p>
+<blockquote>
+<div><ul class="simple">
+<li>BM_ADD: output = input0 + input1，其中input0和input1同为int8或者int16，output可选int8或者int16</li>
+<li>BM_SUB: output = input0 - input1，其中input0和input1同为int8或者int16，output可选int8或者int16</li>
+<li>BM_MUL: output = input0 * input1 &gt;&gt; m，其中input0和input1均为int8，output可选int8或者int16</li>
+<li>BM_MAC: output = (input0 * input1 + output &lt;&lt; n) &gt;&gt; m，其中input0和input1均为int8，output为int16</li>
+<li>BM_MAX: output = max(input0, input1)，其中input0、input1以及output同为int8或者int16</li>
+<li>BM_MIN: output = min(input0, input1)，其中input0、input1以及output同为int8或者int16</li>
+<li>BM_SHIFT: output = input0 &lt;&lt; input1，其中input0、input1以及output均为int16, input1大于0表示左移，小于0表示右移</li>
+<li>BM_AND: output = input0 &amp; input1，其中input0、input1以及output同为int8或者int16</li>
+<li>BM_OR : output = input0 | input1，其中input0、input1以及output同为int8或者int16</li>
+<li>BM_XOR: output = input0 ^ input1，其中input0、input1以及output同为int8或者int16</li>
+<li>BM_CPY: output = input0，input0和output同为int8</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">input0_is_const: 第一个输入tensor是否是常数，如果是则其值为input0_addr;</p>
+</li>
+<li><p class="first">input1_is_const: 第二个输入tensor是否是常数，如果是则其值为input1_addr;</p>
+</li>
+<li><p class="first">rshift_bit: 对输入tensor计算结果右移的位数m，BM_MUL和BM_MAC操作中有效;</p>
+</li>
+<li><p class="first">lshift_bit: 如果是BM_MAC操作，该参数就是左移位数n。</p>
+</li>
+<li><p class="first">shift_type: 如果是BM_SHIFT操作，0表示逻辑移位，1表示算数移位;</p>
+</li>
+<li><p class="first">input0_sign: 输入input0是否为有符号数；</p>
+</li>
+<li><p class="first">input1_sign: 输入input1是否为有符号数；</p>
+</li>
+<li><p class="first">input0_8bit: 输入input0是否为int8，否则为int16；</p>
+</li>
+<li><p class="first">input1_8bit: 输入input1是否为int8，否则为int16；</p>
+</li>
+<li><p class="first">output_8bit: 输出output是否为int8，否则为int16；</p>
+</li>
+<li><p class="first">input1_n_is1: 第二个输入的 N 维度为1, 即在 N 维度进行广播;</p>
+</li>
+<li><p class="first">input1_h_is1: 第二个输入的 H 维度为1, 即在 W 维度进行广播;</p>
+</li>
+<li><p class="first">input1_w_is1: 第二个输入的 W 维度为1, 即在 W 维度进行广播;</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="table-lookup">
+<h1>Table Lookup<a class="headerlink" href="#table-lookup" title="Permalink to this headline">¶</a></h1>
+<p>查找表功能，可以实现 C = A[B]， 其中tensor A为一张table，每一表项的位宽是32bits，表的深度不超过256，B是一个位宽为8bits或32bits的tensor，但无论是8bits或32bits，都只有低8bits有效，作为表A的索引地址。输出tensor C的shape与B相同，但C只能是32bits。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">table_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">index_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_n</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_h</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">table_len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">index_prec</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">TableLookupParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_table_lookup</span><span class="p">(</span><span class="k">const</span> <span class="n">TableLookupParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>table_addr: 存放表项tensor的地址，其首地址可以使用bm_lookup_table_start_addr()获取;</li>
+<li>index_addr: 存放索引tensor的Local Memory偏移地址;</li>
+<li>output_addr: 存放输出tensor的Local Memory偏移地址;</li>
+<li>input_n/input_c/input_h/input_w: 索引以及输出tensor的shape，分别对应NCHW四个维度;</li>
+<li>table_len: 表项的长度;</li>
+<li>index_prec: 索引tensor的位长，0表示8bits，1表示32bits;</li>
+</ul>
+</div>
+<div class="section" id="gather-data">
+<h1>gather data<a class="headerlink" href="#gather-data" title="Permalink to this headline">¶</a></h1>
+<p>该操作可以完成特定规则的数据整理，输入包括原始数据和index两部分，输出为以index作为偏移从原始数据中读出的数据，输入输出均存放于L2 SRAM中，原始数据和输出数据类型一致，可以是8bit、32bit或者128bit。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_GD_8BIT</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">BM_GD_32BIT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">BM_GD_128BIT</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="p">}</span> <span class="n">BmGDType</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">data_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">index_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="n">BmGDType</span> <span class="n">type</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">GatherDataParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_gather_data</span><span class="p">(</span><span class="k">const</span> <span class="n">GatherDataParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>data_addr: 存放输入原始数据的L2 SRAM地址;</li>
+<li>index_addr: 存放输入index的L2 SRAM地址;</li>
+<li>output_addr: 存放输出的L2 SRAM地址;</li>
+<li>length: index的长度，output与之相同；</li>
+<li>type: 数据类型，8 bits、32 bits还是128 bits，如果是128 bits，那么输入原始数据的地址data_addr和输出数据的地址output_addr必须满足128bits对齐。</li>
+</ul>
+</div>
+<div class="section" id="vector-correlation">
+<h1>vector correlation<a class="headerlink" href="#vector-correlation" title="Permalink to this headline">¶</a></h1>
+<p>输入为两个一维向量 input0(n维) input1(n维)，本指令要算出一个二维向量output</p>
+<p>output(i,j) = f(input0(i)，input1(j))  0 &lt;= i &lt;= m–1,   0 &lt;= j &lt;= n-1</p>
+<p>函数f包括浮点加减乘除，浮点的max/min,  整型的and/or/xor, 都是32比特</p>
+<p>在TPU中需要使用张量的描述方式来描述输入输出这三个矢量:
+输入input0描述为(1, input0_c, 1, input0_w)，其中 m = (input0_c – 1) * input0_w + input0_w_last
+输入input1描述为(1, input1_c, 1, input1_w)，其中 n = input1_c * input1_w
+输出output描述为(m, input1_c, 1，input1_w)</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="n">BmAtomicOp</span> <span class="n">op</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_w</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_w_last</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_w</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">VecParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_vec_correlation</span><span class="p">(</span><span class="k">const</span> <span class="n">VecParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p class="first">input0_addr: 存放输入tensor A的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">input1_addr: 存放输入tensor B的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">output_addr: 存放输出tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">op: 操作码，可支持如下操作：</p>
+<blockquote>
+<div><ul class="simple">
+<li>BM_ADD: output(i,j) = input0(i) + input1(j)，输入输出均为float32类型</li>
+<li>BM_SUB: output(i,j) = input0(i) - input1(j)，输入输出均为float32类型</li>
+<li>BM_MUL: output(i,j) = input0(i) * input1(j)，输入输出均为float32类型</li>
+<li>BM_DIV: output(i,j) = input0(i) / input1(j)，输入输出均为float32类型</li>
+<li>BM_MAX: output(i,j) = max(input0(i), input1(j))，输入输出均为float32类型</li>
+<li>BM_MIN: output(i,j) = min(input0(i), input1(j))，输入输出均为float32类型</li>
+<li>BM_AND: output(i,j) = input0(i) &amp; input1(j)，输入输出均为int32类型</li>
+<li>BM_OR:  output(i,j) = input0(i) | input1(j)，输入输出均为int32类型</li>
+<li>BM_XOR: output(i,j) = input0(i) ^ input1(j)，输入输出均为int32类型</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">input0_c: input0 使用四维tensor描述的方式，分配到C维度的大小；</p>
+</li>
+<li><p class="first">input0_w: input0 使用四维tensor描述的方式，分配到W维度的大小；</p>
+</li>
+<li><p class="first">input0_w_last: input0 使用四维tensor描述的方式，不能整除的情况下，最后一个W维度的长度；</p>
+</li>
+<li><p class="first">input1_c: input1 使用四维tensor描述的方式，分配到C维度的大小；</p>
+</li>
+<li><p class="first">input1_w: input1 使用四维tensor描述的方式，分配到W维度的大小；</p>
+</li>
+</ul>
+</div>
+<div class="section" id="sort">
+<h1>sort<a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h1>
+<p>该操作可以实现浮点数据的排序（升序/降序），并且支持排序后可以得到原数据所对应的 index。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_ASCEND</span><span class="p">,</span>
+    <span class="n">BM_DESCEND</span>
+<span class="p">}</span><span class="n">BmSortOrder</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">input_data_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">input_index_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">output_data_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">output_index_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_len</span><span class="p">;</span>
+    <span class="n">BmSortOrder</span> <span class="n">order</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">index_enable</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">index_auto</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">SortParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_sort</span><span class="p">(</span><span class="k">const</span> <span class="n">SortParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>input_data_addr: 存放输入待排数据的地址;</li>
+<li>input_index_addr: 存放输入数据对应index的地址;</li>
+<li>output_data_addr: 存放输出已排数据的地址;</li>
+<li>output_index_addr: 存放输出已排数据对应index的地址;</li>
+<li>input_len：输入待排数据的长度;</li>
+<li>output_len：输出已排数据的长度;</li>
+<li>order：升序还是降序;</li>
+<li>index_enable: 是否使能 index。如果使能即可输出排序后数据所对应的 index ，否则input_index_addr和output_index_addr这两个参数无效。</li>
+<li>index_auto: 是否使能自动生成 index 功能。使用该功能的前提是 index_enable 参数为 true，如果该参数也为 true 则表示按照输入数据的存储顺序从 0 开始计数作为 index，参数input_index_addr 便无效，输出结果中排好序数据所对应的index即存放于output_index_addr地址中。</li>
+</ul>
+</div>
+<div class="section" id="md-scalar">
+<h1>MD-Scalar<a class="headerlink" href="#md-scalar" title="Permalink to this headline">¶</a></h1>
+<p>四维Tensor点对点的四则运算</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input0_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input1_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">shape</span><span class="p">;</span>
+    <span class="n">BmAtomicOp</span> <span class="n">op</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input0_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">input0_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">input1_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">input1_const</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MDScalarParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_md_scalar</span><span class="p">(</span><span class="k">const</span> <span class="n">MDScalarParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p class="first">input0_addr: 存放输入tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">input1_addr: 存放输入tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">output_addr: 存放输出tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度；</p>
+</li>
+<li><p class="first">op: 操作码，可支持如下操作：</p>
+<blockquote>
+<div><ul class="simple">
+<li>BM_ADD: float32 tensor加法</li>
+<li>BM_SUB: float32 tensor减法</li>
+<li>BM_MUL: float32 tensor乘法</li>
+<li>BM_DIV: float32 tensor除法</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">result_add：当运算为乘法时是否累加上原来的结果，也就是将本次计算结果与Y_addr本来存放的值进行累加;</p>
+</li>
+<li><p class="first">input0_is_const：input0 是否为常数值;</p>
+</li>
+<li><p class="first">input1_is_const：input1 是否为常数值;</p>
+</li>
+<li><p class="first">input0_const：如果input0为常数值的话，其常数值为input0_const;</p>
+</li>
+<li><p class="first">input1_const：如果input1为常数值的话，其常数值为input1_const;</p>
+</li>
+</ul>
+</div>
+<div class="section" id="md-linear">
+<h1>MD-Linear<a class="headerlink" href="#md-linear" title="Permalink to this headline">¶</a></h1>
+<p>对四维Tensor的线性操作或平方差和计算。</p>
+<p>线性操作：Y(n, c, h, w) = A(n, c, h, w) * S(0, c, 0 , 0) + B(0, c, 0, 0)</p>
+<p>平方差和：Y(n, c, h, w) = (A(n, c, h, w) +/- B(0, c, 0, 0))^2</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorA_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorB_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorS_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmAtomicOp</span> <span class="n">op</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">tensorB_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">tensorB_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">tensorS_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">tensorS_const</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MDLinearParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_md_linear</span><span class="p">(</span><span class="k">const</span> <span class="n">MDLinearParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p class="first">tensorA_addr: 存放输入tensor A的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">tensorB_addr: 存放输入tensor B的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">tensorS_addr: 存放输入tensor S的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">output_addr: 存放输出tensor的Local Memory偏移地址;</p>
+</li>
+<li><p class="first">shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度;</p>
+</li>
+<li><p class="first">op: 操作码，可支持如下操作：</p>
+<blockquote>
+<div><ul class="simple">
+<li>BM_MAC: output = tensorA * tensorS + tensorB，输入输出均为float32类型</li>
+<li>BM_SQR_SUM：output = (tensorA + tensorB ) ^ 2，输入输出均为float32类型</li>
+<li>BM_SQR_DIFF：output = (tensorA - tensorB ) ^ 2，输入输出均为float32类型</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">result_add：当运算为BM_MAC时是否累加上原来的结果，也就是将本次计算结果与output_addr本来存放的值进行累加;</p>
+</li>
+<li><p class="first">tensorB_is_const/tensorB_const：tensor B 是否为常数值，如果是则其值为tensorB_const;</p>
+</li>
+<li><p class="first">tensorS_is_const/tensorS_const：tensor S 是否为常数值，如果是则其值为tensorS_const;</p>
+</li>
+</ul>
+</div>
+<div class="section" id="md-cmp">
+<h1>MD-CMP<a class="headerlink" href="#md-cmp" title="Permalink to this headline">¶</a></h1>
+<p>实现Tensor的比较操作，计算可以总结为：</p>
+<p>Y(n, c, h, w) = max(A(n, c, h, w) , B(n, c, h, w))</p>
+<p>R(n, c, h, w) = A(n, c, h, w) &gt; B(n, c, h, w) ? C(n, c, h, w) : D(n, c, h, w)；</p>
+<p>该操作中有可能同时计算Y和R，也有可能只计算Y或者R中的某一个。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorA_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorB_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorC_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorD_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorY_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorR_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">bool</span> <span class="n">tensorA_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">tensorA_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">tensorB_is_const</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">tensorB_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">tensorC_is_const</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorC_const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">tensorD_is_const</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tensorD_const</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">result_skip</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MDCmpParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_md_cmp</span><span class="p">(</span><span class="k">const</span> <span class="n">MDCmpParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>tensorA_addr: 存放输入tensor A的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</li>
+<li>tensorB_addr: 存放输入tensor B的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</li>
+<li>tensorC_addr: 存放输入tensor C的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</li>
+<li>tensorD_addr: 存放输入tensor D的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</li>
+<li>tensorY_addr: 存放输出tensor Y的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</li>
+<li>tesnorR_addr: 存放输出tensor R的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</li>
+<li>shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度；</li>
+<li>tensorA_is_const/tensorA_const：A tensor 是否为常数值，如果是则其值为tensorA_const;</li>
+<li>tensorB_is_const/tensorB_const：B tensor 是否为常数值，如果是则其值为tensorB_const;</li>
+<li>tensorC_is_const/tensorC_const：C tensor 是否为常数值，如果是则其值为tensorC_const;</li>
+<li>tensorD_is_const/tensorD_const：D tensor 是否为常数值，如果是则其值为tensorD_const;</li>
+<li>result_skip：执行模式的选择，0表示Y和R都计算，1表示只计算Y，2表示只计算R;</li>
+</ul>
+</div>
+<div class="section" id="md-sfu">
+<h1>MD-SFU<a class="headerlink" href="#md-sfu" title="Permalink to this headline">¶</a></h1>
+<p>四维Tensor的特殊函数运算，功能包括浮点到定点转换，分离浮点数的底数和指数部分，计算泰勒展开式，计算平方根等特殊函数。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">input_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">output_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">shape</span><span class="p">;</span>
+    <span class="n">BmAtomicOp</span> <span class="n">op</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">taylor_len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">taylor_coef_addr</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MDSFUParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_md_sfu</span><span class="p">(</span><span class="k">const</span> <span class="n">MDSFUParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul>
+<li><p class="first">input_addr: 存放输入tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">output_addr: 存放输出tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;</p>
+</li>
+<li><p class="first">shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度；</p>
+</li>
+<li><p class="first">op：操作码，可支持的操作如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li>BM_RSQRT: output = input ^ (-1/2)，输入输出均为float32类型</li>
+<li>BM_NORMALIZE_INT32：取出浮点数的指数部分，按照int32存放</li>
+<li>BM_NORMALIZE_FP32：取出浮点数的指数部分，按照float32存放</li>
+<li>BM_FP32_INT32: 将浮点数转为int32，floor操作</li>
+<li>BM_TAYLOR：泰勒展开式计算</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">taylor_len：泰勒展开式的级数;</p>
+</li>
+<li><p class="first">table_coef_addr：泰勒展开表的系数存放的L2 SRAM地址;</p>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

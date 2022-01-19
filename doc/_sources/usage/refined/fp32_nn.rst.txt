@@ -1,0 +1,324 @@
+FP32 Neural Network Functions
+=============================
+
+okk_bdc_relu
+__________________
+
+.. cpp:function:: void okk_bdc_relu(local_addr_t dst_addr, local_addr_t src_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Calculate ReLU of the elements of the source tensor for fp32 data type.
+
+    .. math:: dst(n, c, h, w) = {\begin{cases}src(n, c, h, w)&{\text{if }}src(n, c, h, w)>0,\\0&{\text{otherwise}}.\end{cases}}
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param shape: Pointer to the shape of the destination, source and work tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The data type of the destination and source tensors is fp32.
+    - The destination and source tensors start at the same NPU.
+    - :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are divisible by 4 and preferred by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_bias
+__________________
+
+.. cpp:function:: void okk_bdc_bias(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t bias_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride)
+
+    Perform adding bias to the elements of the source tensor per channel.
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w) + bias(0, c, 0, 0)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param bias_addr: Address of the bias tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+
+    **Remarks**
+
+    - The bias tensor is in the :ref:`compact layout`.
+    - The data type of the destination, source and bias tensors is fp32.
+    - The shape of the bias tensor is [1, :cpp:expr:`shape->c`, 1, 1].
+    - The destination, source and bias tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`bias_addr` are divisible by 4, where :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are preferred to be divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_scale
+___________________
+
+.. cpp:function:: void okk_bdc_scale(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t scale_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, bool result_add)
+
+    Perform scaling the elements of the source tensor per channel with or without result accumulation by addtition.
+
+    If :cpp:expr:`result_add == false`
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)\times scale(0, c, 0, 0)
+
+    else
+
+    .. math:: dst(n, c, h, w) = dst(n, c, h, w) + src(n, c, h, w)\times scale(0, c, 0, 0)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param bias_addr: Address of the scale tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param result_add: Flag of performing result accumulation by addtition.
+
+    **Remarks**
+
+    - The scale tensor is in the :ref:`compact layout`.
+    - The data type of the destination, source and scale tensors is fp32.
+    - The shape of the scale tensor is [1, :cpp:expr:`shape->c`, 1, 1].
+    - The destination, source and scale tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr` and :cpp:expr:`scale_addr` are divisible by 4, where :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are preferred to be divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_scale_bias
+________________________
+
+.. cpp:function:: void okk_bdc_scale_bias(local_addr_t dst_addr, local_addr_t src_addr, local_addr_t scale_addr, local_addr_t bias_addr, const dim4 *shape, const dim4 *dst_stride, const dim4 *src_stride, bool result_add)
+
+    Perform scaling and adding bias to the elements of the source tensor per channel with or without result accumulation by addtition.
+
+    If :cpp:expr:`result_add == false`
+
+    .. math:: dst(n, c, h, w) = src(n, c, h, w)\times scale(0, c, 0, 0) + bias(0, c, 0, 0)
+
+    else
+
+    .. math:: dst(n, c, h, w) = dst(n, c, h, w) + src(n, c, h, w)\times scale(0, c, 0, 0) + bias(0, c, 0, 0)
+
+    :param dst_addr: Address of the destination tensor.
+    :param src_addr: Address of the source tensor.
+    :param scale_addr: Address of the scale tensor.
+    :param bias_addr: Address of the bias tensor.
+    :param shape: Pointer to the shape of the destination and source tensors.
+    :param dst_stride: Pointer to the stride of the destination tensor.
+    :param src_stride: Pointer to the stride of the source tensor.
+    :param result_add: Flag of performing result accumulation by addtition.
+
+    **Remarks**
+
+    - The scale and bias tensors are in the :ref:`compact layout`.
+    - The data type of the destination, source, scale and bias tensors is fp32.
+    - The shape of the scale and bias tensors is [1, :cpp:expr:`shape->c`, 1, 1].
+    - The destination, source, scale and bias tensors start at the same NPU.
+    - :cpp:expr:`dst_addr`, :cpp:expr:`src_addr`, :cpp:expr:`scale_addr` and :cpp:expr:`bias_addr` are divisible by 4, where :cpp:expr:`dst_addr` and :cpp:expr:`src_addr` are preferred to be divisible by 128.
+    - :cpp:expr:`shape->n`, :cpp:expr:`shape->h` and :cpp:expr:`shape->w` are in [1, 65535], :cpp:expr:`shape->c` is in [1, 4095].
+    - If :cpp:expr:`dst_stride` or :cpp:expr:`src_stride` is NULL, the relative tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_conv2d
+____________________
+
+.. cpp:function:: void okk_bdc_conv2d(local_addr_t output_addr, local_addr_t input_addr, local_addr_t weight_addr, local_addr_t bias_addr, const dim4 *input_shape, int output_c, int kernel_h, int kernel_w, const dim4 *input_stride, const dim4 *kernel_stride, bool using_bias, bool result_add, const Padding *padding, const dim2 *stride, const dim2 *dilation)
+
+    Perform 2D convolution with or without adding bias and result accumulation by addtition.
+
+    :param output_addr: Address of the output tensor.
+    :param input_addr: Address of the input tensor.
+    :param weight_addr: Address of the weight tensor.
+    :param bias_addr: Address of the bias tensor, only used when :cpp:expr:`using_bias = true`.
+    :param input_shape: Pointer to the shape of the input tensor.
+    :param output_c: Channel number of the output tensor.
+    :param kernel_h: Height of the convolution kernel.
+    :param kernel_w: Width of the convolution kernel.
+    :param input_stride: Pointer to the stride of the input tensor.
+    :param kernel_stride: Pointer to the stride of the weight tensor.
+    :param using_bias: Flag of adding bias.
+    :param result_add: Flag of performing result accumulation by addtition.
+    :param padding: Pointer to the amount of paddings applied to the input tensor.
+    :param stride: Pointer to the strides for the cross-correlation.
+    :param dilation: Pointer to the spacings between the kernel points.
+
+    **Remarks**
+
+    - The output tensor is in the :ref:`128-byte aligned layout`, the bias tensor is in the :ref:`compact layout`.
+    - The data type of the output, input, weight and bias tensors is fp32.
+    - The weight tensor is in the :ref:`2IC-mode`.
+    - The output, weight and bias tensors start at the same NPU.
+    - :cpp:expr:`output_addr` is divisible by 128, :cpp:expr:`input_addr`, :cpp:expr:`weight_addr` and :cpp:expr:`bias_addr` are divisible by 4.
+    - :cpp:expr:`input_shape->n` is in [1, 65535], :cpp:expr:`input_shape->c` is in [1, 4095], :cpp:expr:`input_shape->h` and :cpp:expr:`input_shape->w` are in [1, 2047].
+    - It is required that
+
+      :cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` <= 2047,
+
+      :cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` <= 2047.
+    - The shape of the output tensor is [:cpp:expr:`input_shape->n`, :cpp:expr:`output_c`, output_h, output_w], where
+
+      output_h = (:cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` - ((:cpp:expr:`kernel_h` - 1) * :cpp:expr:`dilation->h` + 1)) / :cpp:expr:`stride->h` + 1,
+
+      output_w = (:cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` - ((:cpp:expr:`kernel_w` - 1) * :cpp:expr:`dilation->w` + 1)) / :cpp:expr:`stride->w` + 1,
+
+      and it is required that output_h <= 2047 and output_w <= 2047.
+    - The shape of the bias tensor is [1, :cpp:expr:`output_c`, 1, 1].
+    - :cpp:expr:`padding->top`, :cpp:expr:`padding->bottom`, :cpp:expr:`padding->left` and :cpp:expr:`padding->right` are in [0, 15], :cpp:expr:`stride->h` and :cpp:expr:`stride->w` are in [1, 15], :cpp:expr:`dilation->h` and :cpp:expr:`dilation->w` are in [1, 15].
+    - If :cpp:expr:`padding` is NULL, there will be no paddings.
+    - If :cpp:expr:`stride` is NULL, the stride value will be one as default.
+    - If :cpp:expr:`dilation` is NULL, the dilation value will be one as default.
+    - If :cpp:expr:`input_stride` is NULL, the input tensor is in the :ref:`128-byte aligned layout`.
+
+okk_bdc_depthwise2d
+_________________________
+
+.. cpp:function:: void okk_bdc_depthwise2d(local_addr_t output_addr, local_addr_t input_addr, local_addr_t weight_addr, local_addr_t bias_addr, const dim4 *input_shape, int kernel_h, int kernel_w, bool using_bias, const Padding *padding, const dim2 *stride, const dim2 *dilation)
+
+    Perform 2D depthwise convolution with or without adding bias.
+
+    :param output_addr: Address of the output tensor.
+    :param input_addr: Address of the input tensor.
+    :param weight_addr: Address of the weight tensor.
+    :param bias_addr: Address of the bias tensor, only used when :cpp:expr:`using_bias = true`.
+    :param input_shape: Pointer to the shape of the input tensor.
+    :param kernel_h: Height of the convolution kernel.
+    :param kernel_w: Width of the convolution kernel.
+    :param using_bias: Flag of adding bias.
+    :param padding: Pointer to the amount of paddings applied to the input tensor.
+    :param stride: Pointer to the strides for the cross-correlation.
+    :param dilation: Pointer to the spacings between the kernel points.
+
+    **Remarks**
+
+    - The output and input tensors are in the :ref:`128-byte aligned layout`, the weight and bias tensors are in the :ref:`compact layout`.
+    - The data type of the output, input, weight and bias tensors is fp32.
+    - The output, input, weight and bias tensors start at the same NPU.
+    - :cpp:expr:`output_addr` and :cpp:expr:`input_addr` are divisible by 128, :cpp:expr:`weight_addr` and :cpp:expr:`bias_addr` are divisible by 4.
+    - :cpp:expr:`input_shape->n` is in [1, 65535], :cpp:expr:`input_shape->c` is in [1, 4095], :cpp:expr:`input_shape->h` and :cpp:expr:`input_shape->w` are in [1, 2047].
+    - It is required that
+
+      :cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` <= 2047,
+
+      :cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` <= 2047.
+
+    - The shape of the output tensor is [:cpp:expr:`input_shape->n`, :cpp:expr:`input_shape->c`, output_h, output_w], where
+
+      output_h = (:cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` - ((:cpp:expr:`kernel_h` - 1) * :cpp:expr:`dilation->h` + 1)) / :cpp:expr:`stride->h` + 1,
+
+      output_w = (:cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` - ((:cpp:expr:`kernel_w` - 1) * :cpp:expr:`dilation->w` + 1)) / :cpp:expr:`stride->w` + 1,
+
+      and it is required that output_h <= 2047 and output_w <= 2047.
+    - The shape of the weight tensor is [1, :cpp:expr:`input_shape->c`, :cpp:expr:`kernel_h`, :cpp:expr:`kernel_w`], the shape of the bias tensor is [1, :cpp:expr:`input_shape->c`, 1, 1].
+    - :cpp:expr:`padding->top`, :cpp:expr:`padding->bottom`, :cpp:expr:`padding->left` and :cpp:expr:`padding->right` are in [0, 15], :cpp:expr:`stride->h` and :cpp:expr:`stride->w` are in [1, 15], :cpp:expr:`dilation->h` and :cpp:expr:`dilation->w` are in [1, 15].
+    - If :cpp:expr:`padding` is NULL, there will be no paddings.
+    - If :cpp:expr:`stride` is NULL, the stride value will be one as default.
+    - If :cpp:expr:`dilation` is NULL, the dilation value will be one as default.
+
+okk_bdc_avg_pool2d
+________________________
+
+.. cpp:function:: void okk_bdc_avg_pool2d(local_addr_t output_addr, local_addr_t input_addr, const dim4 *input_shape, int kernel_h, int kernel_w, const Padding *padding, const dim2 *stride)
+
+    Perform 2D average pooling.
+
+    :param output_addr: Address of the output tensor.
+    :param input_addr: Address of the input tensor.
+    :param input_shape: Pointer to the shape of the input tensor.
+    :param kernel_h: Height of the convolution kernel.
+    :param kernel_w: Width of the convolution kernel.
+    :param padding: Pointer to the amount of paddings applied to the input tensor.
+    :param stride: Pointer to the strides for the cross-correlation.
+
+    **Remarks**
+
+    - The output and input tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the output and input tensors is fp32.
+    - The output and input tensors start at the same NPU.
+    - :cpp:expr:`output_addr` and :cpp:expr:`input_addr` are divisible by 128.
+    - :cpp:expr:`input_shape->n` is in [1, 65535], :cpp:expr:`input_shape->c` is in [1, 4095], :cpp:expr:`input_shape->h` and :cpp:expr:`input_shape->w` are in [1, 2047].
+    - It is required that
+
+      :cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` <= 2047,
+
+      :cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` <= 2047.
+
+    - The shape of the output tensor is [:cpp:expr:`input_shape->n`, :cpp:expr:`input_shape->c`, output_h, output_w], where
+
+      output_h = (:cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` - :cpp:expr:`kernel_h`) / :cpp:expr:`stride->h` + 1,
+
+      output_w = (:cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` - :cpp:expr:`kernel_w`) / :cpp:expr:`stride->w` + 1,
+
+      and it is required that output_h <= 2047 and output_w <= 2047.
+    - The shape of the weight tensor is [1, :cpp:expr:`input_shape->c`, :cpp:expr:`kernel_h`, :cpp:expr:`kernel_w`], the shape of the bias tensor is [1, :cpp:expr:`input_shape->c`, 1, 1].
+    - :cpp:expr:`padding->top`, :cpp:expr:`padding->bottom`, :cpp:expr:`padding->left` and :cpp:expr:`padding->right` are in [0, 15], :cpp:expr:`stride->h` and :cpp:expr:`stride->w` are in [1, 15].
+    - If :cpp:expr:`padding` is NULL, there will be no paddings.
+    - If :cpp:expr:`stride` is NULL, the stride value will be one as default.
+
+okk_bdc_max_pool2d
+________________________
+
+.. cpp:function:: void okk_bdc_max_pool2d(local_addr_t output_addr, local_addr_t input_addr, const dim4 *input_shape, int kernel_h, int kernel_w, const Padding *padding, const dim2 *stride)
+
+    Perform 2D max pooling.
+
+    :param output_addr: Address of the output tensor.
+    :param input_addr: Address of the input tensor.
+    :param input_shape: Pointer to the shape of the input tensor.
+    :param kernel_h: Height of the convolution kernel.
+    :param kernel_w: Width of the convolution kernel.
+    :param padding: Pointer to the amount of paddings applied to the input tensor.
+    :param stride: Pointer to the strides for the cross-correlation.
+
+    **Remarks**
+
+    - The output and input tensors are in the :ref:`128-byte aligned layout`.
+    - The data type of the output and input tensors is fp32.
+    - The output and input tensors start at the same NPU.
+    - :cpp:expr:`output_addr` and :cpp:expr:`input_addr` are divisible by 128.
+    - :cpp:expr:`input_shape->n` is in [1, 65535], :cpp:expr:`input_shape->c` is in [1, 4095], :cpp:expr:`input_shape->h` and :cpp:expr:`input_shape->w` are in [1, 2047].
+    - It is required that
+
+      :cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` <= 2047,
+
+      :cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` <= 2047.
+
+    - The shape of the output tensor is [:cpp:expr:`input_shape->n`, :cpp:expr:`input_shape->c`, output_h, output_w], where
+
+      output_h = (:cpp:expr:`input_shape->h` + :cpp:expr:`padding->top` + :cpp:expr:`padding->bottom` - :cpp:expr:`kernel_h`) / :cpp:expr:`stride->h` + 1,
+
+      output_w = (:cpp:expr:`input_shape->w` + :cpp:expr:`padding->left` + :cpp:expr:`padding->right` - :cpp:expr:`kernel_w`) / :cpp:expr:`stride->w` + 1,
+
+      and it is required that output_h <= 2047 and output_w <= 2047.
+    - The shape of the weight tensor is [1, :cpp:expr:`input_shape->c`, :cpp:expr:`kernel_h`, :cpp:expr:`kernel_w`], the shape of the bias tensor is [1, :cpp:expr:`input_shape->c`, 1, 1].
+    - :cpp:expr:`padding->top`, :cpp:expr:`padding->bottom`, :cpp:expr:`padding->left` and :cpp:expr:`padding->right` are in [0, 15], :cpp:expr:`stride->h` and :cpp:expr:`stride->w` are in [1, 15].
+    - If :cpp:expr:`padding` is NULL, there will be no paddings.
+    - If :cpp:expr:`stride` is NULL, the stride value will be one as default.
+    - The implicit padding value is -3.4028234663852886E38 (0xff7fffff).
+
+okk_bdc_matmul
+____________________
+
+.. cpp:function:: void okk_bdc_matmul(local_addr_t output_addr, local_addr_t left_addr, local_addr_t right_addr, local_addr_t bias_addr, int left_rows, int left_cols, int right_cols, int left_cols_per_channel, int right_cols_per_channel, bool using_bias, bool result_add)
+
+    Perform matrix multiplication with or without adding bias and result accumulation by addtition.
+
+    :param output_addr: Address of the output tensor.
+    :param left_addr: Address of the left matrix tensor.
+    :param right_addr: Address of the right matrix tensor.
+    :param bias_addr: Address of the bias tensor, only used when :cpp:expr:`using_bias = true`.
+    :param left_rows: Number of the rows of the left matrix.
+    :param left_cols: Number of the columns of the left matrix.
+    :param right_cols: Number of the columns of the right matrix.
+    :param left_cols_per_channel: Number of the columns of the left matrix per channel.
+    :param right_cols_per_channel: Number of the columns of the right matrix per channel.
+    :param using_bias: Flag of adding bias.
+    :param result_add: Flag of performing result accumulation by addtition.
+
+    **Remarks**
+
+    - The output, left matrix, right matrix and bias tensors are in the matrix layout.
+    - The data type of the output, left matrix, right matrix and bias tensors is fp32.
+    - The output, right matrix and bias tensors start at the same NPU.
+    - :cpp:expr:`output_addr`, :cpp:expr:`left_addr`, :cpp:expr:`right_addr` and :cpp:expr:`bias_addr` are divisible by 128.
+    - The bias is a 1-by-:cpp:expr:`right_cols` matrix.
+    - :cpp:expr:`left_cols_per_channel` is in [1, min(128, :cpp:expr:`left_cols`)], :cpp:expr:`left_rows` is in [1, 65535], and :cpp:expr:`right_cols_per_channel` in [1, min(128, :cpp:expr:`right_cols`)].
+    - It is required that ceil(:cpp:expr:`left_cols` / :cpp:expr:`left_cols_per_channel`) <= 4095 and ceil(:cpp:expr:`right_cols` / :cpp:expr:`right_cols_per_channel`) <= 4095.
+

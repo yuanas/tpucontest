@@ -1,0 +1,160 @@
+Some Definitions
+================
+
+.. cpp:type:: unsigned int local_addr_t
+
+.. cpp:type:: unsigned long long system_addr_t
+
+.. cpp:type:: unsigned long long global_addr_t
+
+.. cpp:type:: char s8x4[4]
+
+.. cpp:type:: unsigned char u8x4[4]
+
+.. cpp:type:: short s16x2[2]
+
+.. cpp:type:: unsigned short u16x2[2]
+
+.. cpp:union:: x32
+
+    .. cpp:var:: float fp32
+    .. cpp:var:: int s32
+    .. cpp:var:: unsigned int u32
+    .. cpp:var:: s8x4 _4N_s8
+    .. cpp:var:: u8x4 _4N_u8
+    .. cpp:var:: s16x2 _2N_s16
+    .. cpp:var:: u16x2 _2N_u16
+
+.. cpp:union:: x16
+
+    .. cpp:var:: short s16
+    .. cpp:var:: unsigned short u16
+
+.. cpp:union:: x8
+
+    .. cpp:var:: char s8
+    .. cpp:var:: unsigned char u8
+
+.. cpp:class:: dim4
+
+    .. cpp:var:: int n
+    .. cpp:var:: int c
+    .. cpp:var:: int h
+    .. cpp:var:: int w
+
+.. cpp:class:: dim2
+
+    .. cpp:var:: int h
+    .. cpp:var:: int w
+
+.. cpp:enum:: op_type_t
+
+    Operation type of the fixed point binary operation.
+
+.. cpp:enumerator:: S8_OP_S8_TO_S8 = 31
+
+    Value of int8 operates value of int8 to value of int8.
+
+.. cpp:enumerator:: S8_OP_S8_TO_S16 = 23
+
+    Value of int8 operates value of int8 to value of int16.
+
+.. cpp:enumerator:: S8_OP_U8_TO_S8 = 27
+
+    Value of int8 operates value of uint8 to value of int8.
+
+.. cpp:enumerator:: S8_OP_U8_TO_S16 = 19
+
+    Value of int8 operates value of uint8 to value of int16.
+
+.. cpp:enumerator:: U8_OP_S8_TO_S8 = 29
+
+    Value of uint8 operates value of int8 to value of int8.
+
+.. cpp:enumerator:: U8_OP_S8_TO_S16 = 21
+
+    Value of uint8 operates value of int8 to value of int16.
+
+.. cpp:enumerator:: U8_OP_U8_TO_S8 = 25
+
+    Value of uint8 operate value of uint8 to value of int8.
+
+.. cpp:enumerator:: U8_OP_U8_TO_S16 = 17
+
+    Value of uint8 operates value of uint8 to value of int16.
+
+.. cpp:enumerator:: U8_OP_U8_TO_U8 = 9
+
+    Value of uint8 operates value of uint8 to value of uint8.
+
+.. cpp:enumerator:: U8_OP_U8_TO_U16 = 1
+
+    Value of uint8 operates value of uint8 to value of uint16.
+
+.. cpp:enumerator:: S16_OP_S16_TO_S8 = 30
+
+    Value of int16 operates value of int16 to value of int8.
+
+.. cpp:enumerator:: S16_OP_S16_TO_S16 = 22
+
+    Value of int16 operates value of int16 to value of int16.
+
+.. cpp:enumerator:: S16_OP_U16_TO_S8 = 26
+
+    Value of int16 operates value of uint16 to value of int8.
+
+.. cpp:enumerator:: S16_OP_U16_TO_S16 = 18
+
+    Value of int16 operates value of uint16 to value of int16.
+
+.. cpp:enumerator:: U16_OP_S16_TO_S8 = 28
+
+    Value of uint16 operates value of int16 to value of int8.
+
+.. cpp:enumerator:: U16_OP_S16_TO_S16 = 20
+
+    Value of int16 operates value of int16 to value of int16.
+
+.. cpp:enumerator:: U16_OP_U16_TO_S8 = 24
+
+    Value of uint16 operates value of uint16 to value of int8.
+
+.. cpp:enumerator:: U16_OP_U16_TO_S16 = 16
+
+    Value of uint16 operates value of uint16 to value of int16.
+
+.. cpp:enumerator:: U16_OP_U16_TO_U8 = 8
+
+    Value of uint16 operates value of uint16 to value of uint8.
+
+.. cpp:enumerator:: U16_OP_U16_TO_U16 = 0
+
+    Value of uint16 operates value of uint16 to value of uint16.
+
+.. cpp:enum:: mul_type_t
+
+    Type of the fixed point multiplication.
+
+.. cpp:enumerator:: S16_MUL_S8_TO_S16 = 7
+
+    Value of int16 multiplies by value of int8 to value of int16.
+
+.. cpp:enumerator:: U16_MUL_S8_TO_S16 = 6
+
+    Value of uint16 multiplies by value of int8 to value of int16.
+
+.. cpp:enumerator:: U16_MUL_U8_TO_U16 = 0
+
+    Value of uint16 multiplies by value of uint8 to value of uint16.
+
+.. cpp:enumerator:: S16_MUL_U8_TO_S16 = 5
+
+    Value of int16 multiplies by value of uint8 to value of int16.
+
+.. c:macro:: DIV_UP
+
+    DIV_UP(a, b) (((a) - 1) / (b) + 1)
+
+.. c:macro:: ALIGN
+
+    ALIGN(a, b) :c:macro:`DIV_UP` (a, b) * (b)

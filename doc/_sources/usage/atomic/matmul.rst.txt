@@ -1,0 +1,134 @@
+
+Matrix Multiply
+================
+
+
+由于在Local Memory中数据都是按照tensor的方式存储的，因此需要将2维矩阵拆分成4维的tensor形式。
+
+假设矩阵有Y行X列，而tensor的几何尺寸为 NCHW，那么：
+
+N = Y
+
+C = (X + W - 1) / W
+
+H = 1
+
+W = W
+
+也就是将矩阵的列分解到C和W两个维度，具体分配由用户决定，接口如下。
+
+
+浮点运算
+________
+
+浮点矩阵乘法运算，可以实现 Y = L * R + B 或者 Y = trans(L) * R + B。
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input_l_addr;
+             unsigned int input_r_addr;
+             unsigned int bias_addr;
+             unsigned int output_addr;
+             unsigned int l_row;
+             unsigned int l_col;
+             unsigned int l_tensor_w;
+             unsigned int l_tensor_c;
+             unsigned int r_tensor_w;
+             unsigned int r_tensor_c;
+             bool l_trans;
+             bool using_bias;
+             bool result_add;
+         } MatmulParam;
+
+         void bm_atomic_matmul(const MatmulParam* param);
+
+参数说明：
+
+* input_l_addr：存放左矩阵的Local Memory偏移地址;
+* input_r_addr：存放右矩阵的Local Memory偏移地址;
+* bias_addr：存放bias系数的Local Memory偏移地址;
+* output_addr：存放结果矩阵的Local Memory偏移地址;
+* l_row：左矩阵的行数;
+* l_col：左矩阵的列数;
+* l_tensor_w：左矩阵的列分解后，分配给W维度的大小;
+* l_tensor_c：左矩阵的列分解后，分配给C维度的大小;
+* r_tensor_w：右矩阵的列分解后，分配给W维度的大小;
+* r_tensor_c：右矩阵的列分解后，分配给C维度的大小;
+* l_trans： 左矩阵是否要进行转置操作
+* using_bias： 是否含有bias运算
+* result_add： 是否累加上原来的结果，也就是将本次矩阵乘法结果与output_addr本来存放的值进行累加;
+
+
+定点运算
+________
+
+定点矩阵乘法运算，左矩阵、右矩阵均为8bit，bias为16bits，结果可以是8bits或者16bits，可以实现以下功能：
+
+Y[7:0] = (L[7:0] * R[7:0] + B[15:0]) >> m
+
+或者
+
+Y[15:0] = (L[7:0] * R[7:0] + B[15:0]) >> m
+
+或者
+
+Y[7:0] = (L[7:0] * R[7:0] + B[15:0] + (Y[15:0] << n)) >> m
+
+或者
+
+Y[15:0] = (L[7:0] * R[7:0] + B[15:0] + (Y[15:0] << n)) >> m
+
+所有输入输出均按照1N模式存储。
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned int input_l_addr;
+             unsigned int input_r_addr;
+             unsigned int bias_addr;
+             unsigned int output_addr;
+             unsigned int l_row;
+             unsigned int l_col;
+             unsigned int l_tensor_w;
+             unsigned int l_tensor_c;
+             unsigned int r_tensor_w;
+             unsigned int r_tensor_c;
+             unsigned int lshfit_bit;
+             unsigned int rshift_bit;
+             bool l_trans;
+             bool using_bias;
+             bool result_add;
+             bool result_add_sign;
+             bool if_relu;
+             bool input_l_sign;
+             bool input_r_sign;
+             bool bias_sign;
+             bool output_16bit;
+         } MatmulQuantParam;
+
+         void bm_atomic_matmul_quantized(const MatmulQuantParam* param);
+
+
+参数说明：
+
+* input_l_addr：存放左矩阵的Local Memory偏移地址;
+* input_r_addr：存放右矩阵的Local Memory偏移地址;
+* bias_addr：存放bias系数的Local Memory偏移地址;
+* output_addr：存放结果矩阵的Local Memory偏移地址;
+* l_row：左矩阵的行数;
+* l_col：左矩阵的列数;
+* l_tensor_w：左矩阵的列分解后，分配给W维度的大小;
+* l_tensor_c：左矩阵的列分解后，分配给C维度的大小;
+* r_tensor_w：右矩阵的列分解后，分配给W维度的大小;
+* r_tensor_c：右矩阵的列分解后，分配给C维度的大小;
+* lshift_bit： 如果result_add 为真，output_addr本来存放的值可以左移后与该矩阵乘法结果累加，该参数表示左移位数;
+* rshift_bit： add result之后的结果右移位数;
+* l_trans： 左矩阵是否要进行转置操作
+* using_bias： 是否含有bias运算
+* result_add： 是否累加上原来的结果，也就是将本次矩阵乘法结果与output_addr本来存放的值进行累加;
+* result_add_sign： 如果if_add_result为真，那么该参数表示Y_start_addr本来存放的值是否为有符号数;
+* if_relu： 是否对最终的结果做relu操作;
+* input_l_sign/input_r_sign/bias_sign：分别表示左矩阵、右矩阵以及bias的值是否为有符号数;
+* output_16bit： 输出结果是否为16bits。
+

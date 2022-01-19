@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GDMA 操作 &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>GDMA 操作</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/atomic/gdma.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gdma">
+<h1>GDMA 操作<a class="headerlink" href="#gdma" title="Permalink to this headline">¶</a></h1>
+<p>该部分介绍所有的使用GDMA引擎完成的操作。</p>
+<p>其中，搬运的数据类型包括：</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_GDMA_FORMAT_FLOAT32</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_INT16</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_UINT8</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_INT8</span><span class="p">,</span>
+    <span class="n">BM_GDMA_FORMAT_FLOAT16</span>
+<span class="p">}</span> <span class="n">BmGDMAFormat</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>数据搬运的方向包括以下，S表示Global Memory、L2-SRAM以及DTCM，L表示Local Memory。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+    <span class="n">BM_GDMA_DIR_S2L</span><span class="p">,</span>
+    <span class="n">BM_GDMA_DIR_L2S</span><span class="p">,</span>
+    <span class="n">BM_GDMA_DIR_S2S</span><span class="p">,</span>
+    <span class="n">BM_GDMA_DIR_L2L</span>
+<span class="p">}</span> <span class="n">BmGDMADir</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="id1">
+<h2>一维数据搬运<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>通用的线性方式搬运。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="n">BmGDMADir</span> <span class="n">direction</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemCpy1DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memcpy_1D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemCpy1DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>src_addr: 源地址;</li>
+<li>dst_addr: 目的地址;</li>
+<li>length: 搬运的数据长度;</li>
+<li>format: 搬运的数据类型;</li>
+<li>direction: 搬运方向;</li>
+</ul>
+</div>
+<div class="section" id="matrix">
+<h2>二维matrix的搬运<a class="headerlink" href="#matrix" title="Permalink to this headline">¶</a></h2>
+<p>该操作可以实现二维matrix在global memory和local memory之间的搬运。</p>
+<p>在global memory中，数据以二维matrix的形式存储，row行col列，支持带有row_stride的数据访问。</p>
+<p>在local memory中，将数据切割成多份，依次放置于于不同的NPU中，每份sec_size大小。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">global_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_mem_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">row</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">col</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">row_stride</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sec_size</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="n">BmGDMADir</span> <span class="n">direction</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">transpose</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">result_add</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemCpy2DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memcpy_2D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemCpy2DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>global_mem_addr: global memory的地址;</li>
+<li>local_mem_addr: local memory的地址;</li>
+<li>local_mem_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;</li>
+<li>row: matrix在global memory存储的行数；</li>
+<li>col: matrix在global memory存储的列数；</li>
+<li>row_stride: matrix在global memory存储的row stride大小；</li>
+<li>sec_size: 数据在local memory中存储在每个NPU的大小；</li>
+<li>format: 数据的类型;</li>
+<li>direction: 搬运的方向;</li>
+<li>transpose: 是否进行转置;</li>
+<li>rasult_add: 搬运的数据是否与目的地址的原数据累加，该功能仅支持float32的数据类型。</li>
+</ul>
+</div>
+<div class="section" id="tensor">
+<h2>四维Tensor的搬运<a class="headerlink" href="#tensor" title="Permalink to this headline">¶</a></h2>
+<p>可以支持读取和写入的Tensor的shape不同，但是总大小必须一致，即:</p>
+<p>src_shape[0] * src_shape[1] * src_shape[2] * src_shape[3] =</p>
+<p>dst_shape[0] * dst_shape[1] * dst_shape[2] * dst_shape[3]</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">src_format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">dst_format</span><span class="p">;</span>
+    <span class="n">BmGDMADir</span> <span class="n">direction</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">transpose</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemCpy4DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memcpy_4D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemCpy4DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>src_addr: 源地址;</li>
+<li>src_local_idx: 当源是local Memory时才有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;</li>
+<li>src_shape[4]: 从源地址读取tensor的shape，分别表示NCHW维度的大小;</li>
+<li>src_stride[4]: 读取tensor在源地址存储的stride信息，分别表示NCHW四个维度stride大小;</li>
+<li>src_format: 源数据的类型;</li>
+<li>dst_addr: 目的地址;</li>
+<li>dst_local_idx: 当目的是local Memory时才有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;</li>
+<li>dst_shape[4]: 向目的地址写入tensor的shape，分别表示NCHW维度的大小;</li>
+<li>dst_stride[4]: 写入tensor在目的地址存储的stride信息，分别表示NCHW四个维度stride大小;</li>
+<li>dst_format: 目的数据的类型;</li>
+<li>direction: 搬运的方向;</li>
+<li>transpose: 是否做N维度和C维度的转置;</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>常数填充<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>该操作可用于向Global Memory和Local Memory中填充常数。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">start_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">const_val</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">is_local_mem</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_idx</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">MemSet4DParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_memset_4D</span><span class="p">(</span><span class="k">const</span> <span class="n">MemSet4DParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>start_addr: 需要写入的Memory的地址，可以是local memory也可以是global memory，由参数is_local_mem决定是否为local memory;</li>
+<li>shape[4]: 填充空间的shape，分别表示NCHW四维的大小；</li>
+<li>stride[4]: 填充空间存储的stride信息，分别表示NCHW四维的stride大小；</li>
+<li>const_val; 该指针指向向目的地址中写入的常数;</li>
+<li>format: 写入数据的类型;</li>
+<li>is_local_mem: 是否填充local memory，否则为global memory；</li>
+<li>local_idx: 当is_local_mem为真时该参数有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始写入;</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>转置操作<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>可以对Local Memory的tensor在C和W两个维度上进行转置。</p>
+<p>src tensor shape: (1, CI, 1, WI)</p>
+<p>dst tensor shape: (1, WI, 1, CI)</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_local_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_c</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_w</span><span class="p">;</span>
+    <span class="n">BmGDMAFormat</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">src_c_stride</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dst_c_stride</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">CWTransParam</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_cwtrans</span><span class="p">(</span><span class="k">const</span> <span class="n">CWTransParam</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>src_addr: 源的Local Memory偏移地址;</li>
+<li>src_local_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始读取;</li>
+<li>dst_addr: 目的的Local Memory偏移地址;</li>
+<li>dst_local_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始写入;</li>
+<li>src_c/src_w: 源数据的shape，分别表示CW维度的大小;</li>
+<li>format: 搬运的数据类型;</li>
+<li>src_c_stride: 源数据存储的C维度的stride大小;</li>
+<li>dst_c_stride: 目的数据存储的C维度的stride大小;</li>
+</ul>
+</div>
+<div class="section" id="masktensor">
+<h2>支持mask的四维Tensor搬运<a class="headerlink" href="#masktensor" title="Permalink to this headline">¶</a></h2>
+<p>GDMA可以将源数据按照mask有选择性的进行搬移，如果mask大小和源数据大小一一对应，如果mask为0则表示对应位置的源数据被舍弃，否则搬运至目的地址。</p>
+<p>当搬运完成后，调用函数bm_get_mask_memcpy_res_num()可以获取搬运到目的地址的数据的数量。</p>
+<p>该操作仅支持从Local Memory到Global Memory方向的搬运。</p>
+<blockquote>
+<div><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">data_local_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">mask_local_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">local_mem_idx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">dst_global_mem_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shape</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">MaskMemCpy4DPram</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">bm_atomic_mask_memcpy_4D</span><span class="p">(</span><span class="k">const</span> <span class="n">MaskMemCpy4DPram</span><span class="o">*</span> <span class="n">param</span><span class="p">);</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">bm_get_mask_memcpy_res_num</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>参数说明：</p>
+<ul class="simple">
+<li>data_local_mem_addr: 源数据的Local Memory偏移地址;</li>
+<li>mask_local_mem_addr: 源数据mask的Local Memory偏移地址;</li>
+<li>local_mem_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始读取;</li>
+<li>dst_global_mem_addr: 目的数据的Global Memory地址;</li>
+<li>shape[4]: 源数据的shape， 分别表示NCHW四个维度的大小。</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

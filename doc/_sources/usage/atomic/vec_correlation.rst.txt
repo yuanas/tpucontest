@@ -1,0 +1,54 @@
+vector correlation
+===================
+
+输入为两个一维向量 input0(n维) input1(n维)，本指令要算出一个二维向量output
+
+output(i,j) = f(input0(i)，input1(j))  0 <= i <= m–1,   0 <= j <= n-1
+
+函数f包括浮点加减乘除，浮点的max/min,  整型的and/or/xor, 都是32比特
+
+在TPU中需要使用张量的描述方式来描述输入输出这三个矢量:
+输入input0描述为(1, input0_c, 1, input0_w)，其中 m = (input0_c – 1) * input0_w + input0_w_last
+输入input1描述为(1, input1_c, 1, input1_w)，其中 n = input1_c * input1_w
+输出output描述为(m, input1_c, 1，input1_w)
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned int input0_addr;
+              unsigned int input1_addr;
+              unsigned int output_addr;
+              BmAtomicOp op;
+              unsigned int input0_c;
+              unsigned int input0_w;
+              unsigned int input0_w_last;
+              unsigned int input1_c;
+              unsigned int input1_w;
+          } VecParam;
+
+          void bm_atomic_vec_correlation(const VecParam* param);
+
+参数说明：
+
+* input0_addr: 存放输入tensor A的Local Memory偏移地址;
+* input1_addr: 存放输入tensor B的Local Memory偏移地址;
+* output_addr: 存放输出tensor的Local Memory偏移地址;
+* op: 操作码，可支持如下操作：
+
+      + BM_ADD: output(i,j) = input0(i) + input1(j)，输入输出均为float32类型
+      + BM_SUB: output(i,j) = input0(i) - input1(j)，输入输出均为float32类型
+      + BM_MUL: output(i,j) = input0(i) * input1(j)，输入输出均为float32类型
+      + BM_DIV: output(i,j) = input0(i) / input1(j)，输入输出均为float32类型
+      + BM_MAX: output(i,j) = max(input0(i), input1(j))，输入输出均为float32类型
+      + BM_MIN: output(i,j) = min(input0(i), input1(j))，输入输出均为float32类型
+      + BM_AND: output(i,j) = input0(i) & input1(j)，输入输出均为int32类型
+      + BM_OR:  output(i,j) = input0(i) | input1(j)，输入输出均为int32类型
+      + BM_XOR: output(i,j) = input0(i) ^ input1(j)，输入输出均为int32类型
+
+* input0_c: input0 使用四维tensor描述的方式，分配到C维度的大小；
+* input0_w: input0 使用四维tensor描述的方式，分配到W维度的大小；
+* input0_w_last: input0 使用四维tensor描述的方式，不能整除的情况下，最后一个W维度的长度；
+* input1_c: input1 使用四维tensor描述的方式，分配到C维度的大小；
+* input1_w: input1 使用四维tensor描述的方式，分配到W维度的大小；
+
+

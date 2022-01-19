@@ -1,0 +1,139 @@
+.. role:: bash(code)
+   :language: bash
+
+Introduction
+____________
+
+In order to facilitate customers to use OKKernel more quickly, a simple framework is built in the demo.
+Users can easily add new customized operators to the framework.
+
+Currently, the following three cases are supported
+
+    - PCIe mode：the host is an X86 processor.
+    - SoC mode：the host is an on-chip A53 processor.
+    - C-Model mode：the codes run on the software simulator and can be used in development and debugging stage. **This mode only supports X86 processor**.
+
+Compilation Tools
+_________________
+
+Since host and device run on different processors, they need to use their respective compilers.
+
+For host,
+
+    - If PCIe mode is used, the local Linux GCC compiler can be used.
+    - If SoC mode is used and developing on the on-chip A53 machine, the local Linux GCC compiler can be used.
+    - If SoC mode is used and developing on X86 machine, a cross compiler of X86-ARM is needed.
+
+For device,
+
+    - An ARM9 32-bit compiler is needed.
+
+User can download the compilation tools by running
+
+.. code-block:: console
+
+    $./prepare_toolchains.sh
+
+The downloads will be stored in the folder :bash:`../toolchains_dir/`,
+and the script will automatically set the environment variable :bash:`CROSS_TOOLCHAINS` path to the toolchains.
+
+When using the toolchains later, user can just set the environment variable by running
+
+.. code-block:: console
+
+    $export CROSS_TOOLCHAINS=path/to/toolchains
+
+
+Header Files and Libraries
+__________________________
+
+For header files, :bash:`okk.h` (atomic function APIs for device) and :bash:`bmlib_runtime.h` (runtime APIs for host) are needed. User may need to copy them to :bash:`include/`.
+
+For libraries, :bash:`libbmlib.so` (runtime APIs for host), :bash:`firmware.a` (basic firmware with ICACHE disabled) and :bash:`firmware_en_icache.a` (basic firmware with ICACHE enabled) are needed.
+User may need to
+
+    - PCIe mode: copy :bash:`libbmlib.so`, :bash:`firmware.a` and :bash:`firmware_en_icache.a` to :bash:`lib/pcie/`.
+    - SoC mode: copy :bash:`libbmlib.so`, :bash:`firmware.a` and :bash:`firmware_en_icache.a` to :bash:`lib/soc/`.
+    - C-Model mode: copy :bash:`libbmlib.so` to :bash:`lib/cmodel/`.
+
+All the header files and library files can be found in the SDK.
+
+Develop
+_______
+
+Referring to :ref:`programming on device` and :ref:`programming on host`, users can develop customized kernel functions and launch them.
+
+The code files for device should be placed in :bash:`device/` and preffered with prefix :bash:`bm_device_`.
+The code files for host should be placed in :bash:`host/`.
+
+Compile and Update Firmware
+___________________________
+
+The compilation options are as follows
+
+    =============== ============== ======== ===============================
+    Argument        Options        Default  Description
+    --------------- -------------- -------- -------------------------------
+    HOST_ARCH       x86/aarch64    x86      x86 - PCIe mode，aarch64 - SoC mode
+    USING_CMODEL    0/1             0       Flag of C-Model mode, 1 - On, 0 - Off
+    DEBUG           0/1             0       Flag of debug mode, 1 - On, 0 - Off
+    ENABLE_ICACHE   0/1             0       Flag of ICACHE, 1 - Enabled, 0 - Disabled
+    =============== ============== ======== ===============================
+
+Supposing developing on X86 machine, for PCIe mode, run
+
+.. code-block:: console
+
+    $make okk
+
+For SoC mode, run
+
+.. code-block:: console
+
+    $make okk HOST_ARCH=aarch64
+
+For C-Model mode, run
+
+.. code-block:: console
+
+    $make okk USING_CMODEL=1
+
+The compiling outputs are in :bash:`build/pcie/`, :bash:`build/soc/` or :bash:`build/cmodel/`.
+In these folders, an execution file named :bash:`load_firmware` is generated, user can run it to update firmware to device.
+In PCIe mode, run
+
+.. code-block:: console
+
+    $cd build/pcie
+    $./load_firmware
+
+In SoC mode and developing on X86 machine, copy folder :bash:`build/soc` to the same path on SoC, then run
+
+.. code-block:: console
+
+    $cd build/soc
+    $./load_firmware
+
+If in C-Model mode, there is no need to update firmware, just need to compile.
+
+Execute
+_______
+
+In SoC mode and developing on X86 machine, the path to libraries may be appended to the environment variable :bash:`LD_LIBRARY_PATH` by
+
+.. code-block:: console
+
+    $export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/lib/
+
+User can execute the host application
+
+.. code-block:: console
+
+    $./build/MODE/hello_world
+
+User can view the print information on device by
+
+.. code-block:: console
+
+    $dmesg
+

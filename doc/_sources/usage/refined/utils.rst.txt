@@ -1,0 +1,80 @@
+Utils Functions
+===============
+
+okk_start_npu_index
+___________________
+
+.. cpp:function:: int okk_start_npu_index(local_addr_t addr)
+
+    Calculate the index of the NPU where the tensor starts.
+
+    :param addr: Address of the tensor in local memory.
+
+    :return: Index of NPU.
+
+okk_channle_num_per_npu
+_________________________
+
+.. cpp:function:: int okk_channle_num_per_npu(int start_idx, int num_channels)
+
+    Calculate the number of channels in each NPU.
+
+    :param start_idx: Index of the NPU where the tensor starts.
+    :param num_channels: Number of channels of the tensor.
+
+    :return: Number of channels per NPU.
+
+okk_128_byte_aligned_stride_for_32bit
+_____________________________________
+
+.. cpp:function:: void okk_128_byte_aligned_stride_for_32bit(dim4 *stride, int start_idx, const dim4 *shape)
+
+    Calculate strides of the tensor in the :ref:`128-byte aligned layout` for 32-bit data type.
+
+    :param stride[out]: Pointer to the stride of the tensor.
+    :param start_idx: Index of the NPU where the tensor starts.
+    :param shape: Pointer to the shape of the tensor.
+
+okk_128_byte_aligned_stride_for_16bit
+_____________________________________
+
+.. cpp:function:: void okk_128_byte_aligned_stride_for_16bit(dim4 *stride, int start_idx, const dim4 *shape)
+
+    Calculate strides of the tensor in the :ref:`128-byte aligned layout` for 16-bit data type.
+
+    :param stride[out]: Pointer to the stride of the tensor.
+    :param start_idx: Index of the NPU where the tensor starts.
+    :param shape: Pointer to the shape of the tensor.
+
+okk_128_byte_aligned_stride_for_8bit
+____________________________________
+
+.. cpp:function:: void okk_128_byte_aligned_stride_for_8bit(dim4 *stride, int start_idx, const dim4 *shape)
+
+    Calculate strides of the tensor in the :ref:`128-byte aligned layout` for 8-bit data type.
+
+    :param stride[out]: Pointer to the stride of the tensor.
+    :param start_idx: Index of the NPU where the tensor starts.
+    :param shape: Pointer to the shape of the tensor.
+
+okk_compact_stride
+_______________________
+
+.. cpp:function:: void okk_compact_stride(dim4 *stride, int start_idx, const dim4 *shape)
+
+    Calculate strides of the tensor in the :ref:`compact layout`.
+
+    :param stride[out]: Pointer to the stride of the tensor.
+    :param start_idx: Index of the NPU where the tensor starts.
+    :param shape: Pointer to the shape of the tensor.
+
+okk_continuous_stride
+___________________________
+
+.. cpp:function:: void okk_continuous_stride(dim4 *stride, const dim4 *shape)
+
+    Calculate strides of the tensor in the :ref:`continuous layout`.
+
+    :param stride[out]: Pointer to the stride of the tensor.
+    :param shape: Pointer to the shape of the tensor.
+

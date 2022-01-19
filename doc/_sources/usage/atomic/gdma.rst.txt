@@ -1,0 +1,242 @@
+GDMA 操作
+================
+
+该部分介绍所有的使用GDMA引擎完成的操作。
+
+其中，搬运的数据类型包括：
+
+    .. code-block:: c
+
+          typedef enum {
+              BM_GDMA_FORMAT_FLOAT32,
+              BM_GDMA_FORMAT_INT16,
+              BM_GDMA_FORMAT_UINT8,
+              BM_GDMA_FORMAT_INT8,
+              BM_GDMA_FORMAT_FLOAT16
+          } BmGDMAFormat;
+
+数据搬运的方向包括以下，S表示Global Memory、L2-SRAM以及DTCM，L表示Local Memory。
+
+    .. code-block:: c
+
+         typedef enum {
+             BM_GDMA_DIR_S2L,
+             BM_GDMA_DIR_L2S,
+             BM_GDMA_DIR_S2S,
+             BM_GDMA_DIR_L2L
+         } BmGDMADir;
+
+
+一维数据搬运
+______________
+
+通用的线性方式搬运。
+
+    .. code-block:: c
+
+         typedef struct {
+             unsigned long long src_addr;
+             unsigned long long dst_addr;
+             unsigned int length;
+             BmGDMAFormat format;
+             BmGDMADir direction;
+         } MemCpy1DParam;
+
+         void bm_atomic_memcpy_1D(const MemCpy1DParam* param);
+
+参数说明：
+
+* src_addr: 源地址;
+* dst_addr: 目的地址;
+* length: 搬运的数据长度;
+* format: 搬运的数据类型;
+* direction: 搬运方向;
+
+
+
+二维matrix的搬运
+__________________
+
+该操作可以实现二维matrix在global memory和local memory之间的搬运。
+
+在global memory中，数据以二维matrix的形式存储，row行col列，支持带有row_stride的数据访问。
+
+在local memory中，将数据切割成多份，依次放置于于不同的NPU中，每份sec_size大小。
+
+    .. code-block:: c
+
+           typedef struct {
+               unsigned long long global_mem_addr;
+               unsigned int local_mem_addr;
+               unsigned int local_mem_idx;
+               unsigned int row;
+               unsigned int col;
+               unsigned int row_stride;
+               unsigned int sec_size;
+               BmGDMAFormat format;
+               BmGDMADir direction;
+               bool transpose;
+               bool result_add;
+           } MemCpy2DParam;
+
+           void bm_atomic_memcpy_2D(const MemCpy2DParam* param);
+
+参数说明：
+
+* global_mem_addr: global memory的地址;
+* local_mem_addr: local memory的地址;
+* local_mem_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;
+* row: matrix在global memory存储的行数；
+* col: matrix在global memory存储的列数；
+* row_stride: matrix在global memory存储的row stride大小；
+* sec_size: 数据在local memory中存储在每个NPU的大小；
+* format: 数据的类型;
+* direction: 搬运的方向;
+* transpose: 是否进行转置;
+* rasult_add: 搬运的数据是否与目的地址的原数据累加，该功能仅支持float32的数据类型。
+
+
+四维Tensor的搬运
+__________________
+
+
+可以支持读取和写入的Tensor的shape不同，但是总大小必须一致，即:
+
+src_shape[0] * src_shape[1] * src_shape[2] * src_shape[3] =
+
+dst_shape[0] * dst_shape[1] * dst_shape[2] * dst_shape[3]
+
+    .. code-block:: c
+
+          typedef struct {
+              unsigned long long src_addr;
+              unsigned int src_local_idx;
+              unsigned int src_shape[4];
+              unsigned int src_stride[4];
+              BmGDMAFormat src_format;
+              unsigned long long dst_addr;
+              unsigned int dst_local_idx;
+              unsigned int dst_shape[4];
+              unsigned int dst_stride[4];
+              BmGDMAFormat dst_format;
+              BmGDMADir direction;
+              bool transpose;
+          } MemCpy4DParam;
+
+          void bm_atomic_memcpy_4D(const MemCpy4DParam* param);
+
+参数说明：
+
+* src_addr: 源地址;
+* src_local_idx: 当源是local Memory时才有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;
+* src_shape[4]: 从源地址读取tensor的shape，分别表示NCHW维度的大小;
+* src_stride[4]: 读取tensor在源地址存储的stride信息，分别表示NCHW四个维度stride大小;
+* src_format: 源数据的类型;
+* dst_addr: 目的地址;
+* dst_local_idx: 当目的是local Memory时才有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始访问;
+* dst_shape[4]: 向目的地址写入tensor的shape，分别表示NCHW维度的大小;
+* dst_stride[4]: 写入tensor在目的地址存储的stride信息，分别表示NCHW四个维度stride大小;
+* dst_format: 目的数据的类型;
+* direction: 搬运的方向;
+* transpose: 是否做N维度和C维度的转置;
+
+
+常数填充
+________
+
+该操作可用于向Global Memory和Local Memory中填充常数。
+
+    .. code-block:: c
+
+       typedef struct {
+           unsigned long long start_addr;
+           unsigned int shape[4];
+           unsigned int stride[4];
+           const void* const_val;
+           BmGDMAFormat format;
+           bool is_local_mem;
+           unsigned int local_idx;
+       } MemSet4DParam;
+
+       void bm_atomic_memset_4D(const MemSet4DParam* param);
+
+参数说明：
+
+* start_addr: 需要写入的Memory的地址，可以是local memory也可以是global memory，由参数is_local_mem决定是否为local memory;
+* shape[4]: 填充空间的shape，分别表示NCHW四维的大小；
+* stride[4]: 填充空间存储的stride信息，分别表示NCHW四维的stride大小；
+* const_val; 该指针指向向目的地址中写入的常数;
+* format: 写入数据的类型;
+* is_local_mem: 是否填充local memory，否则为global memory；
+* local_idx: 当is_local_mem为真时该参数有效，每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始写入;
+
+
+转置操作
+__________
+
+可以对Local Memory的tensor在C和W两个维度上进行转置。
+
+src tensor shape: (1, CI, 1, WI)
+
+dst tensor shape: (1, WI, 1, CI)
+
+    .. code-block:: c
+
+        typedef struct {
+            unsigned int src_addr;
+            unsigned int src_local_idx;
+            unsigned int dst_addr;
+            unsigned int dst_local_idx;
+            unsigned int src_c;
+            unsigned int src_w;
+            BmGDMAFormat format;
+            unsigned int src_c_stride;
+            unsigned int dst_c_stride;
+        } CWTransParam;
+
+        void bm_atomic_cwtrans(const CWTransParam* param);
+
+
+参数说明：
+
+* src_addr: 源的Local Memory偏移地址;
+* src_local_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始读取;
+* dst_addr: 目的的Local Memory偏移地址;
+* dst_local_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始写入;
+* src_c/src_w: 源数据的shape，分别表示CW维度的大小;
+* format: 搬运的数据类型;
+* src_c_stride: 源数据存储的C维度的stride大小;
+* dst_c_stride: 目的数据存储的C维度的stride大小;
+
+
+支持mask的四维Tensor搬运
+________________________
+
+GDMA可以将源数据按照mask有选择性的进行搬移，如果mask大小和源数据大小一一对应，如果mask为0则表示对应位置的源数据被舍弃，否则搬运至目的地址。
+
+当搬运完成后，调用函数bm_get_mask_memcpy_res_num()可以获取搬运到目的地址的数据的数量。
+
+该操作仅支持从Local Memory到Global Memory方向的搬运。
+
+    .. code-block:: c
+
+        typedef struct {
+            unsigned int data_local_mem_addr;
+            unsigned int mask_local_mem_addr;
+            unsigned int local_mem_idx;
+            unsigned long long dst_global_mem_addr;
+            unsigned int shape[4];
+        } MaskMemCpy4DPram;
+
+        void bm_atomic_mask_memcpy_4D(const MaskMemCpy4DPram* param);
+        unsigned int bm_get_mask_memcpy_res_num();
+
+
+参数说明：
+
+* data_local_mem_addr: 源数据的Local Memory偏移地址;
+* mask_local_mem_addr: 源数据mask的Local Memory偏移地址;
+* local_mem_idx: 每个NPU有各自独立的Local Memory空间，该参数表示从第几个NPU的Local Memory开始读取;
+* dst_global_mem_addr: 目的数据的Global Memory地址;
+* shape[4]: 源数据的shape， 分别表示NCHW四个维度的大小。
+

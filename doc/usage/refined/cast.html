@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Data Type Converting Functions &mdash; OKKernel  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OKKernel
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract.html#history">History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">TPU Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#memory-types">Memory Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html#heterogeneous-programming">Heterogeneous Programming</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html">Address of Tensor in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#scatter-features-to-different-npus">Scatter Features to Different NPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-local-memory">Strides in Local Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#strides-in-system-memory">Strides in System Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#layouts">Layouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../layout.html#storage-modes">Storage Modes</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html">About Function Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#some-definitions">Some Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#common-functions">Common Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#utils-functions">Utils Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#gdma-functions">GDMA Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#memory-functions">Memory Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#data-type-converting-functions">Data Type Converting Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-binary-functions">FP32 Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#bit-binary-functions">32-Bit Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-unary-functions">FP32 Unary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fp32-neural-network-functions">FP32 Neural Network Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-binary-functions">Fixed Point Binary Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refined.html#fixed-point-unary-functions">Fixed Point Unary Functions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming_device.html">Programming on Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_host.html">Programming on Host</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compilation-tools">Compilation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#header-files-and-libraries">Header Files and Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#develop">Develop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#compile-and-update-firmware">Compile and Update Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html#execute">Execute</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OKKernel</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Data Type Converting Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/usage/refined/cast.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="data-type-converting-functions">
+<h1>Data Type Converting Functions<a class="headerlink" href="#data-type-converting-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="okk-bdc-fp32-to-int32">
+<h2>okk_bdc_fp32_to_int32<a class="headerlink" href="#okk-bdc-fp32-to-int32" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4">
+<span id="_CPPv321okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4"></span><span id="_CPPv221okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4"></span><span id="okk_bdc_fp32_to_int32__local_addr_t.local_addr_t.dim4CP"></span>void <code class="descname">okk_bdc_fp32_to_int32</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Convert the elements of the source tensor from int32 to fp32 by lookup table.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = \mathbf{INT32}(src(n, c, h, w))\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The destination and source tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+<li>The data type of the source tensor is fp32, the data type of the destination tensor is int32.</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_fp32_to_int32::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_fp32_to_int32::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_fp32_to_int32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_fp32_to_int32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_fp32_to_int32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv421okk_bdc_fp32_to_int3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_fp32_to_int32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-lookup-int32-to-fp32">
+<h2>okk_bdc_lookup_int32_to_fp32<a class="headerlink" href="#okk-bdc-lookup-int32-to-fp32" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4">
+<span id="_CPPv328okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4"></span><span id="_CPPv228okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4"></span><span id="okk_bdc_lookup_int32_to_fp32__local_addr_t.local_addr_t.dim4CP"></span>void <code class="descname">okk_bdc_lookup_int32_to_fp32</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Convert the elements of the source tensor from int32 to fp32 by lookup table.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = \mathbf{FP32}(src(n, c, h, w))\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination and source tensors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The destination and source tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>.</li>
+<li>The data type of the source tensor is int32, the data type of the destination tensor is fp32.</li>
+<li>The elements of the source tensor are in [-128, 127].</li>
+<li>The destination and source tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_lookup_int32_to_fp32::dst_addr"><span class="pre">dst_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_lookup_int32_to_fp32::src_addr"><span class="pre">src_addr</span></a></code> are divisible by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_lookup_int32_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_lookup_int32_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_lookup_int32_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv428okk_bdc_lookup_int32_to_fp3212local_addr_t12local_addr_tPK4dim4" title="okk_bdc_lookup_int32_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-4n-int8-to-fp32">
+<h2>okk_bdc_4N_int8_to_fp32<a class="headerlink" href="#okk-bdc-4n-int8-to-fp32" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb">
+<span id="_CPPv323okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb"></span><span id="_CPPv223okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb"></span><span id="okk_bdc_4N_int8_to_fp32__local_addr_t.local_addr_t.local_addr_t.dim4CP.b.b"></span>void <code class="descname">okk_bdc_4N_int8_to_fp32</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>work_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, bool <em>is_signed</em>, bool <em>is_aligned_layout</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Convert the elements of the source tensor from int8 or uint8 to fp32.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = \mathbf{FP32}(src(n, c, h, w))\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>work_addr</strong> – Address of the work tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source and work tensors.</li>
+<li><strong>is_signed</strong> – Flag of the data type of the source tensor, true means int8, otherwise, uint8.</li>
+<li><strong>is_aligned_layout</strong> – Flag of the layout of the destination, source and work tensor, true means <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>, otherwise, <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The destination, source and work tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a> or <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a> simutanously.</li>
+<li>The data type of the source and work tensors is int8 or uint8, the data type of the destination tensor is fp32.</li>
+<li>The source and work tensors are in the 4N-mode.</li>
+<li>The destination, source and work tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::src_addr"><span class="pre">src_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::work_addr"><span class="pre">work_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>The work tensor is a workspace to store temporary tensor with the same size as the source tensor, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::dst_addr"><span class="pre">dst_addr</span></a> <span class="pre">=</span> <a class="reference internal" href="../refined.html#_CPPv423okk_bdc_4N_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_4N_int8_to_fp32::work_addr"><span class="pre">work_addr</span></a></code> is not allowed.</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="okk-bdc-int8-to-fp32">
+<h2>okk_bdc_int8_to_fp32<a class="headerlink" href="#okk-bdc-int8-to-fp32" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb">
+<span id="_CPPv320okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb"></span><span id="_CPPv220okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb"></span><span id="okk_bdc_int8_to_fp32__local_addr_t.local_addr_t.local_addr_t.dim4CP.b.b"></span>void <code class="descname">okk_bdc_int8_to_fp32</code><span class="sig-paren">(</span><a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>dst_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>src_addr</em>, <a class="reference internal" href="../refined.html#_CPPv412local_addr_t" title="local_addr_t">local_addr_t</a> <em>work_addr</em>, <em class="property">const</em> <a class="reference internal" href="../refined.html#_CPPv44dim4" title="dim4">dim4</a> *<em>shape</em>, bool <em>is_signed</em>, bool <em>is_aligned_layout</em><span class="sig-paren">)</span><br /></dt>
+<dd><p>Convert the elements of the source tensor from int8 or uint8 to fp32.</p>
+<div class="math notranslate nohighlight">
+\[dst(n, c, h, w) = \mathbf{FP32}(src(n, c, h, w))\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_addr</strong> – Address of the destination tensor.</li>
+<li><strong>src_addr</strong> – Address of the source tensor.</li>
+<li><strong>work_addr</strong> – Address of the work tensor.</li>
+<li><strong>shape</strong> – Pointer to the shape of the destination, source and work tensors.</li>
+<li><strong>is_signed</strong> – Flag of the data type of the source tensor, true means int8, otherwise, uint8.</li>
+<li><strong>is_aligned_layout</strong> – Flag of the layout of the destination, source and work tensor, true means <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a>, otherwise, <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong></p>
+<ul class="simple">
+<li>The destination, source and work tensors are in the <a class="reference internal" href="../layout.html#byte-aligned-layout"><span class="std std-ref">128-Byte Aligned Layout</span></a> or <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a> simutanously.</li>
+<li>The data type of the source and work tensors is int8 or uint8, the data type of the destination tensor is fp32.</li>
+<li>The destination, source and work tensors start at the same NPU.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::dst_addr"><span class="pre">dst_addr</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::src_addr"><span class="pre">src_addr</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::work_addr"><span class="pre">work_addr</span></a></code> are divisible by 4 and preferred by 128.</li>
+<li><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">n</span></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code> are in [1, 65535], <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">c</span></code> is in [1, 4095].</li>
+<li>The work tensor is a workspace to store temporary tensor with the same size as the source tensor, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::dst_addr"><span class="pre">dst_addr</span></a> <span class="pre">=</span> <a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::work_addr"><span class="pre">work_addr</span></a></code> is not allowed.</li>
+<li>If the source and work tensors are in the <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>, another restriction is required that C stride is <a class="reference internal" href="def.html#c.ALIGN" title="ALIGN"><code class="xref c c-macro docutils literal notranslate"><span class="pre">ALIGN</span></code></a> (<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span> <span class="pre">*</span> <a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code>, 4) other than <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">h</span> <span class="pre">*</span> <a class="reference internal" href="../refined.html#_CPPv420okk_bdc_int8_to_fp3212local_addr_t12local_addr_t12local_addr_tPK4dim4bb" title="okk_bdc_int8_to_fp32::shape"><span class="pre">shape</span></a><span class="pre">-&gt;</span><span class="pre">w</span></code>,
+so the source and work tensors are in an approximate <a class="reference internal" href="../layout.html#compact-layout"><span class="std std-ref">Compact Layout</span></a>.</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, SOPHGO.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

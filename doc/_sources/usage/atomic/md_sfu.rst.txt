@@ -1,0 +1,35 @@
+MD-SFU
+================
+
+四维Tensor的特殊函数运算，功能包括浮点到定点转换，分离浮点数的底数和指数部分，计算泰勒展开式，计算平方根等特殊函数。
+
+    .. code-block:: c
+
+        typedef struct {
+            unsigned int input_addr;
+            unsigned int output_addr;
+            unsigned int* shape;
+            BmAtomicOp op;
+            unsigned int taylor_len;
+            unsigned int taylor_coef_addr;
+        } MDSFUParam;
+
+        void bm_atomic_md_sfu(const MDSFUParam* param);
+
+参数说明：
+
+* input_addr: 存放输入tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* output_addr: 存放输出tensor的Local Memory偏移地址，要求EU_NUM*sizeof(float)对齐;
+* shape[4]: 输入输出tensor的shape，分别对应NCHW四个维度；
+* op：操作码，可支持的操作如下：
+
+    + BM_RSQRT: output = input ^ (-1/2)，输入输出均为float32类型
+    + BM_NORMALIZE_INT32：取出浮点数的指数部分，按照int32存放
+    + BM_NORMALIZE_FP32：取出浮点数的指数部分，按照float32存放
+    + BM_FP32_INT32: 将浮点数转为int32，floor操作
+    + BM_TAYLOR：泰勒展开式计算
+
+* taylor_len：泰勒展开式的级数;
+* table_coef_addr：泰勒展开表的系数存放的L2 SRAM地址;
+
+
