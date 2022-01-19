@@ -32,8 +32,9 @@
 ## 如何编写程序
 * 阅读文档  
   bm1684contest clone后，用浏览器打开doc/index.html。  
-  仔细阅读Introduction至Storage Modes,了解sophgo芯片结构和内存布局  
-  About Function Names至Fixed Point Unary Functions，介绍了编程中所需的所有结构和函数声明,参赛者可结合device/*demo.c的使用来阅读这段文档
+  仔细阅读Introduction至Storage Modes,了解sophgo芯片结构和内存布局。  
+  About Function Names至Fixed Point Unary Functions，介绍了编程中所需的所有结构和函数声明,参赛者可在这段文档中查找device/*demo.c中用到的各个结构和函数的声明含义。  
+  dd
 ## 联系我们
 ![图片说明](https://github.com/sophon-ai-algo/bm1684contest/blob/main/pic/contact_us.jpg)
   
