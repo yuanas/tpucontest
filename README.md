@@ -28,6 +28,7 @@
 * 如果出现总分相同的情况，以提交时间为标准再次排名，提交越早，排名越靠前。
   
 ## 开发环境配置
+* 请参考 https://github.com/sophon-ai-algo/bm1684contest/blob/main/okkernel/README
 ## 如何编写程序
 * 阅读文档  
   bm1684contest clone后，用浏览器打开doc/index.html。  
