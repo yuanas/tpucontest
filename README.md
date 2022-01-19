@@ -1,12 +1,11 @@
 # 参加算能高性能计算竞赛赢取大奖
 ## 竞赛说明
 * 参赛者报名后，使用算能AI芯片指令集对Conv2d、Depthwise2d、Matmul、Softmax算子进行编程，在保证正确性的前提下，我们对参赛者提交代码的性能进行排名，奖励排名靠前的团队或个人。
+* 参赛者只需完成okkernel/device下的ok_device_conv2d_contest.c ok_device_depthwise_contest.c ok_device_matmul_contest.c ok_device_softmax_contest.c 中TODO部分的代码，将此4个文件提交至svn(svn地址和密码在参赛者报名成功后会发送至邮箱)，我们对参赛者提交代码的性能进行排名，奖励排名靠前的团队或个人。
 ## 报名入口
 * 在算能官网https://www.sophgo.com/ 注册后，按提示即可报名竞赛。
-## 考察范围
-* 参赛者只需完成okkernel/device下的ok_device_conv2d_contest.c ok_device_depthwise_contest.c ok_device_matmul_contest.c ok_device_softmax_contest.c 中TODO部分的代码，将此4个文件提交至svn(svn地址和密码在参赛者报名成功后会发送至邮箱)，我们对参赛者提交代码的性能进行排名，奖励排名靠前的团队或个人。
 ## 竞赛规则
-* 本次比赛Conv2d、Depthwise2d、Matmul、Softmax4个算子的实现和性能优化
+* Conv2d、Depthwise2d、Matmul、Softmax4个算子的实现和性能优化
 * 每个算子有多组参数，每个算子的每组参数称为一个case，每个case独立计分。
 * 参赛者只需使用OKKernel实现Device端的代码，提交时也只提交Device端的代码。
 * 参赛者提交的代码编译不通过视为失败提交，总分计0分。
